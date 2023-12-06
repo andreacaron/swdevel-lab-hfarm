@@ -10,6 +10,8 @@ from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from datetime import datetime
 import pandas as pd
+from pydantic import BaseModel 
+from flask import Flask, request, jsonify 
 
 
 from .mymodules.birthdays import return_birthday, print_birthdays_str
@@ -82,3 +84,20 @@ def get_date():
     """
     current_date = datetime.now().isoformat()
     return JSONResponse(content={"date": current_date})
+
+
+
+@app.get('/cerca_strutture')
+def cerca_strutture(piscina_coperta,sauna,area_fitness):
+    # Creazione di un DataFrame 
+    df = pd.read_csv('/app/app/dove-alloggiare.csv')
+    df["CAP"] = df["CAP"].astype(str)
+    df["CODICE IDENTIFICATIVO"] = df["CODICE IDENTIFICATIVO"].astype(str)
+    df.fillna('', inplace=True)
+
+    filtro = (df['PISCINA COPERTA'] == piscina_coperta) & \
+        (df['SAUNA'] == sauna) & \
+        (df['FITNESS'] == area_fitness) & \
+        (df['ZONA FIERA'] == 'Vero')
+    risultato_filtrato = df[filtro].to_dict(orient='records')
+    return risultato_filtrato
