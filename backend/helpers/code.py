@@ -1,17 +1,17 @@
 import csv 
 import pandas as pd
 
-dove_alloggiare = '/app/app/dove-alloggiare.csv'
-with open(dove_alloggiare, "r", newline= "", encoding="utf-8") as file_csv:
-    lettore_csv = csv.reader(file_csv)
+#dove_alloggiare = 'C:\Users\Utente\Documents\GitHub\swdevel-lab-hfarm\backend\app\dove-alloggiare.csv'
+#with open(dove_alloggiare, "r", newline= "", encoding="utf-8") as file_csv:
+    #lettore_csv = csv.reader(file_csv)
 
 
-    for riga in lettore_csv:
-        print(riga)
+    #for riga in lettore_csv:
+        #print(riga)
 
 
 # Creazione di un DataFrame 
-df = pd.read_csv('/app/app/dove-alloggiare.csv')
+df = pd.read_csv('backend\app\dove-alloggiare.csv')
 
 # Controllo dei valori mancanti in tutto il DataFrame
 valori_mancanti_totali = df.isnull().sum().sum()
