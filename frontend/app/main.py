@@ -90,23 +90,30 @@ def internal():
 
 @app.route('/search', methods=['GET', 'POST'])
 def search_structure():
+    # Create an instance of the SearchForm class
     form = SearchForm()
+    # Initialize error_message variable
     error_message = None 
-
+    # Check if the form is submitted and valid
     if form.validate_on_submit():
+        # Retrieve data from the form
         sauna = form.sauna.data
         piscina = form.piscina_coperta.data
         fitness = form.area_fitness.data
+        # Construct the FastAPI backend URL with user input
         fastapi_url = f'{FASTAPI_BACKEND_HOST}/cerca_strutture?piscina_coperta={piscina}&sauna={sauna}&area_fitness={fitness}'
         try:
+            # Make a GET request to the FastAPI backend
             response = requests.get(fastapi_url)
             response.raise_for_status()  # Raise an HTTPError for bad responses
+            # Parse JSON data from the FastAPI response
             data_from_fastapi, error_message = response.json(), None
         except requests.exceptions.RequestException as e:
+            # Handle request exceptions and capture error message
             data_from_fastapi, error_message = None, f'Error: {str(e)}'
-
+        # Render the search.html template with the obtained data
         return render_template("search.html", form=form, result=data_from_fastapi, error_message=error_message)
-
+    # Render the search.html template with default values
     return render_template('search.html', form=form, result=None, error_message=error_message)
 
 
@@ -114,3 +121,9 @@ def search_structure():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
+
+
+
+
+
+
