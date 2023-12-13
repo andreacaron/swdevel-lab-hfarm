@@ -21,74 +21,80 @@ client = TestClient(app)
 
 import unittest
 
-class TestCercaStrutture(unittest.TestCase):
+class TestSearchStructures(unittest.TestCase):
+    """
+    This class contains tests for the cerca_strutture function.
+    Make sure to adapt the documentation and imports to your needs.
+    """
 
-    def test_tutte_opzioni_true(self):
+    def test_all_options_true(self):
+        """
+        Verify if the cerca_strutture function returns a list
+        when all options are set to True.
+        """
         result = cerca_strutture(piscina_coperta=True, sauna=True, area_fitness=True)
         self.assertIsInstance(result, list)
-        
 
-    def test_nessuna_opzione_true(self):
+    def test_no_option_true(self):
+        """
+        Verify if the cerca_strutture function returns an empty list
+        when all options are set to False.
+        """
         result = cerca_strutture(piscina_coperta=False, sauna=False, area_fitness=False)
         self.assertIsInstance(result, list)
         self.assertEqual(len(result), 0)
 
-    def test_solo_piscina_coperta_true(self):
+    def test_only_covered_pool_true(self):
+        """
+        Verify if the cerca_strutture function returns a list
+        when only the 'piscina_coperta' option is set to True.
+        """
         result = cerca_strutture(piscina_coperta=True, sauna=False, area_fitness=False)
         self.assertIsInstance(result, list)
-        
 
-    def test_solo_sauna_true(self):
+    def test_only_sauna_true(self):
+        """
+        Verify if the cerca_strutture function returns a list
+        when only the 'sauna' option is set to True.
+        """
         result = cerca_strutture(piscina_coperta=False, sauna=True, area_fitness=False)
         self.assertIsInstance(result, list)
-        
 
-    def test_solo_area_fitness_true(self):
+    def test_only_fitness_area_true(self):
+        """
+        Verify if the cerca_strutture function returns a list
+        when only the 'area_fitness' option is set to True.
+        """
         result = cerca_strutture(piscina_coperta=False, sauna=False, area_fitness=True)
         self.assertIsInstance(result, list)
-        
 
-    def test_solo_piscina_coperta_e_sauna_true(self):
+    def test_only_covered_pool_and_sauna_true(self):
+        """
+        Verify if the cerca_strutture function returns a list
+        when only the 'piscina_coperta' and 'sauna' options are set to True.
+        """
         result = cerca_strutture(piscina_coperta=True, sauna=True, area_fitness=False)
         self.assertIsInstance(result, list)
-        
 
-    def test_solo_piscina_coperta_e_area_fitness_true(self):
+    def test_only_covered_pool_and_fitness_area_true(self):
+        """
+        Verify if the cerca_strutture function returns a list
+        when only the 'piscina_coperta' and 'area_fitness' options are set to True.
+        """
         result = cerca_strutture(piscina_coperta=True, sauna=False, area_fitness=True)
         self.assertIsInstance(result, list)
-        
 
-    def test_solo_sauna_e_area_fitness_true(self):
+    def test_only_sauna_and_fitness_area_true(self):
+        """
+        Verify if the cerca_strutture function returns a list
+        when only the 'sauna' and 'area_fitness' options are set to True.
+        """
         result = cerca_strutture(piscina_coperta=False, sauna=True, area_fitness=True)
         self.assertIsInstance(result, list)
-        
-
-    def test_tutte_opzioni_false(self):
-        result = cerca_strutture(piscina_coperta=False, sauna=False, area_fitness=False)
-        self.assertIsInstance(result, list)
-        self.assertEqual(len(result), 0)
-
-    def test_piscina_coperta_true_e_altre_opzioni_false(self):
-        result = cerca_strutture(piscina_coperta=True, sauna=False, area_fitness=False)
-        self.assertIsInstance(result, list)
-        
-
-    def test_sauna_true_e_altre_opzioni_false(self):
-        result = cerca_strutture(piscina_coperta=False, sauna=True, area_fitness=False)
-        self.assertIsInstance(result, list)
-        
-
-    def test_area_fitness_true_e_altre_opzioni_false(self):
-        result = cerca_strutture(piscina_coperta=False, sauna=False, area_fitness=True)
-        self.assertIsInstance(result, list)
-        
-
-   
 
 
 if __name__ == '__main__':
     unittest.main()
-
 
 
 
