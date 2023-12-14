@@ -3,9 +3,35 @@
 {% block title %} Homepage of Frontend {% endblock %}
 
 {% block content %}
+    <style>
+        /* Utilizziamo gli stessi stili di colori e font dalla pagina di ricerca HTML */
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 50px;
+        }
+
+        h1 {
+            color: #007bff;
+        }
+
+        p {
+            color: #6c757d;
+        }
+    </style>
+
     <div class="container mt-5">
-        <h1>Hello, world!</h1>
-        <p>Date from Backend: {{ date_from_backend }}</p>
+        <h1>Welcome to Our Frontend Homepage!</h1>
+        <p>This project is proudly crafted by:</p>
+        <div class="text-muted">
+            <p>Caron Andrea 891814</p>
+            <p>De Rocco Martina 890739</p>
+            <p>Diaz Sofia Montiel 888716</p>
+            <p>Satour Samira 888619</p>
+            <p>Sebbar Ilhame 891944</p>
+        </div>
     </div>
 
 {% endblock %}
