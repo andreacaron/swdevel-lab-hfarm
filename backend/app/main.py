@@ -1,84 +1,57 @@
-"""
-Backend module for the FastAPI application.
+# This script sets up a FastAPI server to filter bed and breakfast establishments based on selected amenities.
+# It utilizes CORS middleware for cross-origin requests.
 
-This module defines a FastAPI application that serves
-as the backend for the project.
-"""
-
-from fastapi import FastAPI
-from fastapi import FastAPI
-from fastapi.responses import JSONResponse
-from datetime import datetime
+# Importing necessary modules
+import csv
+from fastapi import FastAPI, Query
 import pandas as pd
+from fastapi.middleware.cors import CORSMiddleware
 
-
-from .mymodules.birthdays import return_birthday, print_birthdays_str
-
+# Code to create an instance of FastAPI
 app = FastAPI()
 
-# Dictionary of birthdays
-birthdays_dictionary = {
-    'Albert Einstein': '03/14/1879',
-    'Benjamin Franklin': '01/17/1706',
-    'Ada Lovelace': '12/10/1815',
-    'Donald Trump': '06/14/1946',
-    'Rowan Atkinson': '01/6/1955'
-}
+# Adding CORS middleware to handle cross-origin requests
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], # Setting '*' to allow requests from any origin 
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"])
 
-df = pd.read_csv('/app/app/employees.csv')
-
-@app.get('/csv_show')
-def read_and_return_csv():
-    aux = df['Age'].values
-    return{"Age": str(aux.argmin())}
-
-@app.get('/')
-def read_root():
-    """
-    Root endpoint for the backend.
-
-    Returns:
-        dict: A simple greeting.
-    """
-    return {"Hello": "World"}
+# Function to parse string values to boolean ('True'/'False'/'Vero'/'Falso')
+def parse_bool(value):
+    return value.lower() in ['true', 'vero']
 
 
-@app.get('/query/{person_name}')
-def read_item(person_name: str):
-    """
-    Endpoint to query birthdays based on person_name.
+# Function to read and filter B&B based on user-selected amenities
+@app.get("/essential_services_periphery")
+def essential_services_periphery(aria_condizionata: str = Query("False", description="Air Conditioning"),
+                                 animali_ammessi: str = Query("False", description="Pets Allowed")):
+    # Parsing amenities to boolean values
+    aria_condizionata_bool = parse_bool(aria_condizionata)
+    animali_ammessi_bool = parse_bool(animali_ammessi)
 
-    Args:
-        person_name (str): The name of the person.
+    # Reading the CSV file containing bed and breakfast data
+    df = pd.read_csv('app/dove-alloggiare.csv')
+    # Handling NA values
+    df.fillna('', inplace=True)
+    
+    # Filter bed and breakfast from 'TIPOLOGIA' column
+    bnb_df = df[df['TIPOLOGIA'] == 'BED AND BREAKFAST']
 
-    Returns:
-        dict: Birthday information for the provided person_name.
-    """
-    person_name = person_name.title()  # Convert to title case for consistency
-    birthday = birthdays_dictionary.get(person_name)
-    if birthday:
-        return {"person_name": person_name, "birthday": birthday}
-    else:
-        return {"error": "Person not found"}
+    # Filter B&B in periphery areas
+    periphery_bnb = bnb_df[bnb_df['PERIFERIA'] == 'Vero']
+    
+    # Filtering essential services for B&B in periphery based on user-selected amenities
+    filter_conditions = (periphery_bnb['ARIA CONDIZIONATA'] == aria_condizionata) & \
+                         (periphery_bnb['ANIMALI AMMESSI'] == animali_ammessi)
+    
+    essential_df = periphery_bnb[filter_conditions]
+    
+    # Extract relevant data for frontend
+    essential_data = essential_df[
+        ['DENOMINAZIONE', 'INDIRIZZO', 'NUMERO CIVICO', 'COMUNE', 'CAP', 'PROVINCIA', 'EMAIL']
+    ].to_dict(orient='records')
 
+    return essential_data
 
-@app.get('/module/search/{person_name}')
-def read_item_from_module(person_name: str):
-    return {return_birthday(person_name)}
-
-
-@app.get('/module/all')
-def dump_all_birthdays():
-    return {print_birthdays_str()}
-
-
-@app.get('/get-date')
-def get_date():
-    """
-    Endpoint to get the current date.
-
-    Returns:
-        dict: Current date in ISO format.
-    """
-    current_date = datetime.now().isoformat()
-    return JSONResponse(content={"date": current_date})
