@@ -1,33 +1,36 @@
-from fastapi import FastAPI, Query
+from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 import pandas as pd
+import uvicorn
 
 app = FastAPI()
 
-@app.get('/find_structure')
-def find_structure(selected_type: str):
-    # Read the CSV file
-    df_structures = pd.read_csv('app/dove-alloggiare.csv')
-   
-    # Handling NA values
-    df_structures.fillna('', inplace=True)
+df_suburb = pd.read_csv('/app/app/dove-alloggiare.csv')
 
+# Handling NA values
+df_suburb.fillna('', inplace=True)
 
-    # Filtering the data based on the criteria of the present feature
-    conditions = df_structures[(df_structures['TIPOLOGIA'] == selected_type) &  
-                (df_structures['PERIFERIA'] == 'Vero') &
-                (df_structures['INGLESE'] == 'Vero') &
-                (df_structures['SPAGNOLO'] == 'Vero')]
-   
-    # If there is data in the specified typology, return the structures' name, address, and email
-    results = conditions[['DENOMINAZIONE', 'PROVINCIA', 'COMUNE', 'INDIRIZZO', 'EMAIL']].to_dict(orient='records')
-       
+@app.get("/find_structures_suburb")
+def find_structures_suburb(Typology,English,French,German,Spanish):
+
+    # Extract relevant data for the frontend
+    conditions = (df_suburb['TIPOLOGIA'] == Typology) & \
+        (df_suburb['INGLESE'] == English) & \
+        (df_suburb['FRANCESE'] == French) & \
+        (df_suburb['TEDESCO'] == German) & \
+        (df_suburb['SPAGNOLO'] == Spanish)& \
+        (df_suburb['PERIFERIA'] == 'Vero')
+    
+    results = df_suburb[conditions].to_dict(orient='records')
     return results
 
+@app.get("/get_typology")
+def get_typology():
+    df_tipologie = df_suburb['TIPOLOGIA'].drop_duplicates()
+    return df_tipologie.to_json()
 
 if __name__ == "__main__":
     # Start server FastAPI
-    import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8080)
+    uvicorn.run(app, host="127.0.0.1", port=8081)
 
-
+#/find_structures_suburb?Typology=ALBERGO&English=Vero&French=Vero&German=Vero&Spanish=Vero
