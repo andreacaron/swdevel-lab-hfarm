@@ -17,14 +17,15 @@ from flask import Flask, request, jsonify
 
 app = FastAPI()
 
+# Create a DataFrame
+df = pd.read_csv('/app/app/dove-alloggiare.csv')
+# Convert specific fields to strings and handle missing values
+df["CAP"] = df["CAP"].astype(str)
+df["CODICE IDENTIFICATIVO"] = df["CODICE IDENTIFICATIVO"].astype(str)
+df.fillna('', inplace=True)
+
 @app.get('/cerca_strutture')
 def cerca_strutture(piscina_coperta,sauna,area_fitness):
-    # Create a DataFrame
-    df = pd.read_csv('/app/app/dove-alloggiare.csv')
-    # Convert specific fields to strings and handle missing values
-    df["CAP"] = df["CAP"].astype(str)
-    df["CODICE IDENTIFICATIVO"] = df["CODICE IDENTIFICATIVO"].astype(str)
-    df.fillna('', inplace=True)
     # Apply filters based on specified criteria
     filtro = (df['PISCINA COPERTA'] == piscina_coperta) & \
         (df['SAUNA'] == sauna) & \

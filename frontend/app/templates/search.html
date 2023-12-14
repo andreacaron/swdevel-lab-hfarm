@@ -130,10 +130,11 @@
                         </div>
                     {% endfor %}
                 </div>
-            {% else %}
-                <!-- Message for no results -->
-                <p class="text-muted">Sorry, we haven't found interesting results. 🥲</p>
             {% endif %}
+            {% if result == [] %}
+            <!-- Message for no results -->
+            <p class="text-muted">Sorry, we haven't found interesting results. 🥲</p>
+        {% endif %}
             <!-- Error message display -->
             {% if error_message %}
                 <p class="text-danger">{{ error_message }}</p>
