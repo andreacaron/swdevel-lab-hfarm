@@ -106,46 +106,42 @@
             {{ form.submit(class="btn btn-primary") }}
         </form>
 
-<!-- Display the result here -->
-<div id="resultContainer">
-    <!-- Result heading -->
-    <h2>Search Results:</h2>
-    {% if result %}
-        <!-- Card deck for result items -->
-        <div class="card-deck">
-            {% for hotel in result %}
-                <!-- Individual result card -->
-                <div class="card">
-                    <div class="card-body">
-                        <!-- Result title -->
-                        <h5 class="card-title">{{ hotel['DENOMINAZIONE'] }}</h5>
-                        <!-- Result details -->
-                        <p class="card-text">
-                            <strong>Provincia:</strong> {{ hotel['PROVINCIA'] }}<br>
-                            <strong>Comune:</strong> {{ hotel['COMUNE'] }}<br>
-                            <strong>Indirizzo:</strong> {{ hotel['INDIRIZZO'] }} {{ hotel['NUMERO CIVICO'] }},
-                            {{ hotel['CAP'] | int }}<br>
-                            <strong>Email:</strong> {{ hotel['EMAIL'] }}
-                        </p>
-                    </div>
+        <!-- Display the result here -->
+        <div id="resultContainer">
+            <!-- Result heading -->
+            {% if result %}
+            <h2>Search Results:</h2>
+                <!-- Card deck for result items -->
+                <div class="card-deck">
+                    {% for hotel in result %}
+                        <!-- Individual result card -->
+                        <div class="card">
+                            <div class="card-body">
+                                <!-- Result title -->
+                                <h5 class="card-title">{{ hotel['DENOMINAZIONE'] }}</h5>
+                                <!-- Result details -->
+                                <p class="card-text">
+                                    <strong>Provincia:</strong> {{ hotel['PROVINCIA'] }}<br>
+                                    <strong>Comune:</strong> {{ hotel['COMUNE'] }}<br>
+                                    <strong>Indirizzo:</strong> {{ hotel['INDIRIZZO'] }} {{ hotel['NUMERO CIVICO'] }},
+                                    {{ hotel['CAP'] | int }}<br>
+                                    <strong>Email:</strong> {{ hotel['EMAIL'] }}
+                                </p>
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div>
-            {% endfor %}
+            {% endif %}
+
+            <!-- Message for no results -->
+            {% if result == [] %}
+                <p class="text-muted">Sorry, we haven't found interesting results. 🥲</p>
+            {% endif %}
+
+            <!-- Error message display -->
+            {% if error_message %}
+                <p class="text-danger">{{ error_message }}</p>
+            {% endif %}
         </div>
-    {% endif %}
-
-    <!-- Message for no results -->
-    {% if result == [] %}
-        <p class="text-muted">Sorry, we haven't found interesting results. 🥲</p>
-    {% endif %}
-
-    <!-- Error message display -->
-    {% if error_message %}
-        <p class="text-danger">{{ error_message }}</p>
-    {% endif %}
-</div>
-        
-
-</div>
-
-
+    </div>
 {% endblock %}
