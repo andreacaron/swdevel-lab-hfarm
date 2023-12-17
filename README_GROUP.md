@@ -36,12 +36,25 @@ https://dati.veneto.it/content/elenco-delle-strutture-ricettive-turistiche-della
 ## Libraries
 
 - **FastAPI**: A Python web framework used for developing web applications, providing tools, libraries, and technologies for building web applications.
-- **Pandas**: A powerful data manipulation and analysis library for Python.
-- **TestClient(FastAPI)**: A class provided by the FastAPI testing utilities. It is used to verify the functionality of different endpoints through various test cases.
+  - **TestClient(FastAPI)**: A class provided by the FastAPI testing utilities. It is used to verify the functionality of different endpoints through various test cases.
+  - **fastapi.responses**: Provides various response classes for creating API responses.
+  - **fastapi.middleware.cors**: Middleware for handling Cross-Origin Resource Sharing (CORS) in FastAPI applications.
+  - **pydantic**: A data validation and settings management library for Python.
+  - **uvicorn**: ASGI server that runs FastAPI applications.
+
 - **Flask**: A Python web framework used for developing web applications, providing tools, libraries, and technologies for building web applications.
+  - **render_template**: A Flask function for rendering HTML templates.
+  - **FlaskForm**: A class from Flask-WTF for creating forms in Flask applications.
+  - **StringField, SubmitField, SelectField**: Classes from WTForms for creating form fields.
+
+- **Pandas**: A powerful data manipulation and analysis library for Python.
 - **Requests**: An HTTP library that simplifies making HTTP requests to interact with web services and APIs.
 - **json**: A module in Python that facilitates encoding and decoding JSON data, commonly used for data interchange between a server and a web application.
 - **Flask-WTF**: An extension for Flask that integrates WTForms, a flexible forms validation and rendering library, simplifying form creation and validation in Flask applications.
+- **os**: Python module for interacting with the operating system, facilitating file system navigation, environment variable management, and system command execution.
+- **sys**: Python module offering access to interpreter-specific variables, enabling manipulation of the runtime environment, including command-line arguments.
+- **pytest**: Python testing framework for easy and scalable unit testing
+- **unittest***: Built-in Python unit testing framework providing test discovery, fixtures, and a test runner; organizes tests into classes that inherit from unittest.TestCase.
 
 
 ## Helper Modules:
