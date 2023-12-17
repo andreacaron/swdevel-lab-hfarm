@@ -14,7 +14,7 @@ FASTAPI_BACKEND_HOST = 'http://backend'
 BACKEND_URL = f'{FASTAPI_BACKEND_HOST}/query/'
 
 
-class SearchForm(FlaskForm):
+class SearchExtras(FlaskForm):
     """
     Defines a search form using Flask-WTF.
 
@@ -33,18 +33,18 @@ class SearchForm(FlaskForm):
         'Pets Allowed:',
         choices=animali_ammessi_choices)
 
-    submit = SubmitField('Search')
+    submit = SubmitField('periphery')
 
 
-@app.route('/search', methods=['GET', 'POST'])
-def search_structure():
+@app.route('/periphery', methods=['GET', 'POST'])
+def search_structure_periphery():
     """
     Route for handling search functionality.
 
     Returns:
         str: Rendered HTML content for the search page.
     """
-    form = SearchForm(request.form)
+    form = SearchExtras(request.form)
     error_message = None
     result = None
 
@@ -63,7 +63,7 @@ def search_structure():
             if response.status_code == 200:
                 result = response.json()
                 return render_template(
-                    'search.html',
+                    'periphery.html',
                     form=form,
                     result=result,
                     error_message=error_message)
@@ -74,7 +74,7 @@ def search_structure():
             error_message = f'Error: {e}'
 
     return render_template(
-        'search.html',
+        'periphery.html',
         form=form,
         result=None,
         error_message=error_message)
