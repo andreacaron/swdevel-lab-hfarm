@@ -3,12 +3,15 @@
 {% block title %} DISCOVER YOUR IDEAL PERIPHERAL BED & BREAKFAST {% endblock %}
 
 {% block content %}
+<!-- Styles for improved aesthetics -->
 <style>
     /* Overall page styling */
     body {
         background-color: #f8f9fa;
         font-family: Arial, sans-serif;
-        font-size: 16px;
+        font-size: 18px;
+        margin: 0 auto; /* Center the page content */
+        max-width: 1200px; /* Set a maximum width for the content */
     }
 
     /* Common styles */
@@ -18,81 +21,84 @@
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         padding: 20px;
         margin-top: 50px;
+        text-align: left; /* Align text to the left */
     }
 
-    /* Header styling */
     h1 {
         color: #007bff;
-    }
-
-    /* Subtitle styling */
-    p {
-        color: #6c757d;
-        font-size: 16px;
-        line-height: 1.6;
-    }
-
-    /* Form styling */
-    form {
-        margin-top: 20px;
-    }
-
-    /* Result container styling */
-    #resultContainer {
-        margin-top: 30px;
-    }
-
-    /* Result heading styling */
-    h2 {
-        color: #28a745;
-    }
-
-    /* Card styling */
-    .card {
-        background-color: #fff;
-        border: 1px solid rgba(0, 0, 0, 0.125);
-        border-radius: 10px;
+        font-weight: bold;
+        font-size: 40px;
         margin-bottom: 20px;
     }
 
-    /* Card title styling */
-    .card-title {
+    h2, p, .underline-btn, .text-black {
+        color: black !important;
+    }
+
+    p {
+        font-size: 18px;
+        line-height: 1.6;
+        text-align: left; /* Align text to the left */
+    }
+
+    /* New style for the underlined button */
+    .underline-btn {
+        text-decoration: underline;
+        background-color: transparent !important;
+        border: none !important;
+    }
+
+    /* Image container style */
+    .img-container {
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .img-container img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+        transition: transform 0.3s ease;
+    }
+
+    .img-container:hover img {
+        transform: scale(1.1);
+    }
+
+    /* Grid for additional images */
+    .img-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* Three images per row */
+        gap: 20px;
+    }
+
+    .img-grid img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+        transition: transform 0.3s ease;
+    }
+
+    .img-grid img:hover {
+        transform: scale(1.1);
+    }
+
+    /* Green color for titles */
+    .green-title {
+        color: green;
+    }
+
+    /* Blue color for specific text */
+    .blue-text {
         color: #007bff;
     }
 
-    /* Card text styling */
-    .card-text {
-        color: #495057;
-    }
-
-    /* Primary button styling */
-    .btn-primary {
-        background-color: #007bff;
-        border-color: #007bff;
-    }
-
-    /* Primary button hover styling */
-    .btn-primary:hover {
-        background-color: #0056b3;
-        border-color: #0056b3;
-    }
-
-    /* Muted text styling */
-    .text-muted {
-        color: #6c757d;
-    }
-
-    /* Danger text styling */
-    .text-danger {
-        color: #dc3545;
-    }
-
-    /* Underlined text styling */
-    .underline-btn {
-        text-decoration: underline;
-        color: black !important;
-        background-color: transparent !important;
-        border: none !important;
+    /* Italic style for specific text */
+    .italic-text {
+        font-style: italic;
     }
 </style>
 

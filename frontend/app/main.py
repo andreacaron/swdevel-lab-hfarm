@@ -23,6 +23,21 @@ FASTAPI_BACKEND_HOST = 'http://backend'
 # Full backend URL composed by appending '/query/' to the backend host
 BACKEND_URL = f'{FASTAPI_BACKEND_HOST}/query/'
 
+
+# Define a form class for SearchEssentials
+class SearchEssentials(FlaskForm):
+    zona = SelectField('Zone:')
+    ristorante = SelectField('Restaurant:', choices=[
+        ('Vero', 'Yes'),
+        ('Falso', 'No')
+    ])
+    parcheggio = SelectField('Parking', choices=[
+        ('Vero', 'Yes'),
+        ('Falso', 'No')
+    ])
+    submit = SubmitField('Search')
+
+# Define a form class for SearhPeriferia
 class SearchPeriferia(FlaskForm):
     # Field for selecting the desired type of structure
     typology = SelectField('🏠 Desired type of structure:')
@@ -39,8 +54,7 @@ class SearchPeriferia(FlaskForm):
     # Submit button for the search form
     submit = SubmitField('Search')
 
-
-# Define a form class fro SearchForm
+# Define a form class for SearchForm
 class SearchForm(FlaskForm):
     piscina_coperta = SelectField('Indoor Pool:',
                                   choices=[('Vero', 'Si'), ('Falso', 'No')])
@@ -48,7 +62,6 @@ class SearchForm(FlaskForm):
     area_fitness = SelectField('Fitness area:',
                                choices=[('Vero', 'Si'), ('Falso', 'No')])
     submit = SubmitField('Search')
-
 
 # Define a form class for SearchTransport
 class SearchTransport(FlaskForm):
@@ -61,7 +74,6 @@ class SearchTransport(FlaskForm):
                            choices=[('Vero', 'Yes'), ('Falso', 'No')])
     submit = SubmitField('Search')
     
-
 # Define a form class for SearchExtras
 class SearchExtras(FlaskForm):
     """
@@ -250,9 +262,12 @@ def display_results():
 
     return render_template('results.html', result=result)
 
+
+# Defining a route for find_hotels
 @app.route('/find_hotels', methods=['GET', 'POST'])
 def find_hotels():
-    form = SearchTransport()  # Create an instance of the search form
+    # Create an instance of the search form
+    form = SearchTransport()  
     error_message = None
     response = requests.get(f'{FASTAPI_BACKEND_HOST}/get_typology')
     aux = json.loads(response.json())
@@ -269,11 +284,8 @@ def find_hotels():
         try:
             response = requests.get(fastapi_url)
             response.raise_for_status()  # Raise an HTTPError for bad responses
-            data_from_fastapi, error_message = response.json(), None
-        except requests.exceptions.RequestException as e:
-            data_from_fastapi, error_message = None, f'Error: {str(e)}'
 
-        # Render the template with the search form, result, and error message
+# Render the template with the search form, result, and error message
         return render_template("find_hotels.html",
                                form=form,
                                result=data_from_fastapi,
@@ -285,7 +297,51 @@ def find_hotels():
                            error_message=None)
 
 
+# Defining a route for the internal page
+@app.route('/internal_page', methods=['GET', 'POST'])
+def find():
+    form = SearchEssentials()
+    error_message = None
+    response = requests.get(f'{FASTAPI_BACKEND_HOST}/get_zones')
+    aux = json.loads(response.json())
+    form.zona.choices = list(aux.values())
+
+    if form.validate_on_submit():
+        zona = form.zona.data
+        ristorante = form.ristorante.data
+        parcheggio = form.parcheggio.data
+        fastapi_url = (
+            f'{FASTAPI_BACKEND_HOST}/structures?'
+            f'zona={zona}&ristorante={ristorante}&parcheggio={parcheggio}'
+        )
+        try:
+            response = requests.get(fastapi_url)
+            response.raise_for_status()
+            data_from_fastapi, error_message = response.json(), None
+        except requests.exceptions.RequestException as e:
+            data_from_fastapi, error_message = None, f'Error: {str(e)}'
 # Run the Flask app
+        return render_template(
+            "internal_page.html",
+            form=form,
+            result=data_from_fastapi,
+            error_message=error_message
+        )
+
+    return render_template(
+        'internal_page.html',
+        form=form,
+        result=None,
+        error_message=error_message
+    )
+        
+        
+# Define a route for the explanatory homepage
+@app.route('/home_page')
+def home():
+    return render_template('home_page.html')
+
+
 if __name__ == '__main__':
     # Run the Flask application on the
     # specified host and port in debug mode
