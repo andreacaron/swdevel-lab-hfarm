@@ -24,6 +24,7 @@
         text-align: left; /* Align text to the left */
     }
 
+    /* Header styling */
     h1 {
         color: #007bff;
         font-weight: bold;
@@ -31,59 +32,67 @@
         margin-bottom: 20px;
     }
 
-    h2, p, .underline-btn, .text-black {
-        color: black !important;
-    }
-
+    /* Subtitle styling */
     p {
+        color: #6c757d;
         font-size: 18px;
         line-height: 1.6;
-        text-align: left; /* Align text to the left */
+        text-align: left;
     }
 
-    /* New style for the underlined button */
-    .underline-btn {
-        text-decoration: underline;
-        background-color: transparent !important;
-        border: none !important;
-    }
-
-    /* Image container style */
-    .img-container {
-        position: relative;
-        overflow: hidden;
-        display: inline-block;
+    /* Form styling */
+    form {
         margin-top: 20px;
+    }
+
+    /* Result container styling */
+    #resultContainer {
+    margin-top: 30px;
+    }
+
+    /* Result heading styling */
+    h2 {
+        color: #28a745;
+    }
+
+    /* Card styling */
+    .card {
+        background-color: #fff;
+        border: 1px solid rgba(0, 0, 0, 0.125);
+        border-radius: 10px;
         margin-bottom: 20px;
     }
 
-    .img-container img {
-        max-width: 100%;
-        height: auto;
-        border-radius: 10px;
-        transition: transform 0.3s ease;
+    /* Card title styling */
+    .card-title {
+        color: #007bff;
     }
 
-    .img-container:hover img {
-        transform: scale(1.1);
+    /* Card text styling */
+    .card-text {
+        color: #495057;
     }
 
-    /* Grid for additional images */
-    .img-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr); /* Three images per row */
-        gap: 20px;
+    /* Primary button styling */
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
     }
 
-    .img-grid img {
-        max-width: 100%;
-        height: auto;
-        border-radius: 10px;
-        transition: transform 0.3s ease;
+    /* Primary button hover styling */
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
     }
 
-    .img-grid img:hover {
-        transform: scale(1.1);
+    /* Muted text styling */
+    .text-muted {
+        color: #6c757d;
+    }
+
+    /* Danger text styling */
+    .text-danger {
+        color: #dc3545;
     }
 
     /* Green color for titles */

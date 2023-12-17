@@ -4,35 +4,35 @@ Backend module for the FastAPI application.
 This module defines a FastAPI application that serves
 as the backend for the project.
 """
-
 from fastapi import FastAPI, Query
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
-# Pandas and datetime imports
 import pandas as pd
-# Pydantic import
 from pydantic import BaseModel
-# Flask and related imports
-#from flask import Flask, request, jsonify
-#from flask_cors import CORS
-
-# Uvicorn import
 import uvicorn
-
 import app
-from pydantic import BaseModel
+# Flask and related imports
+# from flask import Flask, request, jsonify
+# from flask_cors import CORS
 
-# Create an instance of the FastAPI application
+# Define FastAPI instance
 app = FastAPI()
 
-# Adding CORS middleware to handle cross-origin requests
+# Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
-    allow_headers=["*"]
+    allow_headers=["*"],
 )
+
+
+# Define your FastAPI routes
+@app.get("/")
+async def read_root():
+    return {"Hello": "World"}
+
 
 # Function to parse string values to boolean ('True'/'False'/'Vero'/'Falso')
 def parse_bool(value):
@@ -46,6 +46,7 @@ def parse_bool(value):
         bool: Boolean value of the input string.
     """
     return value.lower() in ['true', 'vero']
+
 
 # Create a DataFrame
 df = pd.read_csv('/app/app/dove-alloggiare.csv')
@@ -75,7 +76,7 @@ def cerca_strutture(piscina_coperta, sauna, area_fitness):
 df_suburb = pd.read_csv('/app/app/dove-alloggiare.csv')
 '''
 Handle missing values (NA) by replacing them
-with empty strings in the DataFrame 
+with empty strings in the DataFrame
 '''
 df_suburb.fillna('', inplace=True)
 
