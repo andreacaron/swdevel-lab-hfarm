@@ -280,7 +280,7 @@ def find_hotels():
     error_message = None
     data_from_fastapi = None
 
-    response = requests.get(f'{FASTAPI_BACKEND_HOST}/get_typologies')
+    response = requests.get(f'{FASTAPI_BACKEND_HOST}/get_typology')
     aux = json.loads(response.json())
     form.selected_typology.choices = list(aux.values())
 

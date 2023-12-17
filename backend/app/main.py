@@ -4,35 +4,39 @@ Backend module for the FastAPI application.
 This module defines a FastAPI application that serves
 as the backend for the project.
 """
+
+# Import FastAPI and related modules
 from fastapi import FastAPI, Query
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
-import pandas as pd
-from pydantic import BaseModel
-import uvicorn
-import app
-# Flask and related imports
-# from flask import Flask, request, jsonify
-# from flask_cors import CORS
 
-# Define FastAPI instance
+# Import Pandas for data manipulation
+import pandas as pd
+
+# Import Pydantic for data validation
+from pydantic import BaseModel
+
+# Import uvicorn for running the FastAPI application
+import uvicorn
+
+# Import the app module (assuming it contains FastAPI application instances or routes)
+import app
+
+# Import BaseModel from Pydantic for defining data models
+from pydantic import BaseModel
+
+
+# Create an instance of the FastAPI application
 app = FastAPI()
 
-# Add CORS middleware
+# Adding CORS middleware to handle cross-origin requests
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
-    allow_headers=["*"],
+    allow_headers=["*"]
 )
-
-
-# Define your FastAPI routes
-@app.get("/")
-async def read_root():
-    return {"Hello": "World"}
-
 
 # Function to parse string values to boolean ('True'/'False'/'Vero'/'Falso')
 def parse_bool(value):
@@ -47,7 +51,6 @@ def parse_bool(value):
     """
     return value.lower() in ['true', 'vero']
 
-
 # Create a DataFrame
 df = pd.read_csv('/app/app/dove-alloggiare.csv')
 # Convert specific fields to strings and handle missing values
@@ -56,6 +59,7 @@ df["CODICE IDENTIFICATIVO"] = df["CODICE IDENTIFICATIVO"].astype(str)
 df.fillna('', inplace=True)
 
 
+# Endpoint to search for structures based on specified criteria
 @app.get('/cerca_strutture')
 def cerca_strutture(piscina_coperta, sauna, area_fitness):
     # Apply filters based on specified criteria
@@ -76,11 +80,12 @@ def cerca_strutture(piscina_coperta, sauna, area_fitness):
 df_suburb = pd.read_csv('/app/app/dove-alloggiare.csv')
 '''
 Handle missing values (NA) by replacing them
-with empty strings in the DataFrame
+with empty strings in the DataFrame 
 '''
 df_suburb.fillna('', inplace=True)
 
 
+# Endpoint to search for suburbs based on specified criteria
 @app.get("/find_structures_suburb")
 # Extract relevant data for the frontend based on specified conditions
 def find_structures_suburb(Typology, English, French, German, Spanish):
@@ -98,6 +103,7 @@ def find_structures_suburb(Typology, English, French, German, Spanish):
     return results
 
 
+# Endpoint to search for structures typologies
 @app.get("/get_typology")
 def get_typology():
     #  Extract unique values of 'TIPOLOGIA' column from DataFrame
@@ -164,6 +170,7 @@ def essential_services_periphery(
     return essential_data
 
 
+# Endpoint to search for typology structures based on specified criteria
 @app.get('/find_hotels_near_transports')
 def find_hotels_near_transports(selected_typology, stazione, autostrada):
     # Filtering data based on the criteria
@@ -172,12 +179,6 @@ def find_hotels_near_transports(selected_typology, stazione, autostrada):
         (df['AUTOSTRADA'] == autostrada)
     filtered_result = df[filter_transports].to_dict(orient='records')
     return filtered_result
-
-
-@app.get("/get_typologies")
-def get_typologies():
-    df_tipologies = df['TIPOLOGIA'].drop_duplicates()
-    return df_tipologies.to_json()
 
 
 # Extracting relevant data for zona, parking and restaurant for the frontend

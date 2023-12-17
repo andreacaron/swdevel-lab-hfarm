@@ -1,3 +1,17 @@
+"""
+Module for Backend Testing:
+
+Objective:
+- Validate the functionality of the backend code.
+
+Expected Outcome:
+- Efficient execution of tests means backend code functions as expected.
+
+To execute tests by running on the terminal (from the app/) the command:
+pytest --cov=app --cov-report=html tests/
+"""
+
+# Importing all necessary libraries
 import os
 import sys
 import pytest
@@ -20,11 +34,6 @@ from app.main import (
     find_structures_suburb
 )
 
-
-"""
-To execute tests by running on the terminal (from the app/) the command:
-pytest --cov=app --cov-report=html tests/
- """
 
 # Creating a test client to interact with the FastAPI app
 client = TestClient(app)
