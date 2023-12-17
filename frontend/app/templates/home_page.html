@@ -1,161 +1,164 @@
-<!-- Styles for improved aesthetics -->
-<style>
-    /* Overall page styling */
-    body {
-        background-color: #f8f9fa;
-        font-family: Arial, sans-serif;
-        font-size: 18px;
-        margin: 0 auto; /* Center the page content */
-        max-width: 1200px; /* Set a maximum width for the content */
-    }
+{% extends 'base.html' %}
 
-    /* Common styles */
-    .container {
-        background-color: #ffffff;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        margin-top: 50px;
-        text-align: left; /* Align text to the left */
-    }
+{% block content %}
+    <!-- Styles for improved aesthetics -->
+    <style>
+        /* Overall page styling */
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            margin: 0 auto; /* Center the page content */
+            max-width: 1200px; /* Set a maximum width for the content */
+        }
 
-    h1 {
-        color: #007bff;
-        font-weight: bold;
-        font-size: 40px;
-        margin-bottom: 20px;
-    }
+        /* Common styles */
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 50px;
+            text-align: left; /* Align text to the left */
+        }
 
-    h2, p, .underline-btn, .text-black {
-        color: black !important;
-    }
+        h1 {
+            color: #007bff;
+            font-weight: bold;
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
 
-    p {
-        font-size: 18px;
-        line-height: 1.6;
-        text-align: left; /* Align text to the left */
-    }
+        h2, p, .underline-btn, .text-black {
+            color: black !important;
+        }
 
-    /* New style for the underlined button */
-    .underline-btn {
-        text-decoration: underline;
-        background-color: transparent !important;
-        border: none !important;
-    }
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+            text-align: left; /* Align text to the left */
+        }
 
-    /* Image container style */
-    .img-container {
-        position: relative;
-        overflow: hidden;
-        display: inline-block;
-        margin-top: 20px;
-        margin-bottom: 20px;
-    }
+        /* New style for the underlined button */
+        .underline-btn {
+            text-decoration: underline;
+            background-color: transparent !important;
+            border: none !important;
+        }
 
-    .img-container img {
-        max-width: 100%;
-        height: auto;
-        border-radius: 10px;
-        transition: transform 0.3s ease;
-    }
+        /* Image container style */
+        .img-container {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
 
-    .img-container:hover img {
-        transform: scale(1.1);
-    }
+        .img-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
 
-    /* Grid for additional images */
-    .img-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr); /* Three images per row */
-        gap: 20px;
-    }
+        .img-container:hover img {
+            transform: scale(1.1);
+        }
 
-    .img-grid img {
-        max-width: 100%;
-        height: auto;
-        border-radius: 10px;
-        transition: transform 0.3s ease;
-    }
+        /* Grid for additional images */
+        .img-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* Three images per row */
+            gap: 20px;
+        }
 
-    .img-grid img:hover {
-        transform: scale(1.1);
-    }
+        .img-grid img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
 
-    /* Green color for titles */
-    .green-title {
-        color: green;
-    }
+        .img-grid img:hover {
+            transform: scale(1.1);
+        }
 
-    /* Blue color for specific text */
-    .blue-text {
-        color: #007bff;
-    }
+        /* Green color for titles */
+        .green-title {
+            color: green;
+        }
 
-    /* Italic style for specific text */
-    .italic-text {
-        font-style: italic;
-    }
-</style>
+        /* Blue color for specific text */
+        .blue-text {
+            color: #007bff;
+        }
 
-<div class="container mt-5">
-    <!-- Blue title and text -->
-    <h1 class="blue-text">Welcome to Our Project!</h1>
+        /* Italic style for specific text */
+        .italic-text {
+            font-style: italic;
+        }
+    </style>
 
-    <!-- Italic text on the left -->
-    <p class="italic-text">
-        We are excited to introduce you to our project designed to help you explore the beautiful region of Veneto in Italy.
-        Discover the best places based on wellness, essentials, extra services, languages, and transportation options.
-    </p>
+    <div class="container mt-5">
+        <!-- Blue title and text -->
+        <h1 class="blue-text">Welcome to Our Project!</h1>
 
-    <!-- Italic text on the left -->
-    <p class="italic-text">
-        Whether you're looking for a relaxing wellness retreat, need to find essential services, or want to explore
-        additional amenities, our platform is here to assist you in making informed decisions.
-    </p>
-
-    <!-- Grid for additional images -->
-    <div class="img-grid">
-        <!-- Additional images -->
-        <div class="img-container">
-            <img style="width: 500px; height: auto;" src="https://th.bing.com/th/id/R.a44cb8a70b374af86691191438f57785?rik=MyQrMjuYsLITBw&pid=ImgRaw&r=0" alt="Image 1">
-        </div>
-        <div class="img-container">
-            <img style="width: 500px; height: auto;" src="https://www.termeabanoterme.it/wp-content/uploads/2020/03/centro-termale-1.jpg" alt="Image 2">
-        </div>
-        <div class="img-container">
-            <img style="width: 500px; height: auto;" src="https://th.bing.com/th/id/R.1e27aab9027817694e6088a16edf3d7f?rik=p5s%2fu9uXhSSlkg&pid=ImgRaw&r=0" alt="Image 3">
-        </div>
-        <div class="img-container">
-            <img style="width: 500px; height: auto;" src="https://vcdn.bergfex.at/images/resized/profiles/detail/d00/7f235f3d066182129d6809681204bd00.jpg?1346080938" alt="Image 4">
-        </div>
-        <!-- Additional images -->
-        <div class="img-container">
-            <img style="width: 500px; height: auto;" src="https://th.bing.com/th/id/OIP.KUs9lj12l5YhnOcgmkhNDwHaE8?rs=1&pid=ImgDetMain" alt="Image 5">
-        </div>
-        <div class="img-container">
-            <img style="width: 500px; height: auto;" src="https://www.valdobbiadene.com/wp-content/uploads/2020/12/Valdobbiadene-Turismo-docg-10-660x420.jpg" alt="Image 6">
-        </div>
-    </div>
-
-    <!-- Text on the left without italics -->
-    <div class="left-text">
-        <h2 class="green-title">How It Works</h2>
-        <p>
-            Customize your preferences, and we'll provide you with tailored results.
-            Start your journey to discovering the gems of Veneto!
+        <!-- Italic text on the left -->
+        <p class="italic-text">
+            We are excited to introduce you to our project designed to help you explore the beautiful region of Veneto in Italy.
+            Discover the best places based on wellness, essentials, extra services, languages, and transportation options.
         </p>
 
-        <!-- Five Points with Emojis -->
-        <div class="mt-3">
-            <h2 class="green-title">Explore Veneto with Us:</h2>
-            <ol>
-                <li class="text-black">Wellness Retreats: Find relaxing wellness retreats in picturesque locations. 🌿</li>
-                <li class="text-black">Essential Services: Locate essential services for a hassle-free stay. ⚙️</li>
-                <li class="text-black">Extra Amenities: Explore additional amenities to enhance your experience. ✨</li>
-                <li class="text-black">Language Options: Discover places based on language preferences. 🗣️</li>
-                <li class="text-black">Transportation: Plan your travel with information on transportation options. 🚗</li>
-            </ol>
+        <!-- Italic text on the left -->
+        <p class="italic-text">
+            Whether you're looking for a relaxing wellness retreat, need to find essential services, or want to explore
+            additional amenities, our platform is here to assist you in making informed decisions.
+        </p>
+
+        <!-- Grid for additional images -->
+        <div class="img-grid">
+            <!-- Additional images -->
+            <div class="img-container">
+                <img style="width: 500px; height: auto;" src="https://th.bing.com/th/id/R.a44cb8a70b374af86691191438f57785?rik=MyQrMjuYsLITBw&pid=ImgRaw&r=0" alt="Image 1">
+            </div>
+            <div class="img-container">
+                <img style="width: 500px; height: auto;" src="https://www.termeabanoterme.it/wp-content/uploads/2020/03/centro-termale-1.jpg" alt="Image 2">
+            </div>
+            <div class="img-container">
+                <img style="width: 500px; height: auto;" src="https://th.bing.com/th/id/R.1e27aab9027817694e6088a16edf3d7f?rik=p5s%2fu9uXhSSlkg&pid=ImgRaw&r=0" alt="Image 3">
+            </div>
+            <div class="img-container">
+                <img style="width: 500px; height: auto;" src="https://vcdn.bergfex.at/images/resized/profiles/detail/d00/7f235f3d066182129d6809681204bd00.jpg?1346080938" alt="Image 4">
+            </div>
+            <!-- Additional images -->
+            <div class="img-container">
+                <img style="width: 500px; height: auto;" src="https://th.bing.com/th/id/OIP.KUs9lj12l5YhnOcgmkhNDwHaE8?rs=1&pid=ImgDetMain" alt="Image 5">
+            </div>
+            <div class="img-container">
+                <img style="width: 500px; height: auto;" src="https://www.valdobbiadene.com/wp-content/uploads/2020/12/Valdobbiadene-Turismo-docg-10-660x420.jpg" alt="Image 6">
+            </div>
         </div>
-        
+
+        <!-- Text on the left without italics -->
+        <div class="left-text">
+            <h2 class="green-title">How It Works</h2>
+            <p>
+                Customize your preferences, and we'll provide you with tailored results.
+                Start your journey to discovering the gems of Veneto!
+            </p>
+
+            <!-- Five Points with Emojis -->
+            <div class="mt-3">
+                <h2 class="green-title">Explore Veneto with Us:</h2>
+                <ol>
+                    <li class="text-black">Wellness Retreats: Find relaxing wellness retreats in picturesque locations. 🌿</li>
+                    <li class="text-black">Essential Services: Locate essential services for a hassle-free stay. ⚙️</li>
+                    <li class="text-black">Extra Amenities: Explore additional amenities to enhance your experience. ✨</li>
+                    <li class="text-black">Language Options: Discover places based on language preferences. 🗣️</li>
+                    <li class="text-black">Transportation: Plan your travel with information on transportation options. 🚗</li>
+                </ol>
+            </div>
+        </div>
     </div>
-</div>
+{% endblock %}

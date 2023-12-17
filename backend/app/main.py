@@ -153,3 +153,21 @@ def essential_services_periphery(
         ].to_dict(orient='records')
 
     return essential_data
+
+
+# Extracting relevant data for zona, parking and restaurant for the frontend
+@app.get("/structures")
+def structures(zona, parcheggio, ristorante):
+    filter = (df['ZONA '] == zona) & \
+             (df['RISTORANTE'] == ristorante) & \
+             (df['PARCHEGGIO'] == parcheggio)
+    final_result = df[filter].to_dict(orient='records')
+
+    return final_result
+
+
+# Getting unique zones for the frontend
+@app.get("/get_zones")
+def get_zones():
+    zones_df = df['ZONA '].drop_duplicates()
+    return zones_df.to_json()

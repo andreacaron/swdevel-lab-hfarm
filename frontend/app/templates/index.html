@@ -1,24 +1,102 @@
 {% extends 'base.html' %}
 
-{% block title %} Homepage of Frontend {% endblock %}
-
 {% block content %}
+    <!-- Styles for improved aesthetics -->
     <style>
-        /* Utilizziamo gli stessi stili di colori e font dalla pagina di ricerca HTML */
+        /* Overall page styling */
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            margin: 0 auto; /* Center the page content */
+            max-width: 1200px; /* Set a maximum width for the content */
+        }
+
+        /* Common styles */
         .container {
             background-color: #ffffff;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
             margin-top: 50px;
+            text-align: left; /* Align text to the left */
         }
 
         h1 {
             color: #007bff;
+            font-weight: bold;
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+
+        h2, p, .underline-btn, .text-black {
+            color: black !important;
         }
 
         p {
-            color: #6c757d;
+            font-size: 18px;
+            line-height: 1.6;
+            text-align: left; /* Align text to the left */
+        }
+
+        /* New style for the underlined button */
+        .underline-btn {
+            text-decoration: underline;
+            background-color: transparent !important;
+            border: none !important;
+        }
+
+        /* Image container style */
+        .img-container {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .img-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .img-container:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Grid for additional images */
+        .img-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* Three images per row */
+            gap: 20px;
+        }
+
+        .img-grid img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .img-grid img:hover {
+            transform: scale(1.1);
+        }
+
+        /* Green color for titles */
+        .green-title {
+            color: green;
+        }
+
+        /* Blue color for specific text */
+        .blue-text {
+            color: #007bff;
+        }
+
+        /* Italic style for specific text */
+        .italic-text {
+            font-style: italic;
         }
     </style>
 
@@ -33,6 +111,4 @@
             <p>Sebbar Ilhame 891944</p>
         </div>
     </div>
-
 {% endblock %}
-
