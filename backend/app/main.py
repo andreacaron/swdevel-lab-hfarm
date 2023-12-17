@@ -4,11 +4,15 @@ from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 # Import pandas for data manipulation and analysis
 import pandas as pd
+from fastapi.responses import JSONResponse
+from datetime import datetime
 from pydantic import BaseModel 
-from flask import Flask, request, jsonify 
+from flask import Flask, request, jsonify
+import uvicorn
 
 
 
+# Create an instance of the FastAPI application
 app = FastAPI()
 
 # Create a DataFrame
@@ -30,14 +34,6 @@ def cerca_strutture(piscina_coperta,sauna,area_fitness):
     # Return the filtered results
     return risultato_filtrato
 
-
-
-
-# Import uvicorn for running the FastAPI application
-import uvicorn
-
-# Create an instance of the FastAPI application
-app = FastAPI()
 
 # Read CSV data into a pandas DataFrame
 df_suburb = pd.read_csv('/app/app/dove-alloggiare.csv')
@@ -63,7 +59,6 @@ def find_structures_suburb(Typology, English, French, German, Spanish):
     results = df_suburb[conditions].to_dict(orient='records')
     return results
 
-
 @app.get("/get_typology")
 def get_typology():
     #  Extract unique values of 'TIPOLOGIA' column from DataFrame
@@ -71,7 +66,3 @@ def get_typology():
     # Convert the unique values to JSON format
     return df_tipologie.to_json()
 
-
-if __name__ == "__main__":
-    # Start the FastAPI server using uvicorn on host 127.0.0.1 and port 8081
-    uvicorn.run(app, host="127.0.0.1", port=8081)

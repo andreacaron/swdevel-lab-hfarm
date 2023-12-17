@@ -93,7 +93,7 @@
         <p>Explore accommodations near the fairground featuring an indoor pool, sauna, and fitness area for the ultimate rejuvenating stay.</p>
 
         <!-- WTForms Form to get input from the user -->
-        <form method="POST" action="">
+        <form method="POST" action="{{ url_for('search_structure_search') }}">
             {{ form.csrf_token }}
             <div class="form-group">
                 {{ form.piscina_coperta.label }}

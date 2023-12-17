@@ -19,7 +19,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key'
 
 
-class SearchForm(FlaskForm):
+class SearchPeriferia(FlaskForm):
     # Field for selecting the desired type of structure
     typology = SelectField('🏠 Desired type of structure:')
     # Fields for language selection with choices
@@ -36,6 +36,12 @@ class SearchForm(FlaskForm):
     submit = SubmitField('Search')
 
 
+class SearchForm(FlaskForm):
+    piscina_coperta = SelectField('Indoor Pool:',  choices=[('Vero', 'Si'), ('Falso', 'No')])
+    sauna = SelectField('Sauna:', choices=[('Vero', 'Si'), ('Falso', 'No')])
+    area_fitness = SelectField('Fitness area:',  choices=[('Vero', 'Si'), ('Falso', 'No')])
+    submit = SubmitField('Search')
+    
 # URL of the FastAPI backend host
 FASTAPI_BACKEND_HOST = 'http://backend'
 # Full backend URL composed by appending '/query/' to the backend host
@@ -43,10 +49,10 @@ BACKEND_URL = f'{FASTAPI_BACKEND_HOST}/query/'
 
 
 @app.route('/periferia', methods=['GET', 'POST'])
-def search_structure():
+def search_structure_periferia():
 
     # Create a form instance
-    form = SearchForm()
+    form = SearchPeriferia()
 
     # Initialize error message
     error_message = None
@@ -61,7 +67,7 @@ def search_structure():
     # Check if form is submitted and valid
     if form.validate_on_submit():
         # Extract form data
-        type_structure = form.typology.data
+        typology = form.typology.data
         english = form.english.data
         french = form.french.data
         german = form.german.data
@@ -69,7 +75,7 @@ def search_structure():
         # Construct FastAPI backend URL with form data
         fastapi_url = (
             f'{FASTAPI_BACKEND_HOST}/find_structures_suburb?'
-            f'Typology={type_structure}&'
+            f'Typology={typology}&'
             f'English={english}&'
             f'French={french}&'
             f'German={german}&'
@@ -96,9 +102,14 @@ def search_structure():
                            error_message=error_message)
 
 
+# Configuration for the FastAPI backend URL
+FASTAPI_BACKEND_HOST = 'http://backend'  # Replace with the actual URL of your FastAPI backend
+BACKEND_URL = f'{FASTAPI_BACKEND_HOST}/query/'
+
+
 
 @app.route('/search', methods=['GET', 'POST'])
-def search_structure():
+def search_structure_search():
     # Create an instance of the SearchForm class
     form = SearchForm()
     # Initialize error_message variable
@@ -125,8 +136,10 @@ def search_structure():
     # Render the search.html template with default values
     return render_template('search.html', form=form, result=None, error_message=error_message)
 
-
-
+# Define a route for the Animal Crossers page
+@app.route('/index')
+def index():
+    return render_template('index.html')
 
 if __name__ == '__main__':
     # Run the Flask application on the
