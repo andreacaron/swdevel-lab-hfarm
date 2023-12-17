@@ -18,6 +18,10 @@ app = Flask(__name__)
 # Configure the Flask app with a secret key for form security
 app.config['SECRET_KEY'] = 'your_secret_key'
 
+# URL of the FastAPI backend host
+FASTAPI_BACKEND_HOST = 'http://backend'
+# Full backend URL composed by appending '/query/' to the backend host
+BACKEND_URL = f'{FASTAPI_BACKEND_HOST}/query/'
 
 class SearchPeriferia(FlaskForm):
     # Field for selecting the desired type of structure
@@ -42,10 +46,6 @@ class SearchForm(FlaskForm):
     area_fitness = SelectField('Fitness area:',  choices=[('Vero', 'Si'), ('Falso', 'No')])
     submit = SubmitField('Search')
     
-# URL of the FastAPI backend host
-FASTAPI_BACKEND_HOST = 'http://backend'
-# Full backend URL composed by appending '/query/' to the backend host
-BACKEND_URL = f'{FASTAPI_BACKEND_HOST}/query/'
 
 
 @app.route('/periferia', methods=['GET', 'POST'])
@@ -156,7 +156,8 @@ class SearchExtras(FlaskForm):
 
     submit = SubmitField('periphery')
 
-
+# Feature 3, Frontend code
+    
 @app.route('/periphery', methods=['GET', 'POST'])
 def search_structure_periphery():
     """

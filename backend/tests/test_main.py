@@ -11,7 +11,6 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 # Now you can do the relative import
 from app.main import app, essential_services_periphery, cerca_strutture, df_suburb, find_structures_suburb
 
-# Create a TestClient instance for testing API endpoints
 # Skipping performance tests
 pytest.mark.performance = pytest.mark.skip(reason="Performance tests skipped")
 

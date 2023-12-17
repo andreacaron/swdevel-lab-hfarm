@@ -1,19 +1,47 @@
-# Import FastAPI framework for building APIs quickly
-from fastapi import FastAPI
-# Import JSONResponse for returning custom JSON responses
+# FastAPI imports
+from fastapi import FastAPI, Query
 from fastapi.responses import JSONResponse
-# Import pandas for data manipulation and analysis
-import pandas as pd
-from fastapi.responses import JSONResponse
-from datetime import datetime
-from pydantic import BaseModel 
-from flask import Flask, request, jsonify
-import uvicorn
+from fastapi.middleware.cors import CORSMiddleware
 
+# Pandas and datetime imports
+import pandas as pd
+from datetime import datetime
+
+# Pydantic import
+from pydantic import BaseModel
+
+# Flask and related imports
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+
+# Uvicorn import
+import uvicorn
 
 
 # Create an instance of the FastAPI application
 app = FastAPI()
+
+# Adding CORS middleware to handle cross-origin requests
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
+
+# Function to parse string values to boolean ('True'/'False'/'Vero'/'Falso')
+def parse_bool(value):
+    """
+    Parses string values to boolean.
+
+    Args:
+        value (str): The string value to be parsed.
+
+    Returns:
+        bool: Boolean value of the input string.
+    """
+    return value.lower() in ['true', 'vero']
 
 # Create a DataFrame
 df = pd.read_csv('/app/app/dove-alloggiare.csv')
@@ -37,9 +65,10 @@ def cerca_strutture(piscina_coperta,sauna,area_fitness):
 
 # Read CSV data into a pandas DataFrame
 df_suburb = pd.read_csv('/app/app/dove-alloggiare.csv')
-
-''' Handle missing values (NA) by replacing them
-with empty strings in the DataFrame '''
+'''
+Handle missing values (NA) by replacing them
+with empty strings in the DataFrame 
+'''
 df_suburb.fillna('', inplace=True)
 
 
@@ -59,35 +88,13 @@ def find_structures_suburb(Typology, English, French, German, Spanish):
     results = df_suburb[conditions].to_dict(orient='records')
     return results
 
+
 @app.get("/get_typology")
 def get_typology():
     #  Extract unique values of 'TIPOLOGIA' column from DataFrame
     df_tipologie = df_suburb['TIPOLOGIA'].drop_duplicates()
     # Convert the unique values to JSON format
     return df_tipologie.to_json()
-
-
-# Adding CORS middleware to handle cross-origin requests
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"]
-)
-
-# Function to parse string values to boolean ('True'/'False'/'Vero'/'Falso')
-def parse_bool(value):
-    """
-    Parses string values to boolean.
-
-    Args:
-        value (str): The string value to be parsed.
-
-    Returns:
-        bool: Boolean value of the input string.
-    """
-    return value.lower() in ['true', 'vero']
 
 
 # Function to read and filter B&B based on user-selected amenities

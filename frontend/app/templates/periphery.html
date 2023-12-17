@@ -109,7 +109,6 @@
     <!-- WTForms Form to get input from the user -->
     <form method="POST" action="/periphery" class="mb-4">
         {{ form.hidden_tag() }}
-        {{ form.hidden_tag() }}
         <div class="row">
             <div class="col-md-6 mb-3">
                 <p>
@@ -154,9 +153,9 @@
                     }
                 </script>
             </div>
-            <div class="col-md-12 text-center">
-                {{ form.submit(class="btn btn-primary") }}
-            </div>
+        <!-- Button to initiate the search -->
+        <div class="col-md-12 text-center">
+            <button type="submit" class="btn btn-primary">Search</button>
         </div>
     </form>
 
