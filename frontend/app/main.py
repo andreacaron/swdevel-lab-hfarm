@@ -37,6 +37,7 @@ class SearchEssentials(FlaskForm):
     ])
     submit = SubmitField('Search')
 
+
 # Define a form class for SearhPeriferia
 class SearchPeriferia(FlaskForm):
     # Field for selecting the desired type of structure
@@ -54,6 +55,7 @@ class SearchPeriferia(FlaskForm):
     # Submit button for the search form
     submit = SubmitField('Search')
 
+
 # Define a form class for SearchForm
 class SearchForm(FlaskForm):
     piscina_coperta = SelectField('Indoor Pool:',
@@ -63,6 +65,7 @@ class SearchForm(FlaskForm):
                                choices=[('Vero', 'Si'), ('Falso', 'No')])
     submit = SubmitField('Search')
 
+
 # Define a form class for SearchTransport
 class SearchTransport(FlaskForm):
     # SelectField for choosing typology
@@ -70,11 +73,13 @@ class SearchTransport(FlaskForm):
     # SelectField for choosing train station with choices
     stazione = SelectField('🚅 Train station:',
                            choices=[('Vero', 'Yes'), ('Falso', 'No')])
+
     # SelectField for choosing highway with choices
     autostrada = SelectField('🛣 Highway:',
-                           choices=[('Vero', 'Yes'), ('Falso', 'No')])
+                             choices=[('Vero', 'Yes'), ('Falso', 'No')])
     submit = SubmitField('Search')
-    
+
+
 # Define a form class for SearchExtras
 class SearchExtras(FlaskForm):
     """
@@ -98,6 +103,7 @@ class SearchExtras(FlaskForm):
     submit = SubmitField('periphery')
 
 
+# Define a route for Suburbs Explorer
 @app.route('/periferia', methods=['GET', 'POST'])
 def search_structure_periferia():
     # Create a form instance
@@ -108,7 +114,7 @@ def search_structure_periferia():
 
     # Fetch typology choices from FastAPI backend
     response = requests.get(f'{FASTAPI_BACKEND_HOST}/get_typology')
-    
+
     # Parse JSON response and set typology choices in the form
     aux = json.loads(response.json())
     form.typology.choices = list(aux.values())
@@ -151,6 +157,7 @@ def search_structure_periferia():
                            error_message=error_message)
 
 
+# Define a route for the Wellness Exploratory
 @app.route('/search', methods=['GET', 'POST'])
 def search_structure_search():
     # Create an instance of the SearchForm class
@@ -189,13 +196,14 @@ def search_structure_search():
                            result=None,
                            error_message=error_message)
 
+
 # Define a route for the Animal Crossers page
 @app.route('/index')
 def index():
     return render_template('index.html')
 
 
-# Feature 3, Frontend code    
+# Define a route for peripherical B&b
 @app.route('/periphery', methods=['GET', 'POST'])
 def search_structure_periphery():
     """
@@ -240,6 +248,7 @@ def search_structure_periphery():
         error_message=error_message)
 
 
+# Ensures route opens for peripherical B&b
 @app.route('/display_results', methods=['GET'])
 def display_results():
     """
@@ -264,7 +273,7 @@ def display_results():
     return render_template('results.html', result=result)
 
 
-# Defining a route for find_hotels
+# Defining a route for Transports Exploratory
 @app.route('/find_hotels', methods=['GET', 'POST'])
 def find_hotels():
     form = SearchTransport()
@@ -281,7 +290,9 @@ def find_hotels():
         autostrada = form.autostrada.data
         fastapi_url = (
             f'{FASTAPI_BACKEND_HOST}/find_hotels_near_transports?'
-            f'selected_typology={selected_typology}&stazione={stazione}&autostrada={autostrada}'
+            f'selected_typology={selected_typology}&'
+            f'stazione={stazione}&'
+            f'autostrada={autostrada}'
         )
 
         try:
@@ -299,7 +310,7 @@ def find_hotels():
     )
 
 
-# Defining a route for the internal page
+# Defining a route for the Essentials
 @app.route('/internal_page', methods=['GET', 'POST'])
 def find():
     form = SearchEssentials()
@@ -336,8 +347,8 @@ def find():
         result=None,
         error_message=error_message
     )
-        
-        
+
+
 # Define a route for the explanatory homepage
 @app.route('/home_page')
 def home():
