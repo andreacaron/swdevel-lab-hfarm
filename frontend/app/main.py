@@ -284,6 +284,8 @@ def find_hotels():
         try:
             response = requests.get(fastapi_url)
             response.raise_for_status()  # Raise an HTTPError for bad responses
+        except requests.exceptions.RequestException as e:
+            data_from_fastapi, error_message = None, f'Error: {str(e)}'
 
 # Render the template with the search form, result, and error message
         return render_template("find_hotels.html",
