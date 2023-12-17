@@ -9,197 +9,77 @@ from flask import Flask, render_template, request
 import requests
 import json
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, SelectField, SelectField
+from wtforms import StringField, SubmitField, SelectField, SelectFieldte
 
-
-# Create a Flask web application instance
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'your_secret_key'  # Replace with a secure secret key
 
-# Configure the Flask app with a secret key for form security
-app.config['SECRET_KEY'] = 'your_secret_key'
-
-# URL of the FastAPI backend host
-FASTAPI_BACKEND_HOST = 'http://backend'
-# Full backend URL composed by appending '/query/' to the backend host
+# Configuration for the FastAPI backend URL
+FASTAPI_BACKEND_HOST = 'http://backend'  # Replace with the actual URL of your FastAPI backend
 BACKEND_URL = f'{FASTAPI_BACKEND_HOST}/query/'
 
-class SearchPeriferia(FlaskForm):
-    # Field for selecting the desired type of structure
-    typology = SelectField('🏠 Desired type of structure:')
-    # Fields for language selection with choices
-    # 'Si' for 'Vero' and 'No' for 'Falso'
-    english = SelectField('🇬🇧 English language:',
-                          choices=[('Vero', 'Si'), ('Falso', 'No')])
-    french = SelectField('🇫🇷 French language:',
-                         choices=[('Vero', 'Si'), ('Falso', 'No')])
-    german = SelectField('🇩🇪 German language:',
-                         choices=[('Vero', 'Si'), ('Falso', 'No')])
-    spanish = SelectField('🇪🇸 Spanish language:',
-                          choices=[('Vero', 'Si'), ('Falso', 'No')])
-    # Submit button for the search form
-    submit = SubmitField('Search')
+
+class QueryForm(FlaskForm):
+    person_name = StringField('Person Name:')
+    submit = SubmitField('Get Birthday from FastAPI Backend')
 
 
-class SearchForm(FlaskForm):
-    piscina_coperta = SelectField('Indoor Pool:',  choices=[('Vero', 'Si'), ('Falso', 'No')])
-    sauna = SelectField('Sauna:', choices=[('Vero', 'Si'), ('Falso', 'No')])
-    area_fitness = SelectField('Fitness area:',  choices=[('Vero', 'Si'), ('Falso', 'No')])
-    submit = SubmitField('Search')
-    
-
-
-@app.route('/periferia', methods=['GET', 'POST'])
-def search_structure_periferia():
-
-    # Create a form instance
-    form = SearchPeriferia()
-
-    # Initialize error message
-    error_message = None
-
-    # Fetch typology choices from FastAPI backend
-    response = requests.get(f'{FASTAPI_BACKEND_HOST}/get_typology')
-
-    # Parse JSON response and set typology choices in the form
-    aux = json.loads(response.json())
-    form.typology.choices = list(aux.values())
-
-    # Check if form is submitted and valid
-    if form.validate_on_submit():
-        # Extract form data
-        typology = form.typology.data
-        english = form.english.data
-        french = form.french.data
-        german = form.german.data
-        spanish = form.spanish.data
-        # Construct FastAPI backend URL with form data
-        fastapi_url = (
-            f'{FASTAPI_BACKEND_HOST}/find_structures_suburb?'
-            f'Typology={typology}&'
-            f'English={english}&'
-            f'French={french}&'
-            f'German={german}&'
-            f'Spanish={spanish}'
-        )
-        try:
-            # Make a request to FastAPI backend
-            response = requests.get(fastapi_url)
-            response.raise_for_status()
-            # Raise an HTTPError for bad responses
-            data_from_fastapi, error_message = response.json(), None
-        except requests.exceptions.RequestException as e:
-            # Handle request exceptions
-            data_from_fastapi, error_message = None, f'Error: {str(e)}'
-
-        # Render the template with the result or an error message
-        return render_template("periferia.html", form=form,
-                               result=data_from_fastapi,
-                               error_message=error_message)
-
-    # Render the template with the form
-    return render_template('periferia.html', form=form,
-                           result=None,
-                           error_message=error_message)
-
-
-@app.route('/search', methods=['GET', 'POST'])
-def search_structure_search():
-    # Create an instance of the SearchForm class
-    form = SearchForm()
-    # Initialize error_message variable
-    error_message = None 
-    # Check if the form is submitted and valid
-    if form.validate_on_submit():
-        # Retrieve data from the form
-        sauna = form.sauna.data
-        piscina = form.piscina_coperta.data
-        fitness = form.area_fitness.data
-        # Construct the FastAPI backend URL with user input
-        fastapi_url = f'{FASTAPI_BACKEND_HOST}/cerca_strutture?piscina_coperta={piscina}&sauna={sauna}&area_fitness={fitness}'
-        try:
-            # Make a GET request to the FastAPI backend
-            response = requests.get(fastapi_url)
-            response.raise_for_status()  # Raise an HTTPError for bad responses
-            # Parse JSON data from the FastAPI response
-            data_from_fastapi, error_message = response.json(), None
-        except requests.exceptions.RequestException as e:
-            # Handle request exceptions and capture error message
-            data_from_fastapi, error_message = None, f'Error: {str(e)}'
-        # Render the search.html template with the obtained data
-        return render_template("search.html", form=form, result=data_from_fastapi, error_message=error_message)
-    # Render the search.html template with default values
-    return render_template('search.html', form=form, result=None, error_message=error_message)
-
-# Define a route for the Animal Crossers page
-@app.route('/index')
+@app.route('/')
 def index():
-    return render_template('index.html')
-
-class SearchExtras(FlaskForm):
     """
-    Defines a search form using Flask-WTF.
-
-    Attributes:
-        aria_condizionata : SelectField for Air Conditioning input.
-        animali_ammessi : SelectField for Pets Allowed input.
-        submit : Submit button for the search form.
-    """
-    aria_condizionata_choices = [('Vero', 'Yes'), ('Falso', 'No')]
-    animali_ammessi_choices = [('Vero', 'Yes'), ('Falso', 'No')]
-
-    aria_condizionata = SelectField(
-        'Air Conditioning:',
-        choices=aria_condizionata_choices)
-    animali_ammessi = SelectField(
-        'Pets Allowed:',
-        choices=animali_ammessi_choices)
-
-    submit = SubmitField('periphery')
-
-# Feature 3, Frontend code
-    
-@app.route('/periphery', methods=['GET', 'POST'])
-def search_structure_periphery():
-    """
-    Route for handling search functionality.
+    Render the index page.
 
     Returns:
-        str: Rendered HTML content for the search page.
+        str: Rendered HTML content for the index page.
     """
-    form = SearchExtras(request.form)
-    error_message = None
-    result = None
+    # Fetch the date from the backend
+    date_from_backend = fetch_date_from_backend()
+    return render_template('index.html', date_from_backend=date_from_backend)
+
+def fetch_date_from_backend():
+    """
+    Function to fetch the current date from the backend.
+
+    Returns:
+        str: Current date in ISO format.
+    """
+    backend_url = 'http://backend/get-date'  # Adjust the URL based on your backend configuration
+    try:
+        response = requests.get(backend_url)
+        response.raise_for_status()  # Raise an HTTPError for bad responses
+        return response.json().get('date', 'Date not available')
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching date from backend: {e}")
+        return 'Date not available'
+
+
+@app.route('/internal', methods=['GET', 'POST'])
+def internal():
+    """
+    Render the internal page.
+
+    Returns:
+        str: Rendered HTML content for the index page.
+    """
+    form = QueryForm()
+    error_message = None  # Initialize error message
 
     if form.validate_on_submit():
-        aria_condizionata = form.aria_condizionata.data
-        animali_ammessi = form.animali_ammessi.data
+        person_name = form.person_name.data
 
-        fastapi_url = (
-            f'{FASTAPI_BACKEND_HOST}/essential_services_periphery?'
-            f'aria_condizionata={aria_condizionata}&'
-            f'animali_ammessi={animali_ammessi}')
+        # Make a GET request to the FastAPI backend
+        fastapi_url = f'{FASTAPI_BACKEND_HOST}/query/{person_name}'
+        response = requests.get(fastapi_url)
 
-        try:
-            response = requests.get(fastapi_url)
+        if response.status_code == 200:
+            # Extract and display the result from the FastAPI backend
+            data = response.json()
+            result = data.get('birthday', f'Error: Birthday not available for {person_name}')
+            return render_template('internal.html', form=form, result=result, error_message=error_message)
+        else:
+            error_message = f'Error: Unable to fetch birthday for {person_name} from FastAPI Backend'
 
-            if response.status_code == 200:
-                result = response.json()
-                return render_template(
-                    'periphery.html',
-                    form=form,
-                    result=result,
-                    error_message=error_message)
-            else:
-                error_message = 'Error fetching data from backend'
-
-        except requests.RequestException as e:
-            error_message = f'Error: {e}'
-
-    return render_template(
-        'periphery.html',
-        form=form,
-        result=None,
-        error_message=error_message)
+    return render_template('internal.html', form=form, result=None, error_message=error_message)
 
 
 @app.route('/display_results', methods=['GET'])
@@ -226,6 +106,4 @@ def display_results():
     return render_template('results.html', result=result)
 
 if __name__ == '__main__':
-    # Run the Flask application on the
-    # specified host and port in debug mode
     app.run(host='0.0.0.0', port=80, debug=True)

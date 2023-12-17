@@ -1,5 +1,6 @@
 # FastAPI imports
 from fastapi import FastAPI, Query
+from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -19,6 +20,9 @@ import uvicorn
 
 
 # Create an instance of the FastAPI application
+import pandas as pd
+import json
+
 app = FastAPI()
 
 # Adding CORS middleware to handle cross-origin requests
@@ -153,3 +157,4 @@ def essential_services_periphery(
         ].to_dict(orient='records')
 
     return essential_data
+
