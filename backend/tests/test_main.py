@@ -4,8 +4,6 @@ import pytest
 from fastapi.testclient import TestClient
 import pandas as pd
 import unittest
-# Now you can do the relative import
-from app.main import app, essential_services_periphery, cerca_strutture, df_suburb, find_structures_suburb
 
 # Skipping performance tests
 pytest.mark.performance = pytest.mark.skip(reason="Performance tests skipped")
@@ -13,9 +11,18 @@ pytest.mark.performance = pytest.mark.skip(reason="Performance tests skipped")
 # Add the project root to the sys.path
 sys.path.insert(0, os.path.abspath(
     os.path.join(os.path.dirname(__file__), '..')))
+# Import statements
+from app.main import (
+    app,
+    essential_services_periphery,
+    cerca_strutture,
+    df_suburb,
+    find_structures_suburb
+)
+
 
 """
-Execute this test by running on the terminal (from the app/) the command:
+To execute tests by running on the terminal (from the app/) the command:
 pytest --cov=app --cov-report=html tests/
  """
 
@@ -112,19 +119,18 @@ class TestSearchStructures(unittest.TestCase):
 
 
 class TestApp(unittest.TestCase):
-
-def test_suburb_albergo_lang():
-    # Test Albergo all languages
-    response = client.get("/find_structures_suburb", params={
-        'Typology': 'ALBERGO',
-        'English': 'True',
-        'French': 'True',
-        'German': 'True',
-        'Spanish': 'True'
-    })
-    assert response.status_code == 200
-    # Check if the reponse is a list
-    assert isinstance(response.json(), list)
+    def test_suburb_albergo_lang():
+        # Test Albergo all languages
+        response = client.get("/find_structures_suburb", params={
+            'Typology': 'ALBERGO',
+            'English': 'True',
+            'French': 'True',
+            'German': 'True',
+            'Spanish': 'True'
+        })
+        assert response.status_code == 200
+        # Check if the reponse is a list
+        assert isinstance(response.json(), list)
 
 
 def test_suburb_albergo_nolang():
@@ -269,7 +275,7 @@ class TestSearchStructures(unittest.TestCase):
         self.assertIsInstance(result, list)
         self.assertEqual(len(result), 0)
 
-# TEST 1
+
 def test_valid_entries_and_input():
     """
     Checks if the function handles known valid inputs properly.
@@ -285,7 +291,6 @@ def test_valid_entries_and_input():
     assert len(result_valid_input) >= 0
 
 
-# TEST 2
 def test_invalid_entries_and_input():
     """
     Validates the behavior when known invalid inputs are provided.
@@ -300,7 +305,6 @@ def test_invalid_entries_and_input():
     assert len(result_invalid_input) == 0
 
 
-# TEST 3
 def test_edge_and_boolean_cases():
     """
     Examines the behavior of the function with edge input and boolean values.
@@ -317,7 +321,6 @@ def test_edge_and_boolean_cases():
     assert isinstance(result_false_true, list)
 
 
-# TEST 4
 def test_corner_and_specific_cases():
     """
     Validates the handling of corner cases by the function.
@@ -332,7 +335,6 @@ def test_corner_and_specific_cases():
     assert isinstance(result_specific_corner, list)
 
 
-# TEST 5
 def test_empty_and_extreme_values():
     """
     Verifies the behavior when empty strings and extreme inputs are provided.
@@ -347,7 +349,6 @@ def test_empty_and_extreme_values():
     assert len(result_extreme_values) < 1000
 
 
-# TEST 6
 def test_data_format():
     """
     Ensures that the returned data has specific keys as expected.
@@ -362,7 +363,6 @@ def test_data_format():
     assert all('EMAIL' in item for item in result_data_format)
 
 
-# TEST 7
 def test_specific_scenario():
     """
     Test a specific scenario to ensure proper handling
@@ -373,7 +373,6 @@ def test_specific_scenario():
     assert len(result_specific) >= 0
 
 
-# TEST 8
 @pytest.mark.performance
 def test_performance():
     """
@@ -383,7 +382,6 @@ def test_performance():
     assert len(result_performance) < 10000
 
 
-# TEST 9
 def test_mixed_validations_valid():
     """
     Validates mixed inputs and expected outputs for valid cases.
@@ -394,7 +392,6 @@ def test_mixed_validations_valid():
     assert all(isinstance(item, dict) for item in result_mixed_valid)
 
 
-# TEST 10
 def test_mixed_validations_invalid():
     """
     Validates mixed inputs and expected outputs for invalid cases.
@@ -404,7 +401,6 @@ def test_mixed_validations_invalid():
     assert result_mixed_invalid == []
 
 
-# TEST 11
 def test_no_filters():
     """
     Evaluates behavior when no filters are applied.
@@ -415,7 +411,6 @@ def test_no_filters():
     assert isinstance(result_no_filters, list)
 
 
-# TEST 12
 def test_different_inputs_and_lengths():
     """
     Test different inputs and checks the lengths of the results.
@@ -442,7 +437,6 @@ def test_different_inputs_and_lengths():
             f"Test failed for inputs: {input1}, {input2}")
 
 
-# TESTS Feature_2
 class TestApp(unittest.TestCase):
     def setUp(self):
         self.client = TestClient(app)
@@ -543,7 +537,7 @@ class TestApp(unittest.TestCase):
         self.assertIsInstance(result, list)
 
     def test_find_resort_with_fitness_area(self):
-        # Typology 'Holiday apartments' with neither train station either highway
+        # 'Holiday apartments' with neither train station either highway
         response = self.client.get("/find_hotels_near_transports", params={
             "selected_typology": "APPARTAMENTI_VACANZE",
             "stazione": "No",
@@ -567,6 +561,7 @@ class TestApp(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
 
 # Test to check if the endpoint returns data for valid filters
 # Assuming there is data for the specified filters
@@ -811,9 +806,3 @@ def test_zone_venezia():
     )
     assert response.status_code == 200
     assert isinstance(response.json(), list)
-
-"""
-Execute this test by running on the terminal (from the app/) the command:
-pytest --cov=app --cov-report=html tests/
-
-"""

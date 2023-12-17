@@ -267,10 +267,10 @@ def display_results():
 # Defining a route for find_hotels
 @app.route('/find_hotels', methods=['GET', 'POST'])
 def find_hotels():
-    # Create an instance of the search form
-    form = SearchTransport()  
+    form = SearchTransport()
     error_message = None
     data_from_fastapi = None
+
     response = requests.get(f'{FASTAPI_BACKEND_HOST}/get_typologies')
     aux = json.loads(response.json())
     form.selected_typology.choices = list(aux.values())
@@ -282,25 +282,19 @@ def find_hotels():
         fastapi_url = (
             f'{FASTAPI_BACKEND_HOST}/find_hotels_near_transports?'
             f'selected_typology={selected_typology}&stazione={stazione}&autostrada={autostrada}'
-            )
+        )
+
         try:
             response = requests.get(fastapi_url)
             response.raise_for_status()  # Raise an HTTPError for bad responses
+            data_from_fastapi = response.json()
         except requests.exceptions.RequestException as e:
-             data_from_fastapi, error_message = None, f'Error: {str(e)}'
-
-# Run the Flask app
-        return render_template(
-            "find_hotels.html",
-            form=form,
-            result=data_from_fastapi,
-            error_message=error_message
-        )
+            error_message = f'Error: {str(e)}'
 
     return render_template(
         'find_hotels.html',
         form=form,
-        result=None,
+        result=data_from_fastapi,
         error_message=error_message
     )
 
