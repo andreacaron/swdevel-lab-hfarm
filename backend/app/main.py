@@ -1,10 +1,22 @@
+<<<<<<< HEAD
 # FastAPI imports
 from fastapi import FastAPI, Query
+=======
+"""
+Backend module for the FastAPI application.
+
+This module defines a FastAPI application that serves
+as the backend for the project.
+"""
+
+from fastapi import FastAPI
+>>>>>>> Feature_2
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 
 # Pandas and datetime imports
 import pandas as pd
+<<<<<<< HEAD
 from datetime import datetime
 
 # Pydantic import
@@ -17,9 +29,14 @@ from flask_cors import CORS
 # Uvicorn import
 import uvicorn
 
+=======
+import app
+from pydantic import BaseModel
+>>>>>>> Feature_2
 
 # Create an instance of the FastAPI application
 app = FastAPI()
+<<<<<<< HEAD
 
 # Adding CORS middleware to handle cross-origin requests
 app.add_middleware(
@@ -43,6 +60,8 @@ def parse_bool(value):
     """
     return value.lower() in ['true', 'vero']
 
+=======
+>>>>>>> Feature_2
 # Create a DataFrame
 df = pd.read_csv('/app/app/dove-alloggiare.csv')
 # Convert specific fields to strings and handle missing values
@@ -50,19 +69,24 @@ df["CAP"] = df["CAP"].astype(str)
 df["CODICE IDENTIFICATIVO"] = df["CODICE IDENTIFICATIVO"].astype(str)
 df.fillna('', inplace=True)
 
+
 @app.get('/cerca_strutture')
-def cerca_strutture(piscina_coperta,sauna,area_fitness):
+def cerca_strutture(piscina_coperta, sauna, area_fitness):
     # Apply filters based on specified criteria
-    filtro = (df['PISCINA COPERTA'] == piscina_coperta) & \
-        (df['SAUNA'] == sauna) & \
-        (df['FITNESS'] == area_fitness) & \
+    filtro = (
+        (df['PISCINA COPERTA'] == piscina_coperta) &
+        (df['SAUNA'] == sauna) &
+        (df['FITNESS'] == area_fitness) &
         (df['ZONA FIERA'] == 'Vero')
+    )
+
     # Extract filtered results as a dictionary of records
     risultato_filtrato = df[filtro].to_dict(orient='records')
     # Return the filtered results
     return risultato_filtrato
 
 
+<<<<<<< HEAD
 # Read CSV data into a pandas DataFrame
 df_suburb = pd.read_csv('/app/app/dove-alloggiare.csv')
 '''
@@ -153,3 +177,21 @@ def essential_services_periphery(
         ].to_dict(orient='records')
 
     return essential_data
+=======
+@app.get('/find_hotels_near_transports')
+def find_hotels_near_transports(selected_typology, stazione, autostrada):
+    # Filtering data based on the criteria
+    filter = (
+        (df['TIPOLOGIA'] == selected_typology) &
+        (df['STAZIONE FS'] == stazione) &
+        (df['AUTOSTRADA'] == autostrada)
+        )
+    filtered_result = df[filter].to_dict(orient='records')
+    return filtered_result
+
+
+@app.get("/get_typology")
+def get_typology():
+    df_tipologie = df['TIPOLOGIA'].drop_duplicates()
+    return df_tipologie.to_json()
+>>>>>>> Feature_2

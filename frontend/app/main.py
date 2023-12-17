@@ -40,17 +40,53 @@ class SearchPeriferia(FlaskForm):
     submit = SubmitField('Search')
 
 
+# Define a form class fro SearchForm
 class SearchForm(FlaskForm):
-    piscina_coperta = SelectField('Indoor Pool:',  choices=[('Vero', 'Si'), ('Falso', 'No')])
+    piscina_coperta = SelectField('Indoor Pool:',
+                                  choices=[('Vero', 'Si'), ('Falso', 'No')])
     sauna = SelectField('Sauna:', choices=[('Vero', 'Si'), ('Falso', 'No')])
-    area_fitness = SelectField('Fitness area:',  choices=[('Vero', 'Si'), ('Falso', 'No')])
+    area_fitness = SelectField('Fitness area:',
+                               choices=[('Vero', 'Si'), ('Falso', 'No')])
+    submit = SubmitField('Search')
+
+
+# Define a form class for SearchTransport
+class SearchTransport(FlaskForm):
+    # SelectField for choosing typology
+    selected_typology = SelectField('🏠 Typology:')
+    # SelectField for choosing train station with choices
+    stazione = SelectField('🚅 Train station:',
+                           choices=[('Vero', 'Yes'), ('Falso', 'No')])
+    autostrada = SelectField('🛣 Highway:',
+                           choices=[('Vero', 'Yes'), ('Falso', 'No')])
     submit = SubmitField('Search')
     
+
+# Define a form class for SearchExtras
+class SearchExtras(FlaskForm):
+    """
+    Defines a search form using Flask-WTF.
+
+    Attributes:
+        aria_condizionata : SelectField for Air Conditioning input.
+        animali_ammessi : SelectField for Pets Allowed input.
+        submit : Submit button for the search form.
+    """
+    aria_condizionata_choices = [('Vero', 'Yes'), ('Falso', 'No')]
+    animali_ammessi_choices = [('Vero', 'Yes'), ('Falso', 'No')]
+
+    aria_condizionata = SelectField(
+        'Air Conditioning:',
+        choices=aria_condizionata_choices)
+    animali_ammessi = SelectField(
+        'Pets Allowed:',
+        choices=animali_ammessi_choices)
+
+    submit = SubmitField('periphery')
 
 
 @app.route('/periferia', methods=['GET', 'POST'])
 def search_structure_periferia():
-
     # Create a form instance
     form = SearchPeriferia()
 
@@ -59,7 +95,7 @@ def search_structure_periferia():
 
     # Fetch typology choices from FastAPI backend
     response = requests.get(f'{FASTAPI_BACKEND_HOST}/get_typology')
-
+    
     # Parse JSON response and set typology choices in the form
     aux = json.loads(response.json())
     form.typology.choices = list(aux.values())
@@ -107,7 +143,7 @@ def search_structure_search():
     # Create an instance of the SearchForm class
     form = SearchForm()
     # Initialize error_message variable
-    error_message = None 
+    error_message = None
     # Check if the form is submitted and valid
     if form.validate_on_submit():
         # Retrieve data from the form
@@ -115,7 +151,11 @@ def search_structure_search():
         piscina = form.piscina_coperta.data
         fitness = form.area_fitness.data
         # Construct the FastAPI backend URL with user input
-        fastapi_url = f'{FASTAPI_BACKEND_HOST}/cerca_strutture?piscina_coperta={piscina}&sauna={sauna}&area_fitness={fitness}'
+        fastapi_url = (
+            f'{FASTAPI_BACKEND_HOST}/cerca_strutture?'
+            f'piscina_coperta={piscina}&sauna={sauna}&area_fitness={fitness}'
+            )
+
         try:
             # Make a GET request to the FastAPI backend
             response = requests.get(fastapi_url)
@@ -126,38 +166,23 @@ def search_structure_search():
             # Handle request exceptions and capture error message
             data_from_fastapi, error_message = None, f'Error: {str(e)}'
         # Render the search.html template with the obtained data
-        return render_template("search.html", form=form, result=data_from_fastapi, error_message=error_message)
+        return render_template("search.html",
+                               form=form,
+                               result=data_from_fastapi,
+                               error_message=error_message)
     # Render the search.html template with default values
-    return render_template('search.html', form=form, result=None, error_message=error_message)
+    return render_template('search.html',
+                           form=form,
+                           result=None,
+                           error_message=error_message)
 
 # Define a route for the Animal Crossers page
 @app.route('/index')
 def index():
     return render_template('index.html')
 
-class SearchExtras(FlaskForm):
-    """
-    Defines a search form using Flask-WTF.
 
-    Attributes:
-        aria_condizionata : SelectField for Air Conditioning input.
-        animali_ammessi : SelectField for Pets Allowed input.
-        submit : Submit button for the search form.
-    """
-    aria_condizionata_choices = [('Vero', 'Yes'), ('Falso', 'No')]
-    animali_ammessi_choices = [('Vero', 'Yes'), ('Falso', 'No')]
-
-    aria_condizionata = SelectField(
-        'Air Conditioning:',
-        choices=aria_condizionata_choices)
-    animali_ammessi = SelectField(
-        'Pets Allowed:',
-        choices=animali_ammessi_choices)
-
-    submit = SubmitField('periphery')
-
-# Feature 3, Frontend code
-    
+# Feature 3, Frontend code    
 @app.route('/periphery', methods=['GET', 'POST'])
 def search_structure_periphery():
     """
@@ -225,6 +250,42 @@ def display_results():
 
     return render_template('results.html', result=result)
 
+@app.route('/find_hotels', methods=['GET', 'POST'])
+def find_hotels():
+    form = SearchTransport()  # Create an instance of the search form
+    error_message = None
+    response = requests.get(f'{FASTAPI_BACKEND_HOST}/get_typology')
+    aux = json.loads(response.json())
+    form.selected_typology.choices = list(aux.values())
+
+    if form.validate_on_submit():
+        selected_typology = form.selected_typology.data
+        stazione = form.stazione.data
+        autostrada = form.autostrada.data
+        fastapi_url = (
+            f'{FASTAPI_BACKEND_HOST}/find_hotels_near_transports?'
+            f'selected_typology={selected_typology}&stazione={stazione}&autostrada={autostrada}'
+            )
+        try:
+            response = requests.get(fastapi_url)
+            response.raise_for_status()  # Raise an HTTPError for bad responses
+            data_from_fastapi, error_message = response.json(), None
+        except requests.exceptions.RequestException as e:
+            data_from_fastapi, error_message = None, f'Error: {str(e)}'
+
+        # Render the template with the search form, result, and error message
+        return render_template("find_hotels.html",
+                               form=form,
+                               result=data_from_fastapi,
+                               error_message=error_message)
+
+    # Render the template with the search form and no result or error message
+    return render_template("find_hotels.html",
+                           form=form, result=None,
+                           error_message=None)
+
+
+# Run the Flask app
 if __name__ == '__main__':
     # Run the Flask application on the
     # specified host and port in debug mode
