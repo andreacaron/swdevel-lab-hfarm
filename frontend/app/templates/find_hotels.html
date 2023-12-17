@@ -1,144 +1,155 @@
 {% extends 'base.html' %}
 
-{% block title %} Explore Comfortable Accommodations Near Transports and with Parking {% endblock %}
+{% block title %} Essentials For Your Staying {% endblock %}
 
 {% block content %}
-  <!-- Styles for improved aesthetics -->
-  <style>
-    /* Overall page styling */
-    body {
-      background-color: #f8f9fa;
-    }
+    <!-- Styles for improved aesthetics -->
+    <style>
+        /* Overall page styling */
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            margin: 0 auto; /* Center the page content */
+            max-width: 1200px; /* Set a maximum width for the content */
+        }
 
-    /* Container styling */
-    .container {
-      background-color: #ffffff;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      padding: 20px;
-      margin-top: 50px;
-    }
+        /* Container styling */
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 50px;
+            text-align: left; /* Align text to the left */
+        }
 
-    /* Header styling */
-    h1 {
-      color: #007bff;
-    }
+        /* Header styling */
+        h1 {
+            color: #007bff;
+            font-weight: bold;
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
 
-    /* Subtitle styling */
-    p {
-      color: #6c757d;
-    }
+        /* Subtitle styling */
+        p {
+            color: #6c757d;
+        }
 
-    /* Form styling */
-    form {
-      margin-top: 20px;
-    }
+        /* Form styling */
+        form {
+            margin-top: 20px;
+        }
 
-    /* Result container styling */
-    #resultContainer {
-      margin-top: 30px;
-    }
+        /* Result container styling */
+        #resultContainer {
+            margin-top: 30px;
+        }
 
-    /* Result heading styling */
-    h2 {
-      color: #28a745;
-    }
+        /* Result heading styling */
+        h2 {
+            color: #28a745;
+        }
 
-    /* Card styling */
-    .card {
-      background-color: #fff;
-      border: 1px solid rgba(0, 0, 0, 0.125);
-      border-radius: 10px;
-      margin-bottom: 20px;
-    }
+        /* Card styling */
+        .card {
+            background-color: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.125);
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
 
-    /* Card title styling */
-    .card-title {
-      color: #007bff;
-    }
+        /* Card title styling */
+        .card-title {
+            color: #007bff;
+        }
 
-    /* Card text styling */
-    .card-text {
-      color: #495057;
-    }
+        /* Card text styling */
+        .card-text {
+            color: #495057;
+        }
 
-    /* Primary button styling */
-    .btn-primary {
-      background-color: #007bff;
-      border-color: #007bff;
-    }
+        /* Primary button styling */
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
 
-    /* Primary button hover styling */
-    .btn-primary:hover {
-      background-color: #0056b3;
-      border-color: #0056b3;
-    }
+        /* Primary button hover styling */
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
 
-    /* Muted text styling */
-    .text-muted {
-      color: #6c757d;
-    }
+        /* Muted text styling */
+        .text-muted {
+            color: #6c757d;
+        }
 
-    /* Danger text styling */
-    .text-danger {
-      color: #dc3545;
-    }
-  </style>
+        /* Danger text styling */
+        .text-danger {
+            color: #dc3545;
+        }
+    </style>
 
-  <!-- Main content container -->
-  <div class="container">
-    <!-- Page title -->
-    <h1>Is the accomodation near the Train Station & the Railway? </h1>
-    <!-- Page subtitle -->
-    <p> Select the best accomodation typology and choose your best option near the best transports for you! </p>
+    <!-- Main content container -->
+    <div class="container">
+        <!-- Page title -->
+        <h1> Is the accomodation near the Train Station & the Railway?</h1>
+        <!-- Page subtitle -->
+        <p> Select the best accomodation typology and choose your best option near the best transports for you!</p>
 
-    <!-- WTForms Form to get input from the user -->
-    <form method="POST" action="">
-      {{ form.csrf_token }}
-      <div class="form-group">
-        {{ form.selected_typology.label }}
-        {{ form.selected_typology(class="form-control") }}
-        {{ form.stazione.label }}
-        {{ form.stazione(class="form-control") }}
-        {{ form.autostrada.label }}
-        {{ form.autostrada(class="form-control") }}
-      </div>
-      {{ form.submit(class="btn btn-primary") }}
-    </form>
-
-    <!-- Display the result here -->
-    <div id="resultContainer">
-      <!-- Result heading -->
-      {% if result %}
-      <h2>Search Results:</h2>
-        <!-- Card deck for result items -->
-        <div class="card-deck">
-          {% for hotel in result %}
-            <!-- Individual result card -->
-            <div class="card">
-              <div class="card-body">
-                <!-- Result title -->
-                <h5 class="card-title">{{ hotel['DENOMINAZIONE'] }}</h5>
-                <!-- Result details -->
-                <p class="card-text">
-                  <strong>Provincia:</strong> {{ hotel['PROVINCIA'] }}<br>
-                  <strong>Comune:</strong> {{ hotel['COMUNE'] }}<br>
-                  <strong>Indirizzo:</strong> {{ hotel['INDIRIZZO'] }} {{ hotel['NUMERO CIVICO'] }}, {{ hotel['CAP'] | int }}<br>
-                  <strong>Email:</strong> {{ hotel['EMAIL'] }}
-                </p>
-              </div>
+        <!-- WTForms Form to get input from the user -->
+        <form method="POST" action="">
+            {{ form.csrf_token }}
+            <div class="form-group">
+                {{ form.selected_typology.label }}
+                {{ form.selected_typology(class="form-control") }}
+                {{ form.stazione.label }}
+                {{ form.stazione(class="form-control") }}
+                {{ form.autostrada.label }}
+                {{ form.autostrada(class="form-control") }}
             </div>
-          {% endfor %}
+            {{ form.submit(class="btn btn-primary") }}
+        </form>
+
+        <!-- Display the result here -->
+        <div id="resultContainer">
+            <!-- Result heading -->
+            {% if result %}
+            <h2>Search Results:</h2>
+                <!-- Card deck for result items -->
+                <div class="card-deck">
+                    {% for hotel in result %}
+                        <!-- Individual result card -->
+                        <div class="card">
+                            <div class="card-body">
+                                <!-- Result title -->
+                                <h5 class="card-title">{{ hotel['DENOMINAZIONE'] }}</h5>
+                                <!-- Result details -->
+                                <p class="card-text">
+                                    <strong>Provincia:</strong> {{ hotel['PROVINCIA'] }}<br>
+                                    <strong>Comune:</strong> {{ hotel['COMUNE'] }}<br>
+                                    <strong>Indirizzo:</strong> {{ hotel['INDIRIZZO'] }} {{ hotel['NUMERO CIVICO'] }},
+                                    {{ hotel['CAP'] | int }}<br>
+                                    <strong>Email:</strong> {{ hotel['EMAIL'] }}
+                                </p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <!-- Message for no results -->
+            {% if result == [] %}
+                <p class="text-muted">Sorry, we haven't found interesting results. 🥲</p>
+            {% endif %}
+
+            <!-- Error message display -->
+            {% if error_message %}
+                <p class="text-danger">{{ error_message }}</p>
+            {% endif %}
         </div>
-      {% endif %}
-      {% if result == [] %}
-        <!-- Message for no results -->
-        <p class="text-muted">Sorry, we haven't found interesting results. 🥲</p>
-      {% endif %}
-      <!-- Error message display -->
-      {% if error_message %}
-        <p class="text-danger">{{ error_message }}</p>
-      {% endif %}
     </div>
-  </div>
 {% endblock %}

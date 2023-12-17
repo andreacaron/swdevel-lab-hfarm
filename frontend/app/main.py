@@ -70,6 +70,7 @@ class SearchTransport(FlaskForm):
     # SelectField for choosing train station with choices
     stazione = SelectField('🚅 Train station:',
                            choices=[('Vero', 'Yes'), ('Falso', 'No')])
+    # SelectField for choosing highway with choices
     autostrada = SelectField('🛣 Highway:',
                            choices=[('Vero', 'Yes'), ('Falso', 'No')])
     submit = SubmitField('Search')
@@ -269,7 +270,8 @@ def find_hotels():
     # Create an instance of the search form
     form = SearchTransport()  
     error_message = None
-    response = requests.get(f'{FASTAPI_BACKEND_HOST}/get_typology')
+    data_from_fastapi = None
+    response = requests.get(f'{FASTAPI_BACKEND_HOST}/get_typologies')
     aux = json.loads(response.json())
     form.selected_typology.choices = list(aux.values())
 
@@ -285,18 +287,22 @@ def find_hotels():
             response = requests.get(fastapi_url)
             response.raise_for_status()  # Raise an HTTPError for bad responses
         except requests.exceptions.RequestException as e:
-            data_from_fastapi, error_message = None, f'Error: {str(e)}'
+             data_from_fastapi, error_message = None, f'Error: {str(e)}'
 
-# Render the template with the search form, result, and error message
-        return render_template("find_hotels.html",
-                               form=form,
-                               result=data_from_fastapi,
-                               error_message=error_message)
+# Run the Flask app
+        return render_template(
+            "find_hotels.html",
+            form=form,
+            result=data_from_fastapi,
+            error_message=error_message
+        )
 
-    # Render the template with the search form and no result or error message
-    return render_template("find_hotels.html",
-                           form=form, result=None,
-                           error_message=None)
+    return render_template(
+        'find_hotels.html',
+        form=form,
+        result=None,
+        error_message=error_message
+    )
 
 
 # Defining a route for the internal page

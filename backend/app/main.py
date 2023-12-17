@@ -13,8 +13,8 @@ import pandas as pd
 # Pydantic import
 from pydantic import BaseModel
 # Flask and related imports
-from flask import Flask, request, jsonify
-from flask_cors import CORS
+#from flask import Flask, request, jsonify
+#from flask_cors import CORS
 
 # Uvicorn import
 import uvicorn
@@ -161,22 +161,22 @@ def essential_services_periphery(
         ].to_dict(orient='records')
 
     return essential_data
+
+
 @app.get('/find_hotels_near_transports')
 def find_hotels_near_transports(selected_typology, stazione, autostrada):
     # Filtering data based on the criteria
-    filter = (
-        (df['TIPOLOGIA'] == selected_typology) &
-        (df['STAZIONE FS'] == stazione) &
+    filter_transports = (df['TIPOLOGIA'] == selected_typology) & \
+        (df['STAZIONE FS'] == stazione) & \
         (df['AUTOSTRADA'] == autostrada)
-        )
-    filtered_result = df[filter].to_dict(orient='records')
+    filtered_result = df[filter_transports].to_dict(orient='records')
     return filtered_result
 
 
-@app.get("/get_typology")
-def get_typology():
-    df_tipologie = df['TIPOLOGIA'].drop_duplicates()
-    return df_tipologie.to_json()
+@app.get("/get_typologies")
+def get_typologies():
+    df_tipologies = df['TIPOLOGIA'].drop_duplicates()
+    return df_tipologies.to_json()
 
 
 # Extracting relevant data for zona, parking and restaurant for the frontend
