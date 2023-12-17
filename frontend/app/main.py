@@ -100,7 +100,7 @@ def search_structure():
 
 
 # Define a form class for the search form
-class SearchForm(FlaskForm):
+class SearchTransport(FlaskForm):
     # SelectField for choosing typology
     selected_typology = SelectField('🏠 Typology:')
     # SelectField for choosing train station with choices
@@ -113,7 +113,7 @@ class SearchForm(FlaskForm):
 
 @app.route('/find_hotels', methods=['GET', 'POST'])
 def find_hotels():
-    form = SearchForm()  # Create an instance of the search form
+    form = SearchTransport()  # Create an instance of the search form
     error_message = None
     response = requests.get(f'{FASTAPI_BACKEND_HOST}/get_typology')
     aux = json.loads(response.json())
