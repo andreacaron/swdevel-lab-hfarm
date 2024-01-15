@@ -34,97 +34,105 @@ from app.main import (
     find_structures_suburb
 )
 
-
 # Creating a test client to interact with the FastAPI app
 client = TestClient(app)
 
-
-class TestSearchStructures(unittest.TestCase):
+class TestCercaStruttureEndpoint(unittest.TestCase):
     """
-    This class contains tests for the cerca_strutture function.
-    Make sure to adapt the documentation and imports to your needs.
+    Test cases for the cerca_strutture endpoint.
+
+    These tests cover various scenarios for searching structures based on specified criteria.
     """
 
-    def test_all_options_true(self):
+    def test_search_with_all_options_true(self):
         """
-        Verify if the cerca_strutture function returns a list
-        when all options are set to True.
+        Test searching for structures when all options (piscina_coperta, sauna, area_fitness) are set to True.
+
+        It should return a list of structures meeting the specified criteria.
         """
-        result = cerca_strutture(piscina_coperta=True,
-                                 sauna=True,
-                                 area_fitness=True)
+        response = client.get('/cerca_strutture?piscina_coperta=True&sauna=True&area_fitness=True')
+        result = response.json()
         self.assertIsInstance(result, list)
 
-    def test_no_option_true(self):
+    def test_search_with_no_option_true(self):
         """
-        Verify if the cerca_strutture function returns an empty list
-        when all options are set to False.
+        Test searching for structures when all options (piscina_coperta, sauna, area_fitness) are set to False.
+
+        It should return an empty list as no structures meet the specified criteria.
         """
-        result = cerca_strutture(piscina_coperta=False,
-                                 sauna=False,
-                                 area_fitness=False)
+        response = client.get('/cerca_strutture?piscina_coperta=False&sauna=False&area_fitness=False')
+        result = response.json()
         self.assertIsInstance(result, list)
         self.assertEqual(len(result), 0)
 
-    def test_only_covered_pool_true(self):
+    def test_search_with_only_covered_pool_true(self):
         """
-        Verify if the cerca_strutture function returns a list
-        when only the 'piscina_coperta' option is set to True.
+        Test searching for structures with only the 'piscina_coperta' option set to True.
+
+        It should return a list of structures with covered pools.
         """
-        result = cerca_strutture(piscina_coperta=True,
-                                 sauna=False,
-                                 area_fitness=False)
+        response = client.get('/cerca_strutture?piscina_coperta=True&sauna=False&area_fitness=False')
+        result = response.json()
         self.assertIsInstance(result, list)
 
-    def test_only_sauna_true(self):
+    def test_search_with_only_sauna_true(self):
         """
-        Verify if the cerca_strutture function returns a list
-        when only the 'sauna' option is set to True.
+        Test searching for structures with only the 'sauna' option set to True.
+
+        It should return a list of structures with saunas.
         """
-        result = cerca_strutture(piscina_coperta=False,
-                                 sauna=True,
-                                 area_fitness=False)
+        response = client.get('/cerca_strutture?piscina_coperta=False&sauna=True&area_fitness=False')
+        result = response.json()
         self.assertIsInstance(result, list)
 
-    def test_only_fitness_area_true(self):
+    def test_search_with_only_fitness_area_true(self):
         """
-        Verify if the cerca_strutture function returns a list
-        when only the 'area_fitness' option is set to True.
+        Test searching for structures with only the 'area_fitness' option set to True.
+
+        It should return a list of structures with fitness areas.
         """
-        result = cerca_strutture(piscina_coperta=False,
-                                 sauna=False,
-                                 area_fitness=True)
+        response = client.get('/cerca_strutture?piscina_coperta=False&sauna=False&area_fitness=True')
+        result = response.json()
         self.assertIsInstance(result, list)
 
-    def test_only_covered_pool_and_sauna_true(self):
+    def test_search_with_only_covered_pool_and_sauna_true(self):
         """
-        Verify if the cerca_strutture function returns a list
-        when only the 'piscina_coperta' and 'sauna' options are set to True.
+        Test searching for structures with only the 'piscina_coperta' and 'sauna' options set to True.
+
+        It should return a list of structures with covered pools and saunas.
         """
-        result = cerca_strutture(piscina_coperta=True,
-                                 sauna=True,
-                                 area_fitness=False)
+        response = client.get('/cerca_strutture?piscina_coperta=True&sauna=True&area_fitness=False')
+        result = response.json()
         self.assertIsInstance(result, list)
 
-    def test_only_covered_pool_and_fitness_area_true(self):
+    def test_search_with_only_covered_pool_and_fitness_area_true(self):
         """
-        Verify if the cerca_strutture function returns a list
-        with 'piscina_coperta' and 'area_fitness' set to True.
+        Test searching for structures with 'piscina_coperta' and 'area_fitness' set to True.
+
+        It should return a list of structures with covered pools and fitness areas.
         """
-        result = cerca_strutture(piscina_coperta=True,
-                                 sauna=False,
-                                 area_fitness=True)
+        response = client.get('/cerca_strutture?piscina_coperta=True&sauna=False&area_fitness=True')
+        result = response.json()
         self.assertIsInstance(result, list)
 
-    def test_only_sauna_and_fitness_area_true(self):
+    def test_search_with_only_sauna_and_fitness_area_true(self):
         """
-        Verify if the cerca_strutture function returns a list
-        when only the 'sauna' and 'area_fitness' options are set to True.
+        Test searching for structures with 'sauna' and 'area_fitness' set to True.
+
+        It should return a list of structures with saunas and fitness areas.
         """
-        result = cerca_strutture(piscina_coperta=False,
-                                 sauna=True,
-                                 area_fitness=True)
+        response = client.get('/cerca_strutture?piscina_coperta=False&sauna=True&area_fitness=True')
+        result = response.json()
         self.assertIsInstance(result, list)
+
+    def test_search_with_invalid_parameters(self):
+        """
+        Test handling of invalid parameters in the search.
+
+        It should return a validation error (status code 422) as FastAPI rejects invalid parameters.
+        """
+        response = client.get('/cerca_strutture?sauna=InvalidValue')
+        self.assertEqual(response.status_code, 422)
 
 
 class TestApp(unittest.TestCase):
