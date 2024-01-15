@@ -37,9 +37,9 @@ from app.main import (
 # Creating a test client to interact with the FastAPI app
 client = TestClient(app)
 
-class TestCercaStruttureEndpoint(unittest.TestCase):
+class TestCercaStrutture(unittest.TestCase):
     """
-    Test cases for the cerca_strutture endpoint.
+    Test cases for the cerca_strutture.
 
     These tests cover various scenarios for searching structures based on specified criteria.
     """

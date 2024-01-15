@@ -198,7 +198,7 @@ def search_structure_search():
 
 
 # Define a route for the Animal Crossers page
-@app.route('/index')
+@app.route('/')
 def index():
     return render_template('index.html')
 
