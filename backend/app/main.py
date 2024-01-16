@@ -1,8 +1,9 @@
 """
-Backend module for the FastAPI application.
+Backend module for a FastAPI application providing
+accommodation and facility search functionality.
 
-This module defines a FastAPI application that serves
-as the backend for the project.
+This module defines a FastAPI application
+that serves as the backend for the project.
 """
 
 # Import FastAPI and related modules
@@ -16,15 +17,8 @@ import pandas as pd
 # Import Pydantic for data validation
 from pydantic import BaseModel
 
-# Import uvicorn for running the FastAPI application
-import uvicorn
-
-# Import the app module (assuming it contains FastAPI application instances or routes)
+# Import the app module
 import app
-
-# Import BaseModel from Pydantic for defining data models
-from pydantic import BaseModel
-
 
 # Create an instance of the FastAPI application
 app = FastAPI()
@@ -37,6 +31,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"]
 )
+
 
 # Function to parse string values to boolean ('True'/'False'/'Vero'/'Falso')
 def parse_bool(value):
@@ -51,93 +46,114 @@ def parse_bool(value):
     """
     return value.lower() in ['true', 'vero']
 
+
 # Create a DataFrame
 df = pd.read_csv('/app/app/dove-alloggiare.csv')
+
+# Handle missing values (NA) by replacing them
+df.fillna('', inplace=True)
+
 # Convert specific fields to strings and handle missing values
 df["CAP"] = df["CAP"].astype(str)
 df["CODICE IDENTIFICATIVO"] = df["CODICE IDENTIFICATIVO"].astype(str)
 df.fillna('', inplace=True)
 
 
-# Endpoint to search for structures based on specified criteria
-@app.get('/cerca_strutture')
-def cerca_strutture(piscina_coperta, sauna, area_fitness):
+# Endpoint to search for structures based on specified criteria:
+@app.get('/search_structures')
+def search_structures(indoor_pool, sauna, fitness_area):
+    """
+    Endpoint to search for structures based on specified criteria.
+
+    Args:
+        indoor_pool (str): Indicates the preference for a covered pool.
+        sauna (str): Indicates the preference for a sauna.
+        fitness_area (str): Indicates the preference for a fitness area.
+
+    Returns:
+        List[Dict[str, Any]]: Filtered results of structures as a list of
+        dictionaries.
+    """
     # Apply filters based on specified criteria
-    filtro = (
-        (df['PISCINA COPERTA'] == piscina_coperta) &
+    filter = (
+        (df['PISCINA COPERTA'] == indoor_pool) &
         (df['SAUNA'] == sauna) &
-        (df['FITNESS'] == area_fitness) &
+        (df['FITNESS'] == fitness_area) &
         (df['ZONA FIERA'] == 'Vero')
     )
 
     # Extract filtered results as a dictionary of records
-    risultato_filtrato = df[filtro].to_dict(orient='records')
+    filtered_result = df[filter].to_dict(orient='records')
     # Return the filtered results
-    return risultato_filtrato
-
-
-# Read CSV data into a pandas DataFrame
-df_suburb = pd.read_csv('/app/app/dove-alloggiare.csv')
-'''
-Handle missing values (NA) by replacing them
-with empty strings in the DataFrame 
-'''
-df_suburb.fillna('', inplace=True)
+    return filtered_result
 
 
 # Endpoint to search for suburbs based on specified criteria
 @app.get("/find_structures_suburb")
 # Extract relevant data for the frontend based on specified conditions
 def find_structures_suburb(Typology, English, French, German, Spanish):
+    """
+    Endpoint to search for suburbs based on specified criteria.
+
+    Args:
+        Typology (str): The type of structure.
+        English (str): Indicates English language availability.
+        French (str): Indicates French language availability.
+        German (str): Indicates German language availability.
+        Spanish (str): Indicates Spanish language availability.
+
+    Returns:
+        List[Dict[str, Any]]: Filtered results of suburbs as a list
+        of dictionaries.
+    """
     conditions = (
-        (df_suburb['TIPOLOGIA'] == Typology) &
-        (df_suburb['INGLESE'] == English) &
-        (df_suburb['FRANCESE'] == French) &
-        (df_suburb['TEDESCO'] == German) &
-        (df_suburb['SPAGNOLO'] == Spanish) &
-        (df_suburb['PERIFERIA'] == 'Vero')
+        (df['TIPOLOGIA'] == Typology) &
+        (df['INGLESE'] == English) &
+        (df['FRANCESE'] == French) &
+        (df['TEDESCO'] == German) &
+        (df['SPAGNOLO'] == Spanish) &
+        (df['PERIFERIA'] == 'Vero')
     )
-# Filter DataFrame based on conditions and convert
-# the results to a list of dictionaries
-    results = df_suburb[conditions].to_dict(orient='records')
+    # Filter DataFrame based on conditions and convert
+    # the results to a list of dictionaries
+    results = df[conditions].to_dict(orient='records')
     return results
 
 
 # Endpoint to search for structures typologies
 @app.get("/get_typology")
 def get_typology():
-    #  Extract unique values of 'TIPOLOGIA' column from DataFrame
-    df_tipologie = df_suburb['TIPOLOGIA'].drop_duplicates()
+    """
+    Endpoint to retrieve unique structure typologies.
+
+    Returns:
+        str: Unique structure typologies in JSON format.
+    """
+    # Extract unique values of 'TIPOLOGIA' column from DataFrame
+    df_typologies = df['TIPOLOGIA'].drop_duplicates()
     # Convert the unique values to JSON format
-    return df_tipologie.to_json()
+    return df_typologies.to_json()
 
 
 # Function to read and filter B&B based on user-selected amenities
 @app.get("/essential_services_periphery")
 def essential_services_periphery(
-    aria_condizionata: str = Query("False", description="Air Conditioning"),
-    animali_ammessi: str = Query("False", description="Pets Allowed")
+    air_conditioning: str = Query("False", description="Air Conditioning"),
+    pets_allowed: str = Query("False", description="Pets Allowed")
 ):
     """
     Retrieves B&B data based on selected amenities in periphery areas.
 
     Args:
-        aria_condizionata (str): indicating Air Conditioning preference.
-        animali_ammessi (str): indicating Pets Allowed preference.
+        air_conditioning (str): Indicates Air Conditioning preference.
+        pets_allowed (str): Indicates Pets Allowed preference.
 
     Returns:
         List[Dict[str, str]]: Filtered B&B data with relevant information.
     """
-
     # Parsing amenities to boolean values
-    aria_condizionata_bool = parse_bool(aria_condizionata)
-    animali_ammessi_bool = parse_bool(animali_ammessi)
-
-    # Reading the CSV file containing bed and breakfast data
-    df = pd.read_csv('app/dove-alloggiare.csv')
-
-    # Handling NA values
-    df.fillna('', inplace=True)
+    air_conditioning_bool = parse_bool(air_conditioning)
+    pets_allowed_bool = parse_bool(pets_allowed)
 
     # Filter bed and breakfast from 'TIPOLOGIA' column
     bnb_df = df[df['TIPOLOGIA'] == 'BED AND BREAKFAST']
@@ -147,8 +163,8 @@ def essential_services_periphery(
 
     # Filtering essential services for B&B based on user-selected amenities
     filter_conditions = (
-        (periphery_bnb['ARIA CONDIZIONATA'] == aria_condizionata) &
-        (periphery_bnb['ANIMALI AMMESSI'] == animali_ammessi)
+        (periphery_bnb['ARIA CONDIZIONATA'] == air_conditioning) &
+        (periphery_bnb['ANIMALI AMMESSI'] == pets_allowed)
     )
 
     essential_df = periphery_bnb[filter_conditions]
@@ -172,22 +188,53 @@ def essential_services_periphery(
 
 # Endpoint to search for typology structures based on specified criteria
 @app.get('/find_hotels_near_transports')
-def find_hotels_near_transports(selected_typology, stazione, autostrada):
+def find_hotels_near_transports(
+    selected_typology,
+    train_station,
+    highway
+):
+
+    """
+    Endpoint to search for hotels near transportation based
+    on specified criteria.
+
+    Args:
+        selected_typology (str): The selected structure typology.
+        train_station (str): The selected train station.
+        highway (str): The selected highway.
+
+    Returns:
+        List[Dict[str, Any]]: Filtered results of hotels
+        near transportation as a list of dictionaries.
+    """
     # Filtering data based on the criteria
     filter_transports = (df['TIPOLOGIA'] == selected_typology) & \
-        (df['STAZIONE FS'] == stazione) & \
-        (df['AUTOSTRADA'] == autostrada)
+        (df['STAZIONE FS'] == train_station) & \
+        (df['AUTOSTRADA'] == highway)
     filtered_result = df[filter_transports].to_dict(orient='records')
     return filtered_result
 
 
-# Extracting relevant data for zona, parking and restaurant for the frontend
+# Extracting relevant data for zona, parking, and restaurant for the frontend
 @app.get("/structures")
-def structures(zona, parcheggio, ristorante):
-    filter = (df['ZONA '] == zona) & \
-             (df['RISTORANTE'] == ristorante) & \
-             (df['PARCHEGGIO'] == parcheggio)
-    final_result = df[filter].to_dict(orient='records')
+def structures(zone, parking, restaurant):
+    """
+    Endpoint to extract relevant data for the frontend
+    based on specified criteria.
+
+    Args:
+        zone (str): The selected zone.
+        parking (str): The selected parking preference.
+        restaurant (str): The selected restaurant preference.
+
+    Returns:
+        List[Dict[str, Any]]: Filtered results of relevant
+        data as a list of dictionaries.
+    """
+    filter_conditions = (df['ZONA '] == zone) & \
+        (df['RISTORANTE'] == restaurant) & \
+        (df['PARCHEGGIO'] == parking)
+    final_result = df[filter_conditions].to_dict(orient='records')
 
     return final_result
 
@@ -195,5 +242,11 @@ def structures(zona, parcheggio, ristorante):
 # Getting unique zones for the frontend
 @app.get("/get_zones")
 def get_zones():
+    """
+    Endpoint to retrieve unique zones for the frontend.
+
+    Returns:
+        str: Unique zones in JSON format.
+    """
     zones_df = df['ZONA '].drop_duplicates()
     return zones_df.to_json()
