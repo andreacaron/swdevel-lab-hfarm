@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %} Explore Quality Accommodations Near the Fairground {% endblock %}
+{% block title %} Explore the suburbs {% endblock %}
 
 {% block content %}
 <!-- Styles for improved aesthetics -->
@@ -110,32 +110,36 @@
         font-style: italic;
     }
 </style>
-
     <!-- Main content container -->
     <div class="container">
         <!-- Page title -->
-        <h1>Discover Your Ideal Retreat!</h1>
+        <h1>Discover all the structures in the suburbs that speak your language!</h1>
         <!-- Page subtitle -->
-        <p>Explore accommodations near the fairground featuring an indoor pool, sauna, and fitness area for the ultimate rejuvenating stay.</p>
+        <p>Explore all the accomodations situated in the suburbs available to provide multilingual services</p>
+        
 
         <!-- WTForms Form to get input from the user -->
-        <form method="POST" action="{{ url_for('search_structure_search') }}">
+        <form method="POST" action="">
             {{ form.csrf_token }}
             <div class="form-group">
-                {{ form.piscina_coperta.label }}
-                {{ form.piscina_coperta(class="form-control") }}
-                {{ form.sauna.label }}
-                {{ form.sauna(class="form-control") }}
-                {{ form.area_fitness.label }}
-                {{ form.area_fitness(class="form-control") }}
+                {{ form.typology.label }}
+                {{ form.typology(class="form-control") }}
+                {{ form.english.label }}
+                {{ form.english(class="form-control") }}
+                {{ form.french.label }}
+                {{ form.french(class="form-control") }}
+                {{ form.german.label }}
+                {{ form.german(class="form-control") }}
+                {{ form.spanish.label }}
+                {{ form.spanish(class="form-control") }}
             </div>
             {{ form.submit(class="btn btn-primary") }}
         </form>
 
         <!-- Display the result here -->
         <div id="resultContainer">
-            {% if result %}
             <!-- Result heading -->
+            {% if result %}
                 <h2>Search Results:</h2>
                 <!-- Card deck for result items -->
                 <div class="card-deck">
@@ -147,19 +151,20 @@
                                 <h5 class="card-title">{{ hotel['DENOMINAZIONE'] }}</h5>
                                 <!-- Result details -->
                                 <p class="card-text">
-                                    <strong>Provincia:</strong> {{ hotel['PROVINCIA'] }}<br>
-                                    <strong>Comune:</strong> {{ hotel['COMUNE'] }}<br>
-                                    <strong>Indirizzo:</strong> {{ hotel['INDIRIZZO'] }} {{ hotel['NUMERO CIVICO'] }}, {{ hotel['CAP'] | int }}<br>
-                                    <strong>Email:</strong> {{ hotel['EMAIL'] }}
+                                    <strong>Province:</strong> {{ hotel['PROVINCIA'] }}<br>
+                                    <strong>Municipality:</strong> {{ hotel['COMUNE'] }}<br>
+                                    <strong>Address:</strong> {{ hotel['INDIRIZZO'] }} {{ hotel['NUMERO CIVICO'] }}, {{ hotel['CAP'] | int }}<br>
+                                    <strong>Email:</strong> {{ hotel['EMAIL'] }}<br>
+                                    <strong>Telephone:</strong> {{ hotel['TELEFONO'] }}<br>
                                 </p>
                             </div>
                         </div>
                     {% endfor %}
                 </div>
             {% endif %}
-            {% if result == [] %}
+            {% if result ==[] %}
             <!-- Message for no results -->
-            <p class="text-muted">Sorry, we haven't found interesting results. 🥲</p>
+            <p class="text-muted">Sorry, we have no result correlated to your research. 🥲</p>
         {% endif %}
             <!-- Error message display -->
             {% if error_message %}

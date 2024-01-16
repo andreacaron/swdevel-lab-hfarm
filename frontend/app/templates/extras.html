@@ -114,29 +114,29 @@
     </p>
 
     <!-- WTForms Form to get input from the user -->
-    <form method="POST" action="/periphery" class="mb-4">
+    <form method="POST" action="/extras" class="mb-4">
         {{ form.hidden_tag() }}
         <div class="row">
             <div class="col-md-6 mb-3">
                 <p>
                     <strong>Essential amenities</strong>
                 </p>
-                <label for="aria_condizionata">
+                <label for="air_conditioning">
                     <!-- Using Unicode characters for symbols -->
                     &#x2744; Air Conditioning:
                 </label>
-                {{ form.aria_condizionata(class="form-control", id="aria_condizionata") }}
+                {{ form.air_conditioning(class="form-control", id="air_conditioning") }}
             </div>
 
             <div class="col-md-6 mb-3">
                 <p>
                     <strong>Booking options</strong>
                 </p>
-                <label for="animali_ammessi">
+                <label for="pets_allowed">
                     <!-- Using HTML entity for pets allowed symbol -->
                     &#x1F43E; Pets Allowed:
                 </label>
-                {{ form.animali_ammessi(class="form-control", id="animali_ammessi") }}
+                {{ form.pets_allowed(class="form-control", id="pets_allowed") }}
 
                 <!-- Button to show service animal information -->
                 <button type="button" class="btn btn-outline-dark mt-2 underline-btn" onclick="showServiceAnimalInfo()">Bringing a service animal?</button>

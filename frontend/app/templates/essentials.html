@@ -96,20 +96,20 @@
     <!-- Main content container -->
     <div class="container">
         <!-- Page title -->
-        <h1> Is the accomodation near the Train Station & the Railway?</h1>
+        <h1>Essentials for a Great Staying.</h1>
         <!-- Page subtitle -->
-        <p> Select the best accomodation typology and choose your best option near the best transports for you!</p>
+        <p>In Veneto, we do not have only Spritz! There are beautiful places to visit, find out your best option! Don't forget your essentials.</p>
 
         <!-- WTForms Form to get input from the user -->
         <form method="POST" action="">
             {{ form.csrf_token }}
             <div class="form-group">
-                {{ form.selected_typology.label }}
-                {{ form.selected_typology(class="form-control") }}
-                {{ form.stazione.label }}
-                {{ form.stazione(class="form-control") }}
-                {{ form.autostrada.label }}
-                {{ form.autostrada(class="form-control") }}
+                {{ form.zone.label }}
+                {{ form.zone(class="form-control") }}
+                {{ form.restaurant.label }}
+                {{ form.restaurant(class="form-control") }}
+                {{ form.parking.label }}
+                {{ form.parking(class="form-control") }}
             </div>
             {{ form.submit(class="btn btn-primary") }}
         </form>
@@ -129,11 +129,11 @@
                                 <h5 class="card-title">{{ hotel['DENOMINAZIONE'] }}</h5>
                                 <!-- Result details -->
                                 <p class="card-text">
-                                    <strong>Provincia:</strong> {{ hotel['PROVINCIA'] }}<br>
-                                    <strong>Comune:</strong> {{ hotel['COMUNE'] }}<br>
-                                    <strong>Indirizzo:</strong> {{ hotel['INDIRIZZO'] }} {{ hotel['NUMERO CIVICO'] }},
-                                    {{ hotel['CAP'] | int }}<br>
-                                    <strong>Email:</strong> {{ hotel['EMAIL'] }}
+                                    <strong>Province:</strong> {{ hotel['PROVINCIA'] }}<br>
+                                    <strong>Municipality:</strong> {{ hotel['COMUNE'] }}<br>
+                                    <strong>Address:</strong> {{ hotel['INDIRIZZO'] }} {{ hotel['NUMERO CIVICO'] }}, {{ hotel['CAP'] | int }}<br>
+                                    <strong>Email:</strong> {{ hotel['EMAIL'] }}<br>
+                                    <strong>Telephone:</strong> {{ hotel['TELEFONO'] }}<br>
                                 </p>
                             </div>
                         </div>
