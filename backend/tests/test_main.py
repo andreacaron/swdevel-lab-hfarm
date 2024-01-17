@@ -16,6 +16,7 @@ import os
 import sys
 import pytest
 from fastapi.testclient import TestClient
+from fastapi.responses import JSONResponse
 import pandas as pd
 import unittest
 
@@ -25,103 +26,161 @@ pytest.mark.performance = pytest.mark.skip(reason="Performance tests skipped")
 # Add the project root to the sys.path
 sys.path.insert(0, os.path.abspath(
     os.path.join(os.path.dirname(__file__), '..')))
+
 # Import statements
-from app.main import (
-    app,
-    essential_services_periphery,
-    cerca_strutture,
-    df_suburb,
-    find_structures_suburb
-)
+from app.main import app, search_structures, essential_services_periphery, df, find_structures_suburb
 
 # Creating a test client to interact with the FastAPI app
+
 client = TestClient(app)
 
-class TestCercaStrutture(unittest.TestCase):
+class TestSearchStructures(unittest.TestCase):
     """
-    Test cases for the cerca_strutture.
+    Test cases for the search_structures endpoint.
 
-    These tests cover various scenarios for searching structures based on specified criteria.
+    These tests cover various scenarios for searching
+    structures based on specified criteria.
     """
+
+    def setUp(self):
+        self.client = TestClient(app)
 
     def test_search_with_all_options_true(self):
         """
-        Test searching for structures when all options (piscina_coperta, sauna, area_fitness) are set to True.
+        Test searching for structures when all options
+        (indoor_pool, sauna, fitness_area) are set to True.
 
         It should return a list of structures meeting the specified criteria.
         """
-        response = client.get('/cerca_strutture?piscina_coperta=True&sauna=True&area_fitness=True')
+        params = {
+            'indoor_pool': 'True',
+            'sauna': 'True',
+            'fitness_area': 'True'
+        }
+        response = self.client.get('/search_structures', params=params)
+        self.assertEqual(response.status_code, 200)
         result = response.json()
         self.assertIsInstance(result, list)
 
     def test_search_with_no_option_true(self):
         """
-        Test searching for structures when all options (piscina_coperta, sauna, area_fitness) are set to False.
+        Test searching for structures
+        when all options (indoor_pool, sauna, fitness_area) are set to False.
 
-        It should return an empty list as no structures meet the specified criteria.
+        It should return an empty list as no structures meet
+        the specified criteria.
         """
-        response = client.get('/cerca_strutture?piscina_coperta=False&sauna=False&area_fitness=False')
+        params = {
+            'indoor_pool': 'False',
+            'sauna': 'False',
+            'fitness_area': 'False'
+        }
+        response = self.client.get('/search_structures', params=params)
+        self.assertEqual(response.status_code, 200)
         result = response.json()
         self.assertIsInstance(result, list)
         self.assertEqual(len(result), 0)
 
     def test_search_with_only_covered_pool_true(self):
         """
-        Test searching for structures with only the 'piscina_coperta' option set to True.
+        Test searching for structures with only the
+        'indoor_pool' option set to True.
 
         It should return a list of structures with covered pools.
         """
-        response = client.get('/cerca_strutture?piscina_coperta=True&sauna=False&area_fitness=False')
+        params = {
+            'indoor_pool': 'True',
+            'sauna': 'False',
+            'fitness_area': 'False'
+        }
+        response = self.client.get('/search_structures', params=params)
+        self.assertEqual(response.status_code, 200)
         result = response.json()
         self.assertIsInstance(result, list)
 
     def test_search_with_only_sauna_true(self):
         """
-        Test searching for structures with only the 'sauna' option set to True.
+        Test searching for structures with only the 'sauna'
+        option set to True.
 
         It should return a list of structures with saunas.
         """
-        response = client.get('/cerca_strutture?piscina_coperta=False&sauna=True&area_fitness=False')
+        params = {
+            'indoor_pool': 'False',
+            'sauna': 'True',
+            'fitness_area': 'False'
+        }
+        response = self.client.get('/search_structures', params=params)
+        self.assertEqual(response.status_code, 200)
         result = response.json()
         self.assertIsInstance(result, list)
 
     def test_search_with_only_fitness_area_true(self):
         """
-        Test searching for structures with only the 'area_fitness' option set to True.
+        Test searching for structures with only the 'fitness_area'
+        option set to True.
 
         It should return a list of structures with fitness areas.
         """
-        response = client.get('/cerca_strutture?piscina_coperta=False&sauna=False&area_fitness=True')
+        params = {
+            'indoor_pool': 'False',
+            'sauna': 'False',
+            'fitness_area': 'True'
+        }
+        response = self.client.get('/search_structures', params=params)
+        self.assertEqual(response.status_code, 200)
         result = response.json()
         self.assertIsInstance(result, list)
 
     def test_search_with_only_covered_pool_and_sauna_true(self):
         """
-        Test searching for structures with only the 'piscina_coperta' and 'sauna' options set to True.
+        Test searching for structures with only the 'indoor_pool'
+        and 'sauna' options set to True.
 
         It should return a list of structures with covered pools and saunas.
         """
-        response = client.get('/cerca_strutture?piscina_coperta=True&sauna=True&area_fitness=False')
+        params = {
+            'indoor_pool': 'True',
+            'sauna': 'True',
+            'fitness_area': 'False'
+        }
+        response = self.client.get('/search_structures', params=params)
+        self.assertEqual(response.status_code, 200)
         result = response.json()
         self.assertIsInstance(result, list)
 
     def test_search_with_only_covered_pool_and_fitness_area_true(self):
         """
-        Test searching for structures with 'piscina_coperta' and 'area_fitness' set to True.
+        Test searching for structures with 'indoor_pool' and
+        'fitness_area' set to True.
 
-        It should return a list of structures with covered pools and fitness areas.
+        It should return a list of structures with covered pools
+        and fitness areas.
         """
-        response = client.get('/cerca_strutture?piscina_coperta=True&sauna=False&area_fitness=True')
+        params = {
+            'indoor_pool': 'True',
+            'sauna': 'False',
+            'fitness_area': 'True'
+        }
+        response = self.client.get('/search_structures', params=params)
+        self.assertEqual(response.status_code, 200)
         result = response.json()
         self.assertIsInstance(result, list)
 
     def test_search_with_only_sauna_and_fitness_area_true(self):
         """
-        Test searching for structures with 'sauna' and 'area_fitness' set to True.
+        Test searching for structures with 'sauna'
+        and 'fitness_area' set to True.
 
         It should return a list of structures with saunas and fitness areas.
         """
-        response = client.get('/cerca_strutture?piscina_coperta=False&sauna=True&area_fitness=True')
+        params = {
+            'indoor_pool': 'False',
+            'sauna': 'True',
+            'fitness_area': 'True'
+        }
+        response = self.client.get('/search_structures', params=params)
+        self.assertEqual(response.status_code, 200)
         result = response.json()
         self.assertIsInstance(result, list)
 
@@ -129,10 +188,28 @@ class TestCercaStrutture(unittest.TestCase):
         """
         Test handling of invalid parameters in the search.
 
-        It should return a validation error (status code 422) as FastAPI rejects invalid parameters.
+        It should return a validation error (status code 422) as
+        FastAPI rejects invalid parameters.
         """
-        response = client.get('/cerca_strutture?sauna=InvalidValue')
+        params = {'sauna': 'InvalidValue'}
+        response = self.client.get('/search_structures', params=params)
         self.assertEqual(response.status_code, 422)
+        result = response.json()
+        self.assertEqual(result['detail'][0]['msg'], 'value could not be parsed to a boolean')
+
+    def test_search_with_invalid_boolean_parameters(self):
+        """
+        Test handling of invalid boolean parameters in the search.
+
+        It should return a validation error (status code 422) as
+        FastAPI rejects invalid boolean parameters.
+        """
+        params = {'indoor_pool': 'InvalidValue'}
+        response = self.client.get('/search_structures', params=params)
+        self.assertEqual(response.status_code, 422)
+        result = response.json()
+        self.assertEqual(result['detail'][0]['msg'], 'value could not be parsed to a boolean')
+
 
 
 class TestApp(unittest.TestCase):
@@ -227,7 +304,7 @@ def test_suburbs_hotel():
 
 def test_suburb_missing_values():
     # Test to ensure no missing values
-    assert not df_suburb.isna().any().any()
+    assert not df.isna().any().any()
 
 
 class TestSearchStructures(unittest.TestCase):
@@ -423,8 +500,8 @@ def test_no_filters():
     Evaluates behavior when no filters are applied.
     """
     # Test when no filters are applied (using default string values)
-    result_no_filters = essential_services_periphery(aria_condizionata="False",
-                                                     animali_ammessi="False")
+    result_no_filters = essential_services_periphery(air_conditioning="False",
+                                                     pets_allowed="False")
     assert isinstance(result_no_filters, list)
 
 
@@ -458,46 +535,46 @@ class TestApp(unittest.TestCase):
     def setUp(self):
         self.client = TestClient(app)
 
-    def test_find_albergo(self):
-        # Typology 'albergo' with both train station and highway
+    def test_find_hotel_near_transports(self):
+        # Typology 'hotel' with both train station and highway
         response = self.client.get("/find_hotels_near_transports", params={
             "selected_typology": "ALBERGO",
-            "stazione": "Yes",
-            "autostrada": "Yes"
+            "train_station": "Yes",
+            "highway": "Yes"
         })
         self.assertEqual(response.status_code, 200)
         result = response.json()
         self.assertIsInstance(result, list)
 
-    def test_find_ostello(self):
-        # Typology 'ostello' with both train station and highway
+    def test_find_hostel_near_transports(self):
+        # Typology 'hostel' with both train station and highway
         response = self.client.get("/find_hotels_near_transports", params={
             "selected_typology": "OSTELLO",
-            "stazione": "Yes",
-            "autostrada": "Yes"
+            "train_station": "Yes",
+            "highway": "Yes"
         })
         self.assertEqual(response.status_code, 200)
         result = response.json()
         self.assertIsInstance(result, list)
         self.assertEqual(len(result), 0)
 
-    def test_find_camere(self):
-        # Typology 'camere' with train station and no highway
+    def test_find_rooms_near_transports(self):
+        # Typology 'rooms' with train station and no highway
         response = self.client.get("/find_hotels_near_transports", params={
             "selected_typology": "CAMERE",
-            "stazione": "Yes",
-            "autostrada": "No"
+            "train_station": "Yes",
+            "highway": "No"
         })
         self.assertEqual(response.status_code, 200)
         result = response.json()
         self.assertIsInstance(result, list)
 
     def test_find_country_house_no_transports(self):
-        # Typology 'country house' with neither the station nor the motorway
+        # Typology 'country house' with neither train station nor highway
         response = self.client.get("/find_hotels_near_transports", params={
              "selected_typology": "COUNTRY_HOUSE",
-             "stazione": "No",
-             "autostrada": "No"
+             "train_station": "No",
+             "highway": "No"
         })
         result = response.json()
         self.assertIsInstance(result, list)
@@ -510,66 +587,66 @@ class TestApp(unittest.TestCase):
         self.assertIsInstance(result, str)
 
     def test_find_country_house(self):
-        # Typology 'COUNTRY_HOUSE' with neither the station nor the highway
+        # Typology 'COUNTRY_HOUSE' with neither train station nor highway
         response = self.client.get("/find_hotels_near_transports", params={
             "selected_typology": "COUNTRY_HOUSE",
-            "stazione": "No",
-            "autostrada": "No"
+            "train_station": "No",
+            "highway": "No"
         })
         self.assertEqual(response.status_code, 200)
         result = response.json()
         self.assertIsInstance(result, list)
 
     def test_find_hotels_near_transports_with_highway(self):
-        # Trying with the typology 'Hotel' near the highway
+        # Trying with the typology 'hotel' near the highway
         response = self.client.get("/find_hotels_near_transports", params={
             "selected_typology": "ALBERGO",
-            "stazione": "No",
-            "autostrada": "Yes"
+            "train_station": "No",
+            "highway": "Yes"
         })
         self.assertEqual(response.status_code, 200)
         result = response.json()
         self.assertIsInstance(result, list)
 
-    def test_find_appartamenti_vacanze(self):
-        # Typology 'appartamenti vacanze' near the train station
+    def test_find_holiday_apartments_near_train_station(self):
+        # Typology 'holiday apartments' near the train station
         response = self.client.get("/find_hotels_near_transports", params={
             "selected_typology": "APPARTAMENTI_VACANZE",
-            "stazione": "Yes",
-            "autostrada": "No"
+            "train_station": "Yes",
+            "highway": "No"
         })
         self.assertEqual(response.status_code, 200)
         result = response.json()
         self.assertIsInstance(result, list)
 
-    def test_find_bed_and_breakfast(self):
-        # Typology 'Bed and Breakfast' near the train station
+    def test_find_bed_and_breakfast_near_train_station(self):
+        # Typology 'bed and breakfast' near the train station
         response = self.client.get("/find_hotels_near_transports", params={
             "selected_typology": "BED_AND_BREAKFAST",
-            "stazione": "Yes",
-            "autostrada": "No"
+            "train_station": "Yes",
+            "highway": "No"
         })
         self.assertEqual(response.status_code, 200)
         result = response.json()
         self.assertIsInstance(result, list)
 
     def test_find_resort_with_fitness_area(self):
-        # 'Holiday apartments' with neither train station either highway
+        # 'Holiday apartments' with neither train station nor highway
         response = self.client.get("/find_hotels_near_transports", params={
             "selected_typology": "APPARTAMENTI_VACANZE",
-            "stazione": "No",
-            "autostrada": "No",
+            "train_station": "No",
+            "highway": "No",
         })
         self.assertEqual(response.status_code, 200)
         result = response.json()
         self.assertIsInstance(result, list)
 
     def test_find_hostel_near_highway(self):
-        # Typology 'Hostel' near the highway
+        # Typology 'hostel' near the highway
         response = self.client.get("/find_hotels_near_transports", params={
             "selected_typology": "OSTELLO",
-            "stazione": "No",
-            "autostrada": "Yes"
+            "train_station": "No",
+            "highway": "Yes"
         })
         self.assertEqual(response.status_code, 200)
         result = response.json()
@@ -586,9 +663,9 @@ def test_get_structures_with_data():
     response = client.get(
         "/structures",
         params={
-            'zona': 'dolomiti',
-            'parcheggio': 'Vero',
-            'ristorante': 'Vero'
+            'zone': 'dolomiti',
+            'parking': 'Vero',
+            'restaurant': 'Vero'
         }
     )
     assert response.status_code == 200
@@ -602,9 +679,9 @@ def test_get_structures_no_data():
     response = client.get(
         "/structures",
         params={
-            'zona': 'nonexistent',
-            'parcheggio': 'Falso',
-            'ristorante': 'Falso'
+            'zone': 'nonexistent',
+            'parking': 'Falso',
+            'restaurant': 'Falso'
         }
     )
     assert response.status_code == 200
@@ -626,8 +703,7 @@ def test_invalid_filter_parameter():
         "/structures",
         params={
             'zone': 'australia',
-            'ristorante': 'Vero',
-            'parcheggio': 'Falso'
+            'restaurant': 'Vero',
         }
     )
     assert response.status_code == 422  # Assuming 422 for bad request
@@ -638,9 +714,9 @@ def test_zone_dolomiti():
     response = client.get(
         "/structures",
         params={
-            'zona': 'dolomiti',
-            'parcheggio': 'Vero',
-            'ristorante': 'Falso'
+            'zone': 'dolomiti',
+            'parking': 'Vero',
+            'restaurant': 'Falso'
         }
     )
     assert response.status_code == 200
@@ -651,7 +727,7 @@ def test_zone_dolomiti():
 def test_zone_caorle():
     response = client.get(
         "/structures",
-        params={'zona': 'caorle', 'parcheggio': 'Falso', 'ristorante': 'Vero'}
+        params={'zone': 'caorle', 'parking': 'Falso', 'restaurant': 'Vero'}
     )
     assert response.status_code == 200
     assert isinstance(response.json(), list)
@@ -662,9 +738,9 @@ def test_zone_jesolo_eraclea():
     response = client.get(
         "/structures",
         params={
-            'zona': 'jesolo-eraclea',
-            'parcheggio': 'Vero',
-            'ristorante': 'Vero'
+            'zone': 'jesolo-eraclea',
+            'parking': 'Vero',
+            'restaurant': 'Vero'
         }
     )
     assert response.status_code == 200
@@ -676,9 +752,9 @@ def test_zone_bibione():
     response = client.get(
         "/structures",
         params={
-            'zona': 'bibione',
-            'parcheggio': 'Falso',
-            'ristorante': 'Falso'
+            'zone': 'bibione',
+            'parking': 'Falso',
+            'restaurant': 'Falso'
         }
     )
     assert response.status_code == 200
@@ -690,9 +766,9 @@ def test_zone_altopiano_asiago():
     response = client.get(
         "/structures",
         params={
-            'zona': 'altopiano-asiago',
-            'parcheggio': 'Vero',
-            'ristorante': 'Falso'
+            'zone': 'altopiano-asiago',
+            'parking': 'Vero',
+            'restaurant': 'Falso'
         }
     )
     assert response.status_code == 200
@@ -704,9 +780,9 @@ def test_zone_belluno_feltre_alpago():
     response = client.get(
         "/structures",
         params={
-            'zona': 'belluno-feltre-alpago',
-            'parcheggio': 'Falso',
-            'ristorante': 'Vero'
+            'zone': 'belluno-feltre-alpago',
+            'parking': 'Falso',
+            'restaurant': 'Vero'
         }
     )
     assert response.status_code == 200
@@ -718,9 +794,9 @@ def test_zone_cavallino():
     response = client.get(
         "/structures",
         params={
-            'zona': 'cavallino',
-            'parcheggio': 'Vero',
-            'ristorante': 'Vero'
+            'zone': 'cavallino',
+            'parking': 'Vero',
+            'restaurant': 'Vero'
         }
     )
     assert response.status_code == 200
@@ -732,9 +808,9 @@ def test_zone_chioggia():
     response = client.get(
         "/structures",
         params={
-            'zona': 'chioggia',
-            'parcheggio': 'Falso',
-            'ristorante': 'Falso'
+            'zone': 'chioggia',
+            'parking': 'Falso',
+            'restaurant': 'Falso'
         }
     )
     assert response.status_code == 200
@@ -746,9 +822,9 @@ def test_zone_garda():
     response = client.get(
         "/structures",
         params={
-            'zona': 'garda',
-            'parcheggio': 'Falso',
-            'ristorante': 'Vero'
+            'zone': 'garda',
+            'parking': 'Falso',
+            'restaurant': 'Vero'
         }
     )
     assert response.status_code == 200
@@ -760,9 +836,9 @@ def test_zone_padova():
     response = client.get(
         "/structures",
         params={
-            'zona': 'padova',
-            'parcheggio': 'Vero',
-            'ristorante': 'Vero'
+            'zone': 'padova',
+            'parking': 'Vero',
+            'restaurant': 'Vero'
         }
     )
     assert response.status_code == 200
@@ -774,9 +850,9 @@ def test_zone_rovigo():
     response = client.get(
         "/structures",
         params={
-            'zona': 'rovigo',
-            'parcheggio': 'Falso',
-            'ristorante': 'Falso'
+            'zone': 'rovigo',
+            'parking': 'Falso',
+            'restaurant': 'Falso'
         }
     )
     assert response.status_code == 200
@@ -788,9 +864,9 @@ def test_zone_terme_euganee():
     response = client.get(
         "/structures",
         params={
-            'zona': 'terme-euganee',
-            'parcheggio': 'Vero',
-            'ristorante': 'Vero'
+            'zone': 'terme-euganee',
+            'parking': 'Vero',
+            'restaurant': 'Vero'
         }
     )
     assert response.status_code == 200
@@ -802,9 +878,9 @@ def test_zone_treviso():
     response = client.get(
         "/structures",
         params={
-            'zona': 'treviso',
-            'parcheggio': 'Falso',
-            'ristorante': 'Falso'
+            'zone': 'treviso',
+            'parking': 'Falso',
+            'restaurant': 'Falso'
         }
     )
     assert response.status_code == 200
@@ -816,9 +892,9 @@ def test_zone_venezia():
     response = client.get(
         "/structures",
         params={
-            'zona': 'venezia',
-            'parcheggio': 'Vero',
-            'ristorante': 'Vero'
+            'zone': 'venezia',
+            'parking': 'Vero',
+            'restaurant': 'Vero'
         }
     )
     assert response.status_code == 200
