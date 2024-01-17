@@ -195,12 +195,8 @@ def search_structure_search():
                            result=None, error_message=error_message)
 
 
-<<<<<<< Updated upstream
 # Define a route for the Animal Crossers page
 @app.route('/')
-=======
-@app.route('/index')
->>>>>>> Stashed changes
 def index():
     """
     Route for displaying the homepage.
