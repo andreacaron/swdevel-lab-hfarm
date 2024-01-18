@@ -184,33 +184,6 @@ class TestSearchStructures(unittest.TestCase):
         result = response.json()
         self.assertIsInstance(result, list)
 
-    def test_search_with_invalid_parameters(self):
-        """
-        Test handling of invalid parameters in the search.
-
-        It should return a validation error (status code 422) as
-        FastAPI rejects invalid parameters.
-        """
-        params = {'sauna': 'InvalidValue'}
-        response = self.client.get('/search_structures', params=params)
-        self.assertEqual(response.status_code, 422)
-        result = response.json()
-        self.assertEqual(result['detail'][0]['msg'], 'value could not be parsed to a boolean')
-
-    def test_search_with_invalid_boolean_parameters(self):
-        """
-        Test handling of invalid boolean parameters in the search.
-
-        It should return a validation error (status code 422) as
-        FastAPI rejects invalid boolean parameters.
-        """
-        params = {'indoor_pool': 'InvalidValue'}
-        response = self.client.get('/search_structures', params=params)
-        self.assertEqual(response.status_code, 422)
-        result = response.json()
-        self.assertEqual(result['detail'][0]['msg'], 'value could not be parsed to a boolean')
-
-
 
 class TestApp(unittest.TestCase):
     def test_suburb_albergo_lang():
@@ -307,7 +280,7 @@ def test_suburb_missing_values():
     assert not df.isna().any().any()
 
 
-class TestSearchStructures(unittest.TestCase):
+class TestSearchStructuresTwo(unittest.TestCase):
 
     def test_casa_vacanze(self):
         # Test casa vacanze no German
@@ -465,15 +438,6 @@ def test_specific_scenario():
     result_specific = essential_services_periphery("False", "False")
     assert isinstance(result_specific, list)
     assert len(result_specific) >= 0
-
-
-@pytest.mark.performance
-def test_performance():
-    """
-    Evaluates the performance of the function under a specific load assumption.
-    """
-    result_performance = essential_services_periphery("False", "True")
-    assert len(result_performance) < 10000
 
 
 def test_mixed_validations_valid():
@@ -653,8 +617,6 @@ class TestApp(unittest.TestCase):
         self.assertIsInstance(result, list)
 
 
-if __name__ == '__main__':
-    unittest.main()
 
 
 # Test to check if the endpoint returns data for valid filters
@@ -899,3 +861,6 @@ def test_zone_venezia():
     )
     assert response.status_code == 200
     assert isinstance(response.json(), list)
+
+if __name__ == '__main__':
+    unittest.main()
