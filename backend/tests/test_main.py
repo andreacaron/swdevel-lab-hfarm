@@ -20,8 +20,6 @@ from fastapi.responses import JSONResponse
 import pandas as pd
 import unittest
 
-# Skipping performance tests
-pytest.mark.performance = pytest.mark.skip(reason="Performance tests skipped")
 
 # Add the project root to the sys.path
 sys.path.insert(0, os.path.abspath(

@@ -59,41 +59,65 @@ https://dati.veneto.it/content/elenco-delle-strutture-ricettive-turistiche-della
 
 ## Helper Modules:
 
+We developed everythin in one module, main, both in the backend and in the frontend.
+
 **1. Essentials Feature:**
-  - Backend: essential_services_periphery() function in `essentials_backend.py`
-  - Frontend: `search.html` template and Flask routes in `essentials_frontend.py`
+  - Backend: structures() function in `main.py`
+  - Frontend: `essentials.html` template and Flask routes in `main.py`
 
 **2. Transportation Explorer Feature:**
   - Backend: find_hotels_near_transport() function in `transportation_backend.py`
-  - Frontend: `find_hotels.html` template and Flask routes in `transportation_frontend.py`
+  - Frontend: `transports.html` template and Flask routes in `main.py`
 
 **3. Peripherical BnB Feature:**
   - Backend: essential_services_periphery() function in `peripherical_bnb_backend.py`
-  - Frontend: `search.html` template and Flask routes in `peripherical_bnb_frontend.py`
+  - Frontend: `extras.html` template and Flask routes in `main.py`
 
 **4. Wellness Explorer Feature:**
-  - Backend: cerca_strutture() function in` wellness_backend.py`
-  - Frontend: `search.html` template and Flask routes in `wellness_frontend.py`
+  - Backend: search_structures() function in `main.py`
+  - Frontend: `luxuries.html` template and Flask routes in `main.py`
 
 **5. Suburbs Explorer Feature:**
   - Backend: find_structures_suburb() function in `suburbs_backend.py`
-  - Frontend: `periferia.html` template and Flask routes in `suburbs_frontend.py`
+  - Frontend: `languages.html` template and Flask routes in `main.py`
 
 
 ## HOME PAGE 
 The `home_page.html` code represents the home page of the website.
 
-It is structured with a clean and visually appealing design. Key elements include:
-- container styling
-- introductory section
-- image grid
-- text on the left
-- five points with emojis
-- CSS styling
-- image and grid styles
-- custom classes
+This HTML template serves as the foundation for the Animal Crossers web application. The template utilizes Bootstrap, a popular front-end framework, to ensure a responsive and visually appealing design. The structure and components are tailored to accommodate the various features and pages of the Animal Crossers project.
 
-The page achieves a balance between visual appeal and informative content, providing users with a clear and engaging introduction to the project's purpose and features.
+**Template Structure**
+
+- Meta Tags
+Charset and Viewport: Ensures proper character encoding and sets the viewport for responsiveness.
+
+- CSS Libraries
+1. Bootstrap CSS: Provides the core styling for the application.
+2. Bootstrap Icons: Includes a set of icons for visual elements.
+3. Bootstrap Table CSS: Adds styles for displaying tables.
+
+- Title
+The title of the page is dynamically set using the Jinja2 templating engine. Each specific page can override the default title.
+
+- Body
+
+JavaScript Libraries
+1. jQuery: A JavaScript library for simplified HTML document traversal and manipulation.
+2. Bootstrap Bundle JS: Includes Bootstrap's JavaScript plugins.
+3. Bootstrap Table JS: Adds functionality for interactive tables.
+
+Custom JavaScript
+app.js: A custom JavaScript file for additional functionality. Make sure to link the correct path based on the project structure.
+
+Navigation Bar
+1. A responsive navigation bar created using Bootstrap's Navbar component.
+2. Animal Crossers logo with a link to the home page.
+3. Navigation links for each feature/page of the application.
+
+Content Container
+A container div to hold the main content of each page.
+The {% block content %}{% endblock %} tags allow specific content to be injected into this section for each page.
 
 ## CUSTOMIZED WEB PAGES 
 We applied a custumized CSS style to every web page to enhance the visual appeal. These styles are designed for improved aesthetics and can be easily integrated into your project.
@@ -126,17 +150,6 @@ Different tests have been implemented to ensure the robustness of the "structure
 
 Did the same for each zone.
 
-
-
-**Usage**
-
-To use the application, follow these steps:
-1. Ensure that the CSV file ("dove-alloggiare.csv") is present in the specified path in the code;
-2. Call the "/structures" endpoint with the appropriate parameters for the search;
-3. Unit tests are provided to ensure the correct functioning of the "cerca_strutture" function in various scenarios.
-
-
-
 ## FRONTEND OVERVIEW
 
 This frontend is part of the "Essentials" feature in a web application implemented using Flask. The purpose of the feature is to provide users with information about available accommodation structures in various zones based on specific criteria, such as the presence of essential services like restaurants and parking. This documentation outlines the frontend's structure, form configuration, and how it interacts with the FastAPI backend.
@@ -148,9 +161,9 @@ The frontend is built using Flask. It includes a form for users to input search 
 
 
 The search form (`SearchForm`) includes the following fields:
-- `zona`: A dropdown list for selecting the desired zone.
-- `ristorante`: A dropdown list for selecting restaurant availability (Yes/No).
-- `parcheggio`: A dropdown list for selecting parking availability (Yes/No).
+- `zone`: A dropdown list for selecting the desired zone.
+- `restaurant`: A dropdown list for selecting restaurant availability (Yes/No).
+- `parking`: A dropdown list for selecting parking availability (Yes/No).
 - `submit`: A submit button to trigger the search.
 
 The Flask application is configured to communicate with the FastAPI backend, whose URL is defined by `FASTAPI_BACKEND_HOST` and used to construct the endpoint URL.
@@ -158,15 +171,7 @@ The Flask application is configured to communicate with the FastAPI backend, who
 
 **Internal Page Route**
 
-The `/internal_page` route handles the rendering of the internal page. It retrieves unique zones from the FastAPI backend and populates the dropdown list in the search form dynamically. The user's search criteria are then used to query the backend for relevant information.
-
-
-**Usage**
-
-1. Ensure that the FastAPI backend is running and accessible.
-2. Access the Flask application at the specified host and port.
-3. Complete the search form with desired criteria.
-4. Submit the form to retrieve information from the FastAPI backend.
+The `/essentials` route handles the rendering of the 'essentials' page. It retrieves unique zones from the FastAPI backend and populates the dropdown list in the search form dynamically. The user's search criteria are then used to query the backend for relevant information.
 
 
 **Additional Notes**
@@ -221,8 +226,8 @@ This frontend is an integral part of the "Essentials" feature within a web appli
 
 The frontend is implemented using Flask, incorporating a form that enables users to input search criteria such as zone, restaurant availability, and parking availability. This form is constructed using Flask-WTF and WTForms. Upon form submission, a request is dispatched to the FastAPI backend to retrieve pertinent information based on the user's specified criteria.
 The search form (`SearchForm`) includes the following fields:
-- Stazione: A dropdown list to select the availability of a nearby railway station (Yes/No).
-- Autostrada: A dropdown list to select the availability of a highway (Yes/No).
+- Train_station: A dropdown list to select the availability of a nearby railway station (Yes/No).
+- Highway: A dropdown list to select the availability of a highway (Yes/No).
 - Submit: A submit button to initiate the search.
 The Flask application is configured to communicate with the FastAPI backend, and the backend's URL is defined by `FASTAPI_BACKEND_HOST` and used to construct the endpoint URL.
 
@@ -232,14 +237,6 @@ The Flask application is configured to communicate with the FastAPI backend, and
 The `/find_hotels` route manages the rendering of the web page. It dynamically fetches unique zones from the FastAPI backend and populates the dropdown list in the search form. 
 
 The user's search criteria are then employed to query the backend for relevant information.
-
-
-**Usage**
-
-1. Ensure that the FastAPI backend is operational and accessible.
-2. Access the Flask application at the specified host and port.
-3. Complete the search form with the desired criteria.
-4. Submit the form to retrieve information from the FastAPI backend.
 
 
 **Additional Notes**
@@ -262,8 +259,8 @@ The backbone of this application is the backend module, which manages intricate 
 - **Endpoint**: `/essential_services_periphery`
 - **Description**: Executes a refined filtration process to retrieve B&B data based on meticulously chosen amenities in periphery areas.
 - **Input Parameters**:
-  - `aria_condizionata`: Signifies the Air Conditioning preference (string).
-  - `animali_ammessi`: Represents the Pets Allowed preference (string).
+  - `air_conditioning`: Signifies the Air Conditioning preference (string).
+  - `pets_allowed`: Represents the Pets Allowed preference (string).
 - **Functionality**:
   - Meticulously reads and processes BED AND BREAKFAST data stored in the CSV file (`dove-alloggiare.csv`).
   - Impeccably filters BED AND BREAKFASTs situated in periphery areas based on the discerning selection of amenities made by users.
@@ -325,29 +322,13 @@ The project boasts an exhaustive suite of tests meticulously crafted to scrutini
   - Expected Outcome: Verifies responsiveness and efficiency under increased simulated load, maintaining acceptable response times for B&B queries.
 
 
-
-**Usage**
-To utilize this functionality, follow these steps:
-1. Ensure that the CSV file ("dove-alloggiare.csv") is located in the specified path in the code.
-2. Access the "/essential_services_periphery" endpoint, providing appropriate query parameters for amenity-based filtering.
-3. Utilize the provided unit tests to verify the correct functioning of the filtering feature across various scenarios.
-
 ## FRONTEND OVERVIEW
 
 The frontend module delivers an immaculate user interface, meticulously crafted to facilitate seamless interaction with the application.
 
-The frontend is implemented using Flask and includes HTML, WTForms, and CSS components. The `search.html` template and the Flask routing in `main.py` deliver an engaging and functional user experience.
-The `search.html` template provides a user-friendly form allowing users to specify amenities and view meticulously filtered results. This form is powered by Flask-WTF and interacts with the backend.
-The Flask application (segment from `main.py`) includes routes (`/search`, `/display_results`) to handle form submissions and display results. These routes communicate with the FastAPI backend (`essential_services_periphery` endpoint) to retrieve and display filtered BED AND BREAKFAST information.
-
-
-**Usage**
-To integrate the frontend with the backend for filtered bed and breakfast searches:
-1. Ensure Flask Backend Accessibility: Verify the operational status and accessibility of the Flask backend.
-2. Update FastAPI Backend URL: Modify the `FASTAPI_BACKEND_HOST` variable to correspond with the appropriate FastAPI backend URL.
-3. Implement Frontend Code: Integrate the provided frontend code into your web application.
-4. Develop HTML Template: Create an HTML template (e.g., "search.html") to showcase the search form and display the filtered results.
-5. Customize Form Fields and Design: Tailor the form fields and design elements to align with your application's specific requirements and visual aesthetics.
+The frontend is implemented using Flask and includes HTML, WTForms, and CSS components. The `extras.html` template and the Flask routing in `main.py` deliver an engaging and functional user experience.
+The `extras.html` template provides a user-friendly form allowing users to specify amenities and view meticulously filtered results. This form is powered by Flask-WTF and interacts with the backend.
+The Flask application (segment from `main.py`) includes routes (`/extras`, `/display_results`) to handle form submissions and display results. These routes communicate with the FastAPI backend (`essential_services_periphery` endpoint) to retrieve and display filtered BED AND BREAKFAST information.
 
 
 # FEATURE 4 "WELLNESS EXPLORER"
@@ -364,22 +345,21 @@ The application reads accommodation data from a CSV file ("dove-alloggiare.csv")
 
 To ensure the robustness of the application, a suite of unit tests has been implemented using the FastAPI "TestClient" and the "unittest" module. These tests cover various scenarios, including different combinations of true and false values for search criteria.
 
-- test_all_options_true: Verify if the function returns a list when all options are set to True.
-- test_no_option_true: Verify if the function returns an empty list when all options are set to False.
-- test_only_indoor_pool_true: Verify if the function returns a list when only the "indoor pool" option is set to True.
-- test_only_sauna_true: Verify if the function returns a list when only the 'sauna' option is set to True.
-- test_only_fitness_area_true: Verify if the function returns a list when only the 'fitness_area' option is set to True.
-- test_only_indoor_pool_and_sauna_true: Verify if the function returns a list when only the 'indoor_pool' and 'sauna' options are set to True.
-- test_only_indoor_pool_and_fitness_area_true: Verify if the function returns a list when only the 'indoor_pool' and 'fitness_area' options are set to True.
-- test_only_sauna_and_fitness_area_true: Verify if the function returns a list when only the 'sauna' and 'fitness_area' options are set to True.
+- Search with All Options True: validates that the endpoint returns a list of structures meeting the specified criteria when all options (indoor pool, sauna, fitness area) are set to `True`.
 
-**Usage**
+- Search with No Option True: ensures that an empty list is returned when all options (indoor pool, sauna, fitness area) are set to `False`, indicating no structures meet the specified criteria.
 
-To use the application:
+- Search with Only Covered Pool True: verifies that the endpoint returns a list of structures with covered pools when only the 'indoor_pool' option is set to `True`.
 
-1. Ensure that the CSV file ("dove-alloggiare.csv") is present in the specified path in the code.
-2. Call the "/cerca_strutture" endpoint with the appropriate parameters for the search.
-3. Unit tests are provided to ensure the correct functioning of the "cerca_strutture" function in various scenarios.
+- Search with Only Sauna True: validates that the endpoint returns a list of structures with saunas when only the 'sauna' option is set to `True`.
+
+- Search with Only Fitness Area True: ensures that the endpoint returns a list of structures with fitness areas when only the 'fitness_area' option is set to `True`.
+
+- Search with Only Covered Pool and Sauna True: verifies that the endpoint returns a list of structures with covered pools and saunas when both 'indoor_pool' and 'sauna' options are set to `True`.
+
+- Search with Only Covered Pool and Fitness Area True: validates that the endpoint returns a list of structures with covered pools and fitness areas when both 'indoor_pool' and 'fitness_area' options are set to `True`.
+
+- Search with Only Sauna and Fitness Area True: ensures that the endpoint returns a list of structures with saunas and fitness areas when both 'sauna' and 'fitness_area' options are set to `True`.
 
 
 ## FRONTEND OVERVIEW
@@ -393,17 +373,7 @@ The frontend is built using Flask, a web framework for Python, and facilitates u
 - **Form Validation**: If the form is submitted and valid, input data is retrieved, and a URL for the FastAPI backend is constructed.
 - **FastAPI Backend Request**: A GET request is made to the FastAPI backend using the constructed URL. Exceptions are caught, and an error message is generated if there are issues with the request.
 - **Data Parsing**: If the request is successful, JSON data is parsed from the FastAPI response.
-- **Rendering**: The data, along with the form and error message, is rendered on the "search.html" template.
-
-
-**Usage**
-
-To integrate the frontend with the backend and enable accommodation structure searches:
-1. Ensure that the Flask backend is running and accessible.
-2. Modify the FASTAPI_BACKEND_HOST variable with the appropriate FastAPI backend URL.
-3. Implement the frontend code within your web application.
-4. Create an HTML template (e.g., "search.html") to display the search form and results.
-5. Customise the form fields and design as needed to fit your application's requirements.
+- **Rendering**: The data, along with the form and error message, is rendered on the "luxuries.html" template.
 
 
 # FEATURE 5 "SUBURBS EXPLORER"
@@ -453,15 +423,6 @@ Test Cases for `TestSearchStructures` Class:
 - test_ostello: Verifies the functionality of find_structures_suburb for the 'OSTELLO' typology with only English set to 'True'.
 - test_bed_and_breakfast: Verifies the functionality of find_structures_suburb for the 'BED AND BREAKFAST' typology with only Spanish set to 'True'.
 
-**Usage**
-
-To use the application, follow these steps:
-
-1. Ensure that the CSV file ("dove-alloggiare.csv") is present in the specified path in the code;
-2. Call the "/find_structures_suburb" endpoint with the appropriate parameters for the search;
-3. Unit tests are provided to ensure the correct functioning of the "find_structures_suburb" function in various scenarios.
-
-
 
 ## FRONTEND OVERVIEW
 
@@ -483,6 +444,44 @@ To integrate the frontend with the backend and enable the research:
 3. Implement the frontend code within your web application.
 4. Create an HTML template (e.g., "periferia.html") to display the search form and results.
 5. Customize the form fields and design as needed to fit your application's requirements.
+
+
+
+## Usage
+
+To use the application, follow these steps:
+1. Ensure that the CSV file ("dove-alloggiare.csv") is present in the specified path in the code;
+3. Tests are provided to ensure the correct functioning of the functions in various scenarios.
+
+## IMPORTANT ANNOTATIONS
+
+- To run the different tests please write in the terminal pytest --cov=app --cov-report=html tests/ and also this command coverage report -m, to ensure that all our tests cover all the lines of our codes.
+
+- pycodestyle has been runned in the terminal of these modules:
+1. main.py -backend
+2. test_main.py -backend
+3. main.py -frontend
+**Remark**: no pep8 errors were found except for this one in test_main.py: *E402 module level import not at top of file*
+We could not fix it because it was necessary to keep that order of code lines otherwise the 'import app' command would have caused an unsurpessable error.
+
+- The developed tests comprehend the use of both pytest and unittest, since each member of the group used the one that fitted better with his/her expectations and with the developed code.
+
+- pydoc -w has been runned in the terminal in both main.py for the backend and frontend to ensure that the documentation was appropriate.
+
+- The different html modules in the frontend are named accordingly with their main funcions.
+eg: essentials.html is the web page which displays the Flask route for the essentials services in the Veneto region for the different allocations.
+
+- The images in the Web Page are linked to the owners. We **do not own them**.
+
+- The work was equally splitted among the different group members.
+
+- Tool used for the Software Project Development:
+1. Whatsapp
+2. Google doc
+3. Github
+4. Github Desktop
+5. Docker
+6. Terminal using git
 
 
 # CONCLUSION

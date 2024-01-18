@@ -9,10 +9,10 @@
 <font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>main</strong></big></big></font></td
 ><td align=right valign=bottom
 ><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/app/app/main.py">/app/app/main.py</a></font></td></tr></table>
-    <p><tt>Frontend&nbsp;module&nbsp;for&nbsp;the&nbsp;Flask&nbsp;application.<br>
+    <p><tt>Frontend&nbsp;module&nbsp;for&nbsp;a&nbsp;Flask&nbsp;application.<br>
 &nbsp;<br>
 This&nbsp;module&nbsp;defines&nbsp;a&nbsp;simple&nbsp;Flask&nbsp;application<br>
-that&nbsp;serves&nbsp;as&nbsp;the&nbsp;frontend&nbsp;for&nbsp;the&nbsp;project.</tt></p>
+serving&nbsp;as&nbsp;the&nbsp;frontend&nbsp;for&nbsp;a&nbsp;project.</tt></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#aa55cc">
@@ -36,7 +36,7 @@ that&nbsp;serves&nbsp;as&nbsp;the&nbsp;frontend&nbsp;for&nbsp;the&nbsp;project.<
 <dt><font face="helvetica, arial"><a href="main.html#SearchEssentials">SearchEssentials</a>
 </font></dt><dt><font face="helvetica, arial"><a href="main.html#SearchExtras">SearchExtras</a>
 </font></dt><dt><font face="helvetica, arial"><a href="main.html#SearchForm">SearchForm</a>
-</font></dt><dt><font face="helvetica, arial"><a href="main.html#SearchPeriferia">SearchPeriferia</a>
+</font></dt><dt><font face="helvetica, arial"><a href="main.html#SearchPeriphery">SearchPeriphery</a>
 </font></dt><dt><font face="helvetica, arial"><a href="main.html#SearchTransport">SearchTransport</a>
 </font></dt></dl>
 </dd>
@@ -50,11 +50,13 @@ that&nbsp;serves&nbsp;as&nbsp;the&nbsp;frontend&nbsp;for&nbsp;the&nbsp;project.<
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
 <td colspan=2><tt><a href="#SearchEssentials">SearchEssentials</a>(*args,&nbsp;**kwargs)<br>
 &nbsp;<br>
-Flask-specific&nbsp;subclass&nbsp;of&nbsp;WTForms&nbsp;:class:`~wtforms.form.Form`.<br>
+Form&nbsp;class&nbsp;for&nbsp;searching&nbsp;essential&nbsp;services.<br>
 &nbsp;<br>
-If&nbsp;``formdata``&nbsp;is&nbsp;not&nbsp;specified,&nbsp;this&nbsp;will&nbsp;use&nbsp;:attr:`flask.request.form`<br>
-and&nbsp;:attr:`flask.request.files`.&nbsp;&nbsp;Explicitly&nbsp;pass&nbsp;``formdata=None``&nbsp;to<br>
-prevent&nbsp;this.<br>&nbsp;</tt></td></tr>
+Attributes:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;zone:&nbsp;SelectField&nbsp;for&nbsp;selecting&nbsp;a&nbsp;zone.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;restaurant:&nbsp;SelectField&nbsp;for&nbsp;selecting&nbsp;a&nbsp;restaurant.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;parking:&nbsp;SelectField&nbsp;for&nbsp;selecting&nbsp;parking&nbsp;availability.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;submit:&nbsp;SubmitField&nbsp;for&nbsp;initiating&nbsp;the&nbsp;search.<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="main.html#SearchEssentials">SearchEssentials</a></dd>
@@ -65,17 +67,17 @@ prevent&nbsp;this.<br>&nbsp;</tt></td></tr>
 </dl>
 <hr>
 Data and other attributes defined here:<br>
-<dl><dt><strong>parcheggio</strong> = &lt;UnboundField(SelectField, ('Parking',), {'choices': [('Vero', 'Yes'), ('Falso', 'No')]})&gt;</dl>
+<dl><dt><strong>parking</strong> = &lt;UnboundField(SelectField, ('Parking',), {'choices': [('Vero', 'Yes'), ('Falso', 'No')]})&gt;</dl>
 
-<dl><dt><strong>ristorante</strong> = &lt;UnboundField(SelectField, ('Restaurant:',), {'choices': [('Vero', 'Yes'), ('Falso', 'No')]})&gt;</dl>
+<dl><dt><strong>restaurant</strong> = &lt;UnboundField(SelectField, ('Restaurant:',), {'choices': [('Vero', 'Yes'), ('Falso', 'No')]})&gt;</dl>
 
 <dl><dt><strong>submit</strong> = &lt;UnboundField(SubmitField, ('Search',), {})&gt;</dl>
 
-<dl><dt><strong>zona</strong> = &lt;UnboundField(SelectField, ('Zone:',), {})&gt;</dl>
+<dl><dt><strong>zone</strong> = &lt;UnboundField(SelectField, ('Zone:',), {})&gt;</dl>
 
 <hr>
 Methods inherited from <a href="flask_wtf.form.html#FlaskForm">flask_wtf.form.FlaskForm</a>:<br>
-<dl><dt><a name="SearchEssentials-__init__"><strong>__init__</strong></a>(self, formdata=&lt;object object at 0xffffa58df230&gt;, **kwargs)</dt><dd><tt>:param&nbsp;formdata:&nbsp;Input&nbsp;data&nbsp;coming&nbsp;from&nbsp;the&nbsp;client,&nbsp;usually<br>
+<dl><dt><a name="SearchEssentials-__init__"><strong>__init__</strong></a>(self, formdata=&lt;object object at 0xffff9906c220&gt;, **kwargs)</dt><dd><tt>:param&nbsp;formdata:&nbsp;Input&nbsp;data&nbsp;coming&nbsp;from&nbsp;the&nbsp;client,&nbsp;usually<br>
 &nbsp;&nbsp;&nbsp;&nbsp;``request.form``&nbsp;or&nbsp;equivalent.&nbsp;Should&nbsp;provide&nbsp;a&nbsp;"multi<br>
 &nbsp;&nbsp;&nbsp;&nbsp;dict"&nbsp;interface&nbsp;to&nbsp;get&nbsp;a&nbsp;list&nbsp;of&nbsp;values&nbsp;for&nbsp;a&nbsp;given&nbsp;key,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;such&nbsp;as&nbsp;what&nbsp;Werkzeug,&nbsp;Django,&nbsp;and&nbsp;WebOb&nbsp;provide.<br>
@@ -207,12 +209,12 @@ Data descriptors inherited from <a href="wtforms.form.html#BaseForm">wtforms.for
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
 <td colspan=2><tt><a href="#SearchExtras">SearchExtras</a>(*args,&nbsp;**kwargs)<br>
 &nbsp;<br>
-Defines&nbsp;a&nbsp;search&nbsp;form&nbsp;using&nbsp;Flask-WTF.<br>
+Form&nbsp;class&nbsp;for&nbsp;searching&nbsp;structures&nbsp;with&nbsp;additional&nbsp;features.<br>
 &nbsp;<br>
 Attributes:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;aria_condizionata&nbsp;:&nbsp;SelectField&nbsp;for&nbsp;Air&nbsp;Conditioning&nbsp;input.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;animali_ammessi&nbsp;:&nbsp;SelectField&nbsp;for&nbsp;Pets&nbsp;Allowed&nbsp;input.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;submit&nbsp;:&nbsp;Submit&nbsp;button&nbsp;for&nbsp;the&nbsp;search&nbsp;form.<br>&nbsp;</tt></td></tr>
+&nbsp;&nbsp;&nbsp;&nbsp;air_conditioning:&nbsp;SelectField&nbsp;for&nbsp;Air&nbsp;Conditioning&nbsp;input.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pets_allowed:&nbsp;SelectField&nbsp;for&nbsp;Pets&nbsp;Allowed&nbsp;input.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;submit:&nbsp;SubmitField&nbsp;for&nbsp;initiating&nbsp;the&nbsp;search.<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="main.html#SearchExtras">SearchExtras</a></dd>
@@ -223,19 +225,19 @@ Attributes:<br>
 </dl>
 <hr>
 Data and other attributes defined here:<br>
-<dl><dt><strong>animali_ammessi</strong> = &lt;UnboundField(SelectField, ('Pets Allowed:',), {'choices': [('Vero', 'Yes'), ('Falso', 'No')]})&gt;</dl>
+<dl><dt><strong>air_conditioning</strong> = &lt;UnboundField(SelectField, ('Air Conditioning:',), {'choices': [('Vero', 'Yes'), ('Falso', 'No')]})&gt;</dl>
 
-<dl><dt><strong>animali_ammessi_choices</strong> = [('Vero', 'Yes'), ('Falso', 'No')]</dl>
+<dl><dt><strong>air_conditioning_choices</strong> = [('Vero', 'Yes'), ('Falso', 'No')]</dl>
 
-<dl><dt><strong>aria_condizionata</strong> = &lt;UnboundField(SelectField, ('Air Conditioning:',), {'choices': [('Vero', 'Yes'), ('Falso', 'No')]})&gt;</dl>
+<dl><dt><strong>pets_allowed</strong> = &lt;UnboundField(SelectField, ('Pets Allowed:',), {'choices': [('Vero', 'Yes'), ('Falso', 'No')]})&gt;</dl>
 
-<dl><dt><strong>aria_condizionata_choices</strong> = [('Vero', 'Yes'), ('Falso', 'No')]</dl>
+<dl><dt><strong>pets_allowed_choices</strong> = [('Vero', 'Yes'), ('Falso', 'No')]</dl>
 
-<dl><dt><strong>submit</strong> = &lt;UnboundField(SubmitField, ('periphery',), {})&gt;</dl>
+<dl><dt><strong>submit</strong> = &lt;UnboundField(SubmitField, ('Extras',), {})&gt;</dl>
 
 <hr>
 Methods inherited from <a href="flask_wtf.form.html#FlaskForm">flask_wtf.form.FlaskForm</a>:<br>
-<dl><dt><a name="SearchExtras-__init__"><strong>__init__</strong></a>(self, formdata=&lt;object object at 0xffffa58df230&gt;, **kwargs)</dt><dd><tt>:param&nbsp;formdata:&nbsp;Input&nbsp;data&nbsp;coming&nbsp;from&nbsp;the&nbsp;client,&nbsp;usually<br>
+<dl><dt><a name="SearchExtras-__init__"><strong>__init__</strong></a>(self, formdata=&lt;object object at 0xffff9906c220&gt;, **kwargs)</dt><dd><tt>:param&nbsp;formdata:&nbsp;Input&nbsp;data&nbsp;coming&nbsp;from&nbsp;the&nbsp;client,&nbsp;usually<br>
 &nbsp;&nbsp;&nbsp;&nbsp;``request.form``&nbsp;or&nbsp;equivalent.&nbsp;Should&nbsp;provide&nbsp;a&nbsp;"multi<br>
 &nbsp;&nbsp;&nbsp;&nbsp;dict"&nbsp;interface&nbsp;to&nbsp;get&nbsp;a&nbsp;list&nbsp;of&nbsp;values&nbsp;for&nbsp;a&nbsp;given&nbsp;key,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;such&nbsp;as&nbsp;what&nbsp;Werkzeug,&nbsp;Django,&nbsp;and&nbsp;WebOb&nbsp;provide.<br>
@@ -367,11 +369,13 @@ Data descriptors inherited from <a href="wtforms.form.html#BaseForm">wtforms.for
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
 <td colspan=2><tt><a href="#SearchForm">SearchForm</a>(*args,&nbsp;**kwargs)<br>
 &nbsp;<br>
-Flask-specific&nbsp;subclass&nbsp;of&nbsp;WTForms&nbsp;:class:`~wtforms.form.Form`.<br>
+Form&nbsp;class&nbsp;for&nbsp;searching&nbsp;luxurious&nbsp;structures.<br>
 &nbsp;<br>
-If&nbsp;``formdata``&nbsp;is&nbsp;not&nbsp;specified,&nbsp;this&nbsp;will&nbsp;use&nbsp;:attr:`flask.request.form`<br>
-and&nbsp;:attr:`flask.request.files`.&nbsp;&nbsp;Explicitly&nbsp;pass&nbsp;``formdata=None``&nbsp;to<br>
-prevent&nbsp;this.<br>&nbsp;</tt></td></tr>
+Attributes:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;indoor_pool:&nbsp;SelectField&nbsp;for&nbsp;indoor&nbsp;pool&nbsp;availability.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sauna:&nbsp;SelectField&nbsp;for&nbsp;sauna&nbsp;availability.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fitness_area:&nbsp;SelectField&nbsp;for&nbsp;fitness&nbsp;area&nbsp;availability.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;submit:&nbsp;SubmitField&nbsp;for&nbsp;initiating&nbsp;the&nbsp;search.<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="main.html#SearchForm">SearchForm</a></dd>
@@ -382,17 +386,17 @@ prevent&nbsp;this.<br>&nbsp;</tt></td></tr>
 </dl>
 <hr>
 Data and other attributes defined here:<br>
-<dl><dt><strong>area_fitness</strong> = &lt;UnboundField(SelectField, ('Fitness area:',), {'choices': [('Vero', 'Si'), ('Falso', 'No')]})&gt;</dl>
+<dl><dt><strong>fitness_area</strong> = &lt;UnboundField(SelectField, ('Fitness area:',), {'choices': [('Vero', 'Yes'), ('Falso', 'No')]})&gt;</dl>
 
-<dl><dt><strong>piscina_coperta</strong> = &lt;UnboundField(SelectField, ('Indoor Pool:',), {'choices': [('Vero', 'Si'), ('Falso', 'No')]})&gt;</dl>
+<dl><dt><strong>indoor_pool</strong> = &lt;UnboundField(SelectField, ('Indoor Pool:',), {'choices': [('Vero', 'Yes'), ('Falso', 'No')]})&gt;</dl>
 
-<dl><dt><strong>sauna</strong> = &lt;UnboundField(SelectField, ('Sauna:',), {'choices': [('Vero', 'Si'), ('Falso', 'No')]})&gt;</dl>
+<dl><dt><strong>sauna</strong> = &lt;UnboundField(SelectField, ('Sauna:',), {'choices': [('Vero', 'Yes'), ('Falso', 'No')]})&gt;</dl>
 
 <dl><dt><strong>submit</strong> = &lt;UnboundField(SubmitField, ('Search',), {})&gt;</dl>
 
 <hr>
 Methods inherited from <a href="flask_wtf.form.html#FlaskForm">flask_wtf.form.FlaskForm</a>:<br>
-<dl><dt><a name="SearchForm-__init__"><strong>__init__</strong></a>(self, formdata=&lt;object object at 0xffffa58df230&gt;, **kwargs)</dt><dd><tt>:param&nbsp;formdata:&nbsp;Input&nbsp;data&nbsp;coming&nbsp;from&nbsp;the&nbsp;client,&nbsp;usually<br>
+<dl><dt><a name="SearchForm-__init__"><strong>__init__</strong></a>(self, formdata=&lt;object object at 0xffff9906c220&gt;, **kwargs)</dt><dd><tt>:param&nbsp;formdata:&nbsp;Input&nbsp;data&nbsp;coming&nbsp;from&nbsp;the&nbsp;client,&nbsp;usually<br>
 &nbsp;&nbsp;&nbsp;&nbsp;``request.form``&nbsp;or&nbsp;equivalent.&nbsp;Should&nbsp;provide&nbsp;a&nbsp;"multi<br>
 &nbsp;&nbsp;&nbsp;&nbsp;dict"&nbsp;interface&nbsp;to&nbsp;get&nbsp;a&nbsp;list&nbsp;of&nbsp;values&nbsp;for&nbsp;a&nbsp;given&nbsp;key,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;such&nbsp;as&nbsp;what&nbsp;Werkzeug,&nbsp;Django,&nbsp;and&nbsp;WebOb&nbsp;provide.<br>
@@ -519,19 +523,20 @@ Data descriptors inherited from <a href="wtforms.form.html#BaseForm">wtforms.for
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="SearchPeriferia">class <strong>SearchPeriferia</strong></a>(<a href="flask_wtf.form.html#FlaskForm">flask_wtf.form.FlaskForm</a>)</font></td></tr>
+<font color="#000000" face="helvetica, arial"><a name="SearchPeriphery">class <strong>SearchPeriphery</strong></a>(<a href="flask_wtf.form.html#FlaskForm">flask_wtf.form.FlaskForm</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt><a href="#SearchPeriferia">SearchPeriferia</a>(*args,&nbsp;**kwargs)<br>
+<td colspan=2><tt><a href="#SearchPeriphery">SearchPeriphery</a>(*args,&nbsp;**kwargs)<br>
 &nbsp;<br>
-Flask-specific&nbsp;subclass&nbsp;of&nbsp;WTForms&nbsp;:class:`~wtforms.form.Form`.<br>
+Form&nbsp;class&nbsp;for&nbsp;searching&nbsp;structures&nbsp;in&nbsp;the&nbsp;periphery.<br>
 &nbsp;<br>
-If&nbsp;``formdata``&nbsp;is&nbsp;not&nbsp;specified,&nbsp;this&nbsp;will&nbsp;use&nbsp;:attr:`flask.request.form`<br>
-and&nbsp;:attr:`flask.request.files`.&nbsp;&nbsp;Explicitly&nbsp;pass&nbsp;``formdata=None``&nbsp;to<br>
-prevent&nbsp;this.<br>&nbsp;</tt></td></tr>
+Attributes:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;typology:&nbsp;SelectField&nbsp;for&nbsp;selecting&nbsp;the&nbsp;desired&nbsp;type&nbsp;of&nbsp;structure.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;english,&nbsp;french,&nbsp;german,&nbsp;spanish:&nbsp;SelectFields&nbsp;for&nbsp;language&nbsp;selection.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;submit:&nbsp;SubmitField&nbsp;for&nbsp;initiating&nbsp;the&nbsp;search.<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
-<dd><a href="main.html#SearchPeriferia">SearchPeriferia</a></dd>
+<dd><a href="main.html#SearchPeriphery">SearchPeriphery</a></dd>
 <dd><a href="flask_wtf.form.html#FlaskForm">flask_wtf.form.FlaskForm</a></dd>
 <dd><a href="wtforms.form.html#Form">wtforms.form.Form</a></dd>
 <dd><a href="wtforms.form.html#BaseForm">wtforms.form.BaseForm</a></dd>
@@ -539,13 +544,13 @@ prevent&nbsp;this.<br>&nbsp;</tt></td></tr>
 </dl>
 <hr>
 Data and other attributes defined here:<br>
-<dl><dt><strong>english</strong> = &lt;UnboundField(SelectField, ('🇬🇧 English language... {'choices': [('Vero', 'Si'), ('Falso', 'No')]})&gt;</dl>
+<dl><dt><strong>english</strong> = &lt;UnboundField(SelectField, ('🇬🇧 English language...{'choices': [('Vero', 'Yes'), ('Falso', 'No')]})&gt;</dl>
 
-<dl><dt><strong>french</strong> = &lt;UnboundField(SelectField, ('🇫🇷 French language:... {'choices': [('Vero', 'Si'), ('Falso', 'No')]})&gt;</dl>
+<dl><dt><strong>french</strong> = &lt;UnboundField(SelectField, ('🇫🇷 French language:...{'choices': [('Vero', 'Yes'), ('Falso', 'No')]})&gt;</dl>
 
-<dl><dt><strong>german</strong> = &lt;UnboundField(SelectField, ('🇩🇪 German language:... {'choices': [('Vero', 'Si'), ('Falso', 'No')]})&gt;</dl>
+<dl><dt><strong>german</strong> = &lt;UnboundField(SelectField, ('🇩🇪 German language:...{'choices': [('Vero', 'Yes'), ('Falso', 'No')]})&gt;</dl>
 
-<dl><dt><strong>spanish</strong> = &lt;UnboundField(SelectField, ('🇪🇸 Spanish language... {'choices': [('Vero', 'Si'), ('Falso', 'No')]})&gt;</dl>
+<dl><dt><strong>spanish</strong> = &lt;UnboundField(SelectField, ('🇪🇸 Spanish language...{'choices': [('Vero', 'Yes'), ('Falso', 'No')]})&gt;</dl>
 
 <dl><dt><strong>submit</strong> = &lt;UnboundField(SubmitField, ('Search',), {})&gt;</dl>
 
@@ -553,7 +558,7 @@ Data and other attributes defined here:<br>
 
 <hr>
 Methods inherited from <a href="flask_wtf.form.html#FlaskForm">flask_wtf.form.FlaskForm</a>:<br>
-<dl><dt><a name="SearchPeriferia-__init__"><strong>__init__</strong></a>(self, formdata=&lt;object object at 0xffffa58df230&gt;, **kwargs)</dt><dd><tt>:param&nbsp;formdata:&nbsp;Input&nbsp;data&nbsp;coming&nbsp;from&nbsp;the&nbsp;client,&nbsp;usually<br>
+<dl><dt><a name="SearchPeriphery-__init__"><strong>__init__</strong></a>(self, formdata=&lt;object object at 0xffff9906c220&gt;, **kwargs)</dt><dd><tt>:param&nbsp;formdata:&nbsp;Input&nbsp;data&nbsp;coming&nbsp;from&nbsp;the&nbsp;client,&nbsp;usually<br>
 &nbsp;&nbsp;&nbsp;&nbsp;``request.form``&nbsp;or&nbsp;equivalent.&nbsp;Should&nbsp;provide&nbsp;a&nbsp;"multi<br>
 &nbsp;&nbsp;&nbsp;&nbsp;dict"&nbsp;interface&nbsp;to&nbsp;get&nbsp;a&nbsp;list&nbsp;of&nbsp;values&nbsp;for&nbsp;a&nbsp;given&nbsp;key,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;such&nbsp;as&nbsp;what&nbsp;Werkzeug,&nbsp;Django,&nbsp;and&nbsp;WebOb&nbsp;provide.<br>
@@ -579,7 +584,7 @@ Methods inherited from <a href="flask_wtf.form.html#FlaskForm">flask_wtf.form.Fl
 &nbsp;&nbsp;&nbsp;&nbsp;data&nbsp;as&nbsp;parameters.&nbsp;Overwrites&nbsp;any&nbsp;duplicate&nbsp;keys&nbsp;in<br>
 &nbsp;&nbsp;&nbsp;&nbsp;``data``.&nbsp;Only&nbsp;used&nbsp;if&nbsp;``formdata``&nbsp;is&nbsp;not&nbsp;passed.</tt></dd></dl>
 
-<dl><dt><a name="SearchPeriferia-hidden_tag"><strong>hidden_tag</strong></a>(self, *fields)</dt><dd><tt>Render&nbsp;the&nbsp;form's&nbsp;hidden&nbsp;fields&nbsp;in&nbsp;one&nbsp;call.<br>
+<dl><dt><a name="SearchPeriphery-hidden_tag"><strong>hidden_tag</strong></a>(self, *fields)</dt><dd><tt>Render&nbsp;the&nbsp;form's&nbsp;hidden&nbsp;fields&nbsp;in&nbsp;one&nbsp;call.<br>
 &nbsp;<br>
 A&nbsp;field&nbsp;is&nbsp;considered&nbsp;hidden&nbsp;if&nbsp;it&nbsp;uses&nbsp;the<br>
 :class:`~wtforms.widgets.HiddenInput`&nbsp;widget.<br>
@@ -598,11 +603,11 @@ name&nbsp;if&nbsp;it&nbsp;exists.<br>
 &nbsp;&nbsp;&nbsp;Skip&nbsp;passed&nbsp;fields&nbsp;that&nbsp;aren't&nbsp;hidden.<br>
 &nbsp;&nbsp;&nbsp;Skip&nbsp;passed&nbsp;names&nbsp;that&nbsp;don't&nbsp;exist.</tt></dd></dl>
 
-<dl><dt><a name="SearchPeriferia-is_submitted"><strong>is_submitted</strong></a>(self)</dt><dd><tt>Consider&nbsp;the&nbsp;form&nbsp;submitted&nbsp;if&nbsp;there&nbsp;is&nbsp;an&nbsp;active&nbsp;request&nbsp;and<br>
+<dl><dt><a name="SearchPeriphery-is_submitted"><strong>is_submitted</strong></a>(self)</dt><dd><tt>Consider&nbsp;the&nbsp;form&nbsp;submitted&nbsp;if&nbsp;there&nbsp;is&nbsp;an&nbsp;active&nbsp;request&nbsp;and<br>
 the&nbsp;method&nbsp;is&nbsp;``POST``,&nbsp;``PUT``,&nbsp;``PATCH``,&nbsp;or&nbsp;``DELETE``.</tt></dd></dl>
 
-<dl><dt><a name="SearchPeriferia-validate_on_submit"><strong>validate_on_submit</strong></a>(self, extra_validators=None)</dt><dd><tt>Call&nbsp;:meth:`validate`&nbsp;only&nbsp;if&nbsp;the&nbsp;form&nbsp;is&nbsp;submitted.<br>
-This&nbsp;is&nbsp;a&nbsp;shortcut&nbsp;for&nbsp;``form.<a href="#SearchPeriferia-is_submitted">is_submitted</a>()&nbsp;and&nbsp;form.<a href="#SearchPeriferia-validate">validate</a>()``.</tt></dd></dl>
+<dl><dt><a name="SearchPeriphery-validate_on_submit"><strong>validate_on_submit</strong></a>(self, extra_validators=None)</dt><dd><tt>Call&nbsp;:meth:`validate`&nbsp;only&nbsp;if&nbsp;the&nbsp;form&nbsp;is&nbsp;submitted.<br>
+This&nbsp;is&nbsp;a&nbsp;shortcut&nbsp;for&nbsp;``form.<a href="#SearchPeriphery-is_submitted">is_submitted</a>()&nbsp;and&nbsp;form.<a href="#SearchPeriphery-validate">validate</a>()``.</tt></dd></dl>
 
 <hr>
 Data and other attributes inherited from <a href="flask_wtf.form.html#FlaskForm">flask_wtf.form.FlaskForm</a>:<br>
@@ -610,13 +615,13 @@ Data and other attributes inherited from <a href="flask_wtf.form.html#FlaskForm"
 
 <hr>
 Methods inherited from <a href="wtforms.form.html#Form">wtforms.form.Form</a>:<br>
-<dl><dt><a name="SearchPeriferia-__delattr__"><strong>__delattr__</strong></a>(self, name)</dt><dd><tt>Implement&nbsp;delattr(self,&nbsp;name).</tt></dd></dl>
+<dl><dt><a name="SearchPeriphery-__delattr__"><strong>__delattr__</strong></a>(self, name)</dt><dd><tt>Implement&nbsp;delattr(self,&nbsp;name).</tt></dd></dl>
 
-<dl><dt><a name="SearchPeriferia-__delitem__"><strong>__delitem__</strong></a>(self, name)</dt><dd><tt>Remove&nbsp;a&nbsp;field&nbsp;from&nbsp;this&nbsp;form.</tt></dd></dl>
+<dl><dt><a name="SearchPeriphery-__delitem__"><strong>__delitem__</strong></a>(self, name)</dt><dd><tt>Remove&nbsp;a&nbsp;field&nbsp;from&nbsp;this&nbsp;form.</tt></dd></dl>
 
-<dl><dt><a name="SearchPeriferia-__setitem__"><strong>__setitem__</strong></a>(self, name, value)</dt><dd><tt>Bind&nbsp;a&nbsp;field&nbsp;to&nbsp;this&nbsp;form.</tt></dd></dl>
+<dl><dt><a name="SearchPeriphery-__setitem__"><strong>__setitem__</strong></a>(self, name, value)</dt><dd><tt>Bind&nbsp;a&nbsp;field&nbsp;to&nbsp;this&nbsp;form.</tt></dd></dl>
 
-<dl><dt><a name="SearchPeriferia-validate"><strong>validate</strong></a>(self, extra_validators=None)</dt><dd><tt>Validate&nbsp;the&nbsp;form&nbsp;by&nbsp;calling&nbsp;``validate``&nbsp;on&nbsp;each&nbsp;field.<br>
+<dl><dt><a name="SearchPeriphery-validate"><strong>validate</strong></a>(self, extra_validators=None)</dt><dd><tt>Validate&nbsp;the&nbsp;form&nbsp;by&nbsp;calling&nbsp;``validate``&nbsp;on&nbsp;each&nbsp;field.<br>
 Returns&nbsp;``True``&nbsp;if&nbsp;validation&nbsp;passes.<br>
 &nbsp;<br>
 If&nbsp;the&nbsp;form&nbsp;defines&nbsp;a&nbsp;``validate_&lt;fieldname&gt;``&nbsp;method,&nbsp;it&nbsp;is<br>
@@ -629,19 +634,19 @@ appended&nbsp;as&nbsp;an&nbsp;extra&nbsp;validator&nbsp;for&nbsp;the&nbsp;field'
 
 <hr>
 Methods inherited from <a href="wtforms.form.html#BaseForm">wtforms.form.BaseForm</a>:<br>
-<dl><dt><a name="SearchPeriferia-__contains__"><strong>__contains__</strong></a>(self, name)</dt><dd><tt>Returns&nbsp;`True`&nbsp;if&nbsp;the&nbsp;named&nbsp;field&nbsp;is&nbsp;a&nbsp;member&nbsp;of&nbsp;this&nbsp;form.</tt></dd></dl>
+<dl><dt><a name="SearchPeriphery-__contains__"><strong>__contains__</strong></a>(self, name)</dt><dd><tt>Returns&nbsp;`True`&nbsp;if&nbsp;the&nbsp;named&nbsp;field&nbsp;is&nbsp;a&nbsp;member&nbsp;of&nbsp;this&nbsp;form.</tt></dd></dl>
 
-<dl><dt><a name="SearchPeriferia-__getitem__"><strong>__getitem__</strong></a>(self, name)</dt><dd><tt>Dict-style&nbsp;access&nbsp;to&nbsp;this&nbsp;form's&nbsp;fields.</tt></dd></dl>
+<dl><dt><a name="SearchPeriphery-__getitem__"><strong>__getitem__</strong></a>(self, name)</dt><dd><tt>Dict-style&nbsp;access&nbsp;to&nbsp;this&nbsp;form's&nbsp;fields.</tt></dd></dl>
 
-<dl><dt><a name="SearchPeriferia-__iter__"><strong>__iter__</strong></a>(self)</dt><dd><tt>Iterate&nbsp;form&nbsp;fields&nbsp;in&nbsp;creation&nbsp;order.</tt></dd></dl>
+<dl><dt><a name="SearchPeriphery-__iter__"><strong>__iter__</strong></a>(self)</dt><dd><tt>Iterate&nbsp;form&nbsp;fields&nbsp;in&nbsp;creation&nbsp;order.</tt></dd></dl>
 
-<dl><dt><a name="SearchPeriferia-populate_obj"><strong>populate_obj</strong></a>(self, obj)</dt><dd><tt>Populates&nbsp;the&nbsp;attributes&nbsp;of&nbsp;the&nbsp;passed&nbsp;`obj`&nbsp;with&nbsp;data&nbsp;from&nbsp;the&nbsp;form's<br>
+<dl><dt><a name="SearchPeriphery-populate_obj"><strong>populate_obj</strong></a>(self, obj)</dt><dd><tt>Populates&nbsp;the&nbsp;attributes&nbsp;of&nbsp;the&nbsp;passed&nbsp;`obj`&nbsp;with&nbsp;data&nbsp;from&nbsp;the&nbsp;form's<br>
 fields.<br>
 &nbsp;<br>
 :note:&nbsp;This&nbsp;is&nbsp;a&nbsp;destructive&nbsp;operation;&nbsp;Any&nbsp;attribute&nbsp;with&nbsp;the&nbsp;same&nbsp;name<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;as&nbsp;a&nbsp;field&nbsp;will&nbsp;be&nbsp;overridden.&nbsp;Use&nbsp;with&nbsp;caution.</tt></dd></dl>
 
-<dl><dt><a name="SearchPeriferia-process"><strong>process</strong></a>(self, formdata=None, obj=None, data=None, extra_filters=None, **kwargs)</dt><dd><tt>Process&nbsp;default&nbsp;and&nbsp;input&nbsp;data&nbsp;with&nbsp;each&nbsp;field.<br>
+<dl><dt><a name="SearchPeriphery-process"><strong>process</strong></a>(self, formdata=None, obj=None, data=None, extra_filters=None, **kwargs)</dt><dd><tt>Process&nbsp;default&nbsp;and&nbsp;input&nbsp;data&nbsp;with&nbsp;each&nbsp;field.<br>
 &nbsp;<br>
 :param&nbsp;formdata:&nbsp;Input&nbsp;data&nbsp;coming&nbsp;from&nbsp;the&nbsp;client,&nbsp;usually<br>
 &nbsp;&nbsp;&nbsp;&nbsp;``request.form``&nbsp;or&nbsp;equivalent.&nbsp;Should&nbsp;provide&nbsp;a&nbsp;"multi<br>
@@ -685,11 +690,13 @@ Data descriptors inherited from <a href="wtforms.form.html#BaseForm">wtforms.for
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
 <td colspan=2><tt><a href="#SearchTransport">SearchTransport</a>(*args,&nbsp;**kwargs)<br>
 &nbsp;<br>
-Flask-specific&nbsp;subclass&nbsp;of&nbsp;WTForms&nbsp;:class:`~wtforms.form.Form`.<br>
+Form&nbsp;class&nbsp;for&nbsp;searching&nbsp;hotels&nbsp;near&nbsp;transportation&nbsp;facilities.<br>
 &nbsp;<br>
-If&nbsp;``formdata``&nbsp;is&nbsp;not&nbsp;specified,&nbsp;this&nbsp;will&nbsp;use&nbsp;:attr:`flask.request.form`<br>
-and&nbsp;:attr:`flask.request.files`.&nbsp;&nbsp;Explicitly&nbsp;pass&nbsp;``formdata=None``&nbsp;to<br>
-prevent&nbsp;this.<br>&nbsp;</tt></td></tr>
+Attributes:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;selected_typology:&nbsp;SelectField&nbsp;for&nbsp;choosing&nbsp;typology.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;train_station:&nbsp;SelectField&nbsp;for&nbsp;choosing&nbsp;a&nbsp;train&nbsp;station.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;highway:&nbsp;SelectField&nbsp;for&nbsp;choosing&nbsp;a&nbsp;highway.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;submit:&nbsp;SubmitField&nbsp;for&nbsp;initiating&nbsp;the&nbsp;search.<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="main.html#SearchTransport">SearchTransport</a></dd>
@@ -700,17 +707,17 @@ prevent&nbsp;this.<br>&nbsp;</tt></td></tr>
 </dl>
 <hr>
 Data and other attributes defined here:<br>
-<dl><dt><strong>autostrada</strong> = &lt;UnboundField(SelectField, ('🛣 Highway:',), {'choices': [('Vero', 'Yes'), ('Falso', 'No')]})&gt;</dl>
+<dl><dt><strong>highway</strong> = &lt;UnboundField(SelectField, ('🛣 Highway:',), {'choices': [('Vero', 'Yes'), ('Falso', 'No')]})&gt;</dl>
 
 <dl><dt><strong>selected_typology</strong> = &lt;UnboundField(SelectField, ('🏠 Typology:',), {})&gt;</dl>
 
-<dl><dt><strong>stazione</strong> = &lt;UnboundField(SelectField, ('🚅 Train station:',), {'choices': [('Vero', 'Yes'), ('Falso', 'No')]})&gt;</dl>
-
 <dl><dt><strong>submit</strong> = &lt;UnboundField(SubmitField, ('Search',), {})&gt;</dl>
+
+<dl><dt><strong>train_station</strong> = &lt;UnboundField(SelectField, ('🚅 Train station:',), {'choices': [('Vero', 'Yes'), ('Falso', 'No')]})&gt;</dl>
 
 <hr>
 Methods inherited from <a href="flask_wtf.form.html#FlaskForm">flask_wtf.form.FlaskForm</a>:<br>
-<dl><dt><a name="SearchTransport-__init__"><strong>__init__</strong></a>(self, formdata=&lt;object object at 0xffffa58df230&gt;, **kwargs)</dt><dd><tt>:param&nbsp;formdata:&nbsp;Input&nbsp;data&nbsp;coming&nbsp;from&nbsp;the&nbsp;client,&nbsp;usually<br>
+<dl><dt><a name="SearchTransport-__init__"><strong>__init__</strong></a>(self, formdata=&lt;object object at 0xffff9906c220&gt;, **kwargs)</dt><dd><tt>:param&nbsp;formdata:&nbsp;Input&nbsp;data&nbsp;coming&nbsp;from&nbsp;the&nbsp;client,&nbsp;usually<br>
 &nbsp;&nbsp;&nbsp;&nbsp;``request.form``&nbsp;or&nbsp;equivalent.&nbsp;Should&nbsp;provide&nbsp;a&nbsp;"multi<br>
 &nbsp;&nbsp;&nbsp;&nbsp;dict"&nbsp;interface&nbsp;to&nbsp;get&nbsp;a&nbsp;list&nbsp;of&nbsp;values&nbsp;for&nbsp;a&nbsp;given&nbsp;key,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;such&nbsp;as&nbsp;what&nbsp;Werkzeug,&nbsp;Django,&nbsp;and&nbsp;WebOb&nbsp;provide.<br>
@@ -844,16 +851,34 @@ Data descriptors inherited from <a href="wtforms.form.html#BaseForm">wtforms.for
 &nbsp;<br>
 Returns:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;Rendered&nbsp;HTML&nbsp;content&nbsp;for&nbsp;displaying&nbsp;search&nbsp;results.</tt></dd></dl>
- <dl><dt><a name="-find"><strong>find</strong></a>()</dt><dd><tt>#&nbsp;Defining&nbsp;a&nbsp;route&nbsp;for&nbsp;the&nbsp;Essentials</tt></dd></dl>
- <dl><dt><a name="-find_hotels"><strong>find_hotels</strong></a>()</dt><dd><tt>#&nbsp;Defining&nbsp;a&nbsp;route&nbsp;for&nbsp;Transports&nbsp;Exploratory</tt></dd></dl>
- <dl><dt><a name="-home"><strong>home</strong></a>()</dt><dd><tt>#&nbsp;Define&nbsp;a&nbsp;route&nbsp;for&nbsp;the&nbsp;explanatory&nbsp;homepage</tt></dd></dl>
- <dl><dt><a name="-index"><strong>index</strong></a>()</dt><dd><tt>#&nbsp;Define&nbsp;a&nbsp;route&nbsp;for&nbsp;the&nbsp;Animal&nbsp;Crossers&nbsp;page</tt></dd></dl>
- <dl><dt><a name="-search_structure_periferia"><strong>search_structure_periferia</strong></a>()</dt><dd><tt>#&nbsp;Define&nbsp;a&nbsp;route&nbsp;for&nbsp;Suburbs&nbsp;Explorer</tt></dd></dl>
- <dl><dt><a name="-search_structure_periphery"><strong>search_structure_periphery</strong></a>()</dt><dd><tt>Route&nbsp;for&nbsp;handling&nbsp;search&nbsp;functionality.<br>
+ <dl><dt><a name="-find"><strong>find</strong></a>()</dt><dd><tt>Route&nbsp;for&nbsp;searching&nbsp;essential&nbsp;services.<br>
 &nbsp;<br>
 Returns:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;Rendered&nbsp;HTML&nbsp;content&nbsp;for&nbsp;the&nbsp;search&nbsp;page.</tt></dd></dl>
- <dl><dt><a name="-search_structure_search"><strong>search_structure_search</strong></a>()</dt><dd><tt>#&nbsp;Define&nbsp;a&nbsp;route&nbsp;for&nbsp;the&nbsp;Wellness&nbsp;Exploratory</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;Rendered&nbsp;HTML&nbsp;content&nbsp;for&nbsp;the&nbsp;essentials&nbsp;page.</tt></dd></dl>
+ <dl><dt><a name="-find_hotels"><strong>find_hotels</strong></a>()</dt><dd><tt>Route&nbsp;for&nbsp;searching&nbsp;hotels&nbsp;near&nbsp;transportation&nbsp;facilities.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;Rendered&nbsp;HTML&nbsp;content&nbsp;for&nbsp;the&nbsp;transports&nbsp;exploratory&nbsp;page.</tt></dd></dl>
+ <dl><dt><a name="-home"><strong>home</strong></a>()</dt><dd><tt>Route&nbsp;for&nbsp;displaying&nbsp;the&nbsp;explanatory&nbsp;homepage.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;Rendered&nbsp;HTML&nbsp;content&nbsp;for&nbsp;the&nbsp;homepage.</tt></dd></dl>
+ <dl><dt><a name="-index"><strong>index</strong></a>()</dt><dd><tt>Route&nbsp;for&nbsp;displaying&nbsp;the&nbsp;homepage.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;Rendered&nbsp;HTML&nbsp;content&nbsp;for&nbsp;the&nbsp;homepage.</tt></dd></dl>
+ <dl><dt><a name="-search_structure_periphery"><strong>search_structure_periphery</strong></a>()</dt><dd><tt>Route&nbsp;for&nbsp;searching&nbsp;structures&nbsp;with&nbsp;additional&nbsp;features.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;Rendered&nbsp;HTML&nbsp;content&nbsp;for&nbsp;the&nbsp;extras&nbsp;page.</tt></dd></dl>
+ <dl><dt><a name="-search_structure_search"><strong>search_structure_search</strong></a>()</dt><dd><tt>Route&nbsp;for&nbsp;searching&nbsp;luxurious&nbsp;structures.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;Rendered&nbsp;HTML&nbsp;content&nbsp;for&nbsp;the&nbsp;wellness&nbsp;exploratory&nbsp;page.</tt></dd></dl>
+ <dl><dt><a name="-search_structures_periphery"><strong>search_structures_periphery</strong></a>()</dt><dd><tt>Route&nbsp;for&nbsp;searching&nbsp;structures&nbsp;in&nbsp;the&nbsp;periphery.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;Rendered&nbsp;HTML&nbsp;content&nbsp;for&nbsp;the&nbsp;peripherical&nbsp;B&amp;B&nbsp;page.</tt></dd></dl>
 </td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#55aa55">
