@@ -28,11 +28,19 @@ sys.path.insert(0, os.path.abspath(
     os.path.join(os.path.dirname(__file__), '..')))
 
 # Import statements
-from app.main import app, search_structures, essential_services_periphery, df, find_structures_suburb
+from app.main import (
+    app,
+    search_structures,
+    essential_services_periphery,
+    df,
+    find_structures_suburb
+)
+
 
 # Creating a test client to interact with the FastAPI app
 
 client = TestClient(app)
+
 
 class TestSearchStructures(unittest.TestCase):
     """
@@ -617,8 +625,6 @@ class TestApp(unittest.TestCase):
         self.assertIsInstance(result, list)
 
 
-
-
 # Test to check if the endpoint returns data for valid filters
 # Assuming there is data for the specified filters
 def test_get_structures_with_data():
@@ -861,6 +867,7 @@ def test_zone_venezia():
     )
     assert response.status_code == 200
     assert isinstance(response.json(), list)
+
 
 if __name__ == '__main__':
     unittest.main()

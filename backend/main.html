@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module main</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>main</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/app/app/main.py">/app/app/main.py</a></font></td></tr></table>
+    <p><tt>Backend&nbsp;module&nbsp;for&nbsp;a&nbsp;FastAPI&nbsp;application&nbsp;providing<br>
+accommodation&nbsp;and&nbsp;facility&nbsp;search&nbsp;functionality.<br>
+&nbsp;<br>
+This&nbsp;module&nbsp;defines&nbsp;a&nbsp;FastAPI&nbsp;application<br>
+that&nbsp;serves&nbsp;as&nbsp;the&nbsp;backend&nbsp;for&nbsp;the&nbsp;project.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="pandas.html">pandas</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-essential_services_periphery"><strong>essential_services_periphery</strong></a>(air_conditioning: str = Query(False), pets_allowed: str = Query(False))</dt><dd><tt>Retrieves&nbsp;B&amp;B&nbsp;data&nbsp;based&nbsp;on&nbsp;selected&nbsp;amenities&nbsp;in&nbsp;periphery&nbsp;areas.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;air_conditioning&nbsp;(str):&nbsp;Indicates&nbsp;Air&nbsp;Conditioning&nbsp;preference.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pets_allowed&nbsp;(str):&nbsp;Indicates&nbsp;Pets&nbsp;Allowed&nbsp;preference.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;List[Dict[str,&nbsp;str]]:&nbsp;Filtered&nbsp;B&amp;B&nbsp;data&nbsp;with&nbsp;relevant&nbsp;information.</tt></dd></dl>
+ <dl><dt><a name="-find_hotels_near_transports"><strong>find_hotels_near_transports</strong></a>(selected_typology, train_station, highway)</dt><dd><tt>Endpoint&nbsp;to&nbsp;search&nbsp;for&nbsp;hotels&nbsp;near&nbsp;transportation&nbsp;based<br>
+on&nbsp;specified&nbsp;criteria.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;selected_typology&nbsp;(str):&nbsp;The&nbsp;selected&nbsp;structure&nbsp;typology.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;train_station&nbsp;(str):&nbsp;The&nbsp;selected&nbsp;train&nbsp;station.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;highway&nbsp;(str):&nbsp;The&nbsp;selected&nbsp;highway.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;List[Dict[str,&nbsp;Any]]:&nbsp;Filtered&nbsp;results&nbsp;of&nbsp;hotels<br>
+&nbsp;&nbsp;&nbsp;&nbsp;near&nbsp;transportation&nbsp;as&nbsp;a&nbsp;list&nbsp;of&nbsp;dictionaries.</tt></dd></dl>
+ <dl><dt><a name="-find_structures_suburb"><strong>find_structures_suburb</strong></a>(Typology, English, French, German, Spanish)</dt><dd><tt>Endpoint&nbsp;to&nbsp;search&nbsp;for&nbsp;suburbs&nbsp;based&nbsp;on&nbsp;specified&nbsp;criteria.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Typology&nbsp;(str):&nbsp;The&nbsp;type&nbsp;of&nbsp;structure.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;English&nbsp;(str):&nbsp;Indicates&nbsp;English&nbsp;language&nbsp;availability.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;French&nbsp;(str):&nbsp;Indicates&nbsp;French&nbsp;language&nbsp;availability.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;German&nbsp;(str):&nbsp;Indicates&nbsp;German&nbsp;language&nbsp;availability.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Spanish&nbsp;(str):&nbsp;Indicates&nbsp;Spanish&nbsp;language&nbsp;availability.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;List[Dict[str,&nbsp;Any]]:&nbsp;Filtered&nbsp;results&nbsp;of&nbsp;suburbs&nbsp;as&nbsp;a&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;dictionaries.</tt></dd></dl>
+ <dl><dt><a name="-get_typology"><strong>get_typology</strong></a>()</dt><dd><tt>Endpoint&nbsp;to&nbsp;retrieve&nbsp;unique&nbsp;structure&nbsp;typologies.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;Unique&nbsp;structure&nbsp;typologies&nbsp;in&nbsp;JSON&nbsp;format.</tt></dd></dl>
+ <dl><dt><a name="-get_zones"><strong>get_zones</strong></a>()</dt><dd><tt>Endpoint&nbsp;to&nbsp;retrieve&nbsp;unique&nbsp;zones&nbsp;for&nbsp;the&nbsp;frontend.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;Unique&nbsp;zones&nbsp;in&nbsp;JSON&nbsp;format.</tt></dd></dl>
+ <dl><dt><a name="-parse_bool"><strong>parse_bool</strong></a>(value)</dt><dd><tt>Parses&nbsp;string&nbsp;values&nbsp;to&nbsp;boolean.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;(str):&nbsp;The&nbsp;string&nbsp;value&nbsp;to&nbsp;be&nbsp;parsed.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bool:&nbsp;Boolean&nbsp;value&nbsp;of&nbsp;the&nbsp;input&nbsp;string.</tt></dd></dl>
+ <dl><dt><a name="-search_structures"><strong>search_structures</strong></a>(indoor_pool, sauna, fitness_area)</dt><dd><tt>Endpoint&nbsp;to&nbsp;search&nbsp;for&nbsp;structures&nbsp;based&nbsp;on&nbsp;specified&nbsp;criteria.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;indoor_pool&nbsp;(str):&nbsp;Indicates&nbsp;the&nbsp;preference&nbsp;for&nbsp;a&nbsp;covered&nbsp;pool.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sauna&nbsp;(str):&nbsp;Indicates&nbsp;the&nbsp;preference&nbsp;for&nbsp;a&nbsp;sauna.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fitness_area&nbsp;(str):&nbsp;Indicates&nbsp;the&nbsp;preference&nbsp;for&nbsp;a&nbsp;fitness&nbsp;area.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;List[Dict[str,&nbsp;Any]]:&nbsp;Filtered&nbsp;results&nbsp;of&nbsp;structures&nbsp;as&nbsp;a&nbsp;list&nbsp;of<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dictionaries.</tt></dd></dl>
+ <dl><dt><a name="-structures"><strong>structures</strong></a>(zone, parking, restaurant)</dt><dd><tt>Endpoint&nbsp;to&nbsp;extract&nbsp;relevant&nbsp;data&nbsp;for&nbsp;the&nbsp;frontend<br>
+based&nbsp;on&nbsp;specified&nbsp;criteria.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;zone&nbsp;(str):&nbsp;The&nbsp;selected&nbsp;zone.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;parking&nbsp;(str):&nbsp;The&nbsp;selected&nbsp;parking&nbsp;preference.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;restaurant&nbsp;(str):&nbsp;The&nbsp;selected&nbsp;restaurant&nbsp;preference.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;List[Dict[str,&nbsp;Any]]:&nbsp;Filtered&nbsp;results&nbsp;of&nbsp;relevant<br>
+&nbsp;&nbsp;&nbsp;&nbsp;data&nbsp;as&nbsp;a&nbsp;list&nbsp;of&nbsp;dictionaries.</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>app</strong> = &lt;fastapi.applications.FastAPI object&gt;<br>
+<strong>df</strong> =      PROVINCIA    COMUNE LOCALITA          TIPOL...10/2021         3 Leoni
+
+[8504 rows x 45 columns]</td></tr></table>
+</body></html>
